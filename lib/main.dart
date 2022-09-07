@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-// helpers
 import 'user_interface/routing/app_router.dart';
+import 'constants/app_theme.dart';
 // screens
 import 'user_interface/screens/home_screen/home_screen.dart';
 
@@ -15,9 +15,8 @@ class MyCGPAApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+      theme: AppTheme.lightTheme,
+      darkTheme: AppTheme.darkTheme,
       onGenerateRoute: AppRouter.onGenerateRoute,
       initialRoute: HomeScreen.screenId,
     );
