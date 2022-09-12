@@ -6,8 +6,6 @@ class HomeScreen extends StatelessWidget {
 
   HomeScreen({Key? key}) : super(key: key);
 
-  List<String> strings = ['hi', 'lo', 'kids'];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,14 +15,19 @@ class HomeScreen extends StatelessWidget {
             padding: const EdgeInsets.fromLTRB(15, 40, 0, 10),
             child: const Text(
               'CGPA Calculator',
-              style: TextStyle(),
+              style: TextStyle(
+                fontSize: 30,
+              ),
             ),
           ),
-          ...strings.map((e) => ListTile(title: Text(e))).toList(),
-          ExpansionTile(
-            title: Text('title'),
-            children: strings.map((e) => ListTile(title: Text(e))).toList(),
-          ),
+
+          YearCardDisplay(yearTitle: '1st year'),
+
+
+          // ExpansionTile(
+          //   title: Text('title'),
+          //   children: strings.map((e) => ListTile(title: Text(e))).toList(),
+          // ),
         ],
       ),
     );
