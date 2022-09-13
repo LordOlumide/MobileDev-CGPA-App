@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
-class LoginScreen extends StatelessWidget{
+class LoginScreen extends StatefulWidget{
   static const screenId = 'Login screen';
   LoginScreen({Key? key}) : super(key: key);
 
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  String email = '';
+  String password = '';
 
   @override
   Widget build(BuildContext context) {
@@ -14,18 +20,16 @@ class LoginScreen extends StatelessWidget{
         children: [
           // email textfield
           TextField(
-            controller: emailController,
           ),
 
           // password textfield
           TextField(
-            controller: passwordController,
           ),
 
           // Login button
           MaterialButton(
             onPressed: () {},
-            child: Text(
+            child: const Text(
               'Log in',
               style: TextStyle(),
             ),
