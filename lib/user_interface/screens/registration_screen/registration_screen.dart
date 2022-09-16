@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:mobile_dev_cgpa_app/constants/decorations.dart';
+import '../../../repos/auth_repo.dart';
+// screens
+import '../home_screen/home_screen.dart';
 
 class RegistrationScreen extends StatefulWidget {
+  static const screenId = 'Registration screen';
   const RegistrationScreen({Key? key}) : super(key: key);
 
   @override
@@ -47,14 +52,28 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
             // "Registration" button
             MaterialButton(
-              color: Colors.blueAccent,,
-              onPressed: () {
-
+              color: Colors.blueAccent,
+              onPressed: () async {
+                try {
+                  final newUser = await Provider.of<Auth>(context).registerNewUser(email: email, password: password);
+                  if (newUser != null) {
+                    Navigator.pushNamed(context, HomeScreen.screenId);
+                  }
+                } catch (e) {
+                  print('FirebaseAuth Error: $e');
+                }
               },
               child: const Text(
                 'Register',
                 style: TextStyle(),
               ),
+            ),
+
+            MaterialButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('Go back'),
             ),
           ],
         ),
