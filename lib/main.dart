@@ -13,25 +13,24 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
 
-  runApp(const MyCGPAApp());
+  runApp(MyCGPAApp());
 }
 
 class MyCGPAApp extends StatelessWidget {
-  const MyCGPAApp({super.key});
+  MyCGPAApp({super.key});
+  //
+  // final globalAuthInstance = Auth();
+  // globalAuthInstance.initializeInstancee();
+  //
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        Provider(create: (context) => Auth()),
-      ],
-      child: MaterialApp(
-        title: 'Flutter Demo',
-        theme: AppTheme.lightTheme,
-        darkTheme: AppTheme.darkTheme,
-        onGenerateRoute: AppRouter.onGenerateRoute,
-        initialRoute: WelcomeScreen.screenId,
-      ),
+    return MaterialApp(
+      title: 'Flutter Demo',
+      theme: AppTheme.lightTheme,
+      darkTheme: AppTheme.darkTheme,
+      onGenerateRoute: AppRouter.onGenerateRoute,
+      initialRoute: WelcomeScreen.screenId,
     );
   }
 }
