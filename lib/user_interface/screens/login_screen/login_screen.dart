@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:mobile_dev_cgpa_app/constants/decorations.dart';
+import 'package:mobile_dev_cgpa_app/repos/auth_repo.dart';
 import 'package:mobile_dev_cgpa_app/user_interface/screens/home_screen/home_screen.dart';
+import 'package:mobile_dev_cgpa_app/utils/y_space.dart';
+import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {
   static const screenId = 'Login screen';
@@ -19,28 +22,62 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: ListView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             // email textfield
-            TextField(),
+            TextField(
+              onChanged: (value) {
+                email = value;
+              },
+              keyboardType: TextInputType.emailAddress,
+              textAlign: TextAlign.center,
+              decoration: kTextFieldDecoration.copyWith(
+                hintText: 'Enter your email',
+              ),
+            ),
+            const YSpace(30),
 
             // password textfield
-            TextField(),
+            TextField(
+              onChanged: (value) {
+                password = value;
+              },
+              obscureText: true,
+              textAlign: TextAlign.center,
+              decoration: kTextFieldDecoration.copyWith(
+                hintText: 'Enter your password',
+              ),
+            ),
+            const YSpace(30),
 
             // Login button
             MaterialButton(
-              onPressed: () {
-                FirebaseAuth.instance
-                    .signInWithEmailAndPassword(
-                        email: email, password: password)
-                    .then((value) =>
-                        Navigator.pushNamed(context, HomeScreen.screenId))
-                    .onError((error, stackTrace) => print('Error: $error'));
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+              onPressed: () async {
+                try {
+                  await Provider.of<Auth>(context).instance
+                      .signInWithEmailAndPassword(
+                      email: email, password: password)
+                      .then((value) =>
+                      Navigator.pushNamed(context, HomeScreen.screenId));
+                } catch (e) {
+                  print('FirebaseAuth Error: $e');
+                }
               },
               child: const Text(
                 'Log in',
                 style: TextStyle(),
               ),
+            ),
+            const YSpace(20),
+
+            MaterialButton(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('Go back'),
             ),
           ],
         ),

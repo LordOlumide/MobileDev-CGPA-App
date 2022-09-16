@@ -18,19 +18,20 @@ Future<void> main() async {
 
 class MyCGPAApp extends StatelessWidget {
   MyCGPAApp({super.key});
-  //
-  // final globalAuthInstance = Auth();
-  // globalAuthInstance.initializeInstancee();
-  //
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: AppTheme.lightTheme,
-      darkTheme: AppTheme.darkTheme,
-      onGenerateRoute: AppRouter.onGenerateRoute,
-      initialRoute: WelcomeScreen.screenId,
+    return MultiProvider(
+      providers: [
+        Provider(create: (context) => Auth()),
+      ],
+      child: MaterialApp(
+        title: 'Flutter Demo',
+        theme: AppTheme.lightTheme,
+        // darkTheme: AppTheme.darkTheme,
+        onGenerateRoute: AppRouter.onGenerateRoute,
+        initialRoute: WelcomeScreen.screenId,
+      ),
     );
   }
 }

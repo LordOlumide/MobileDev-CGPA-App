@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_dev_cgpa_app/utils/y_space.dart';
 import 'package:provider/provider.dart';
 import 'package:mobile_dev_cgpa_app/constants/decorations.dart';
 import '../../../repos/auth_repo.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-
 // screens
 import '../home_screen/home_screen.dart';
 
@@ -22,8 +21,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final authInstance = FirebaseAuth.instance;
-
     return Scaffold(
       body: Center(
         child: Column(
@@ -41,6 +38,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 hintText: 'Enter your email',
               ),
             ),
+            const YSpace(30),
 
             // password textfield
             TextField(
@@ -53,13 +51,14 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 hintText: 'Enter your password.',
               ),
             ),
+            const YSpace(30),
 
             // "Registration" button
             MaterialButton(
-              color: Colors.blueAccent,
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
               onPressed: () async {
                 try {
-                  final newUser = await authInstance
+                  await Provider.of<Auth>(context).instance
                       .createUserWithEmailAndPassword(
                           email: email, password: password)
                       .then((value) =>
@@ -73,8 +72,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 style: TextStyle(),
               ),
             ),
+            const YSpace(20),
 
             MaterialButton(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
               onPressed: () {
                 Navigator.of(context).pop();
               },

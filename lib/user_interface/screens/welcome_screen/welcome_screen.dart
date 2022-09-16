@@ -23,6 +23,7 @@ class WelcomeScreen extends StatelessWidget {
 
             // Registration Button
             MaterialButton(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
               onPressed: () {
                 Navigator.pushNamed(context, RegistrationScreen.screenId);
               },
@@ -35,6 +36,7 @@ class WelcomeScreen extends StatelessWidget {
 
             // Login button
             MaterialButton(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
               onPressed: () {
                 Navigator.pushNamed(context, LoginScreen.screenId);
               },
