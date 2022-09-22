@@ -3,6 +3,7 @@ import 'package:mobile_dev_cgpa_app/utils/y_space.dart';
 import 'package:provider/provider.dart';
 import 'package:mobile_dev_cgpa_app/constants/decorations.dart';
 import '../../../repos/auth_repo.dart';
+
 // screens
 import '../home_screen/home_screen.dart';
 
@@ -58,7 +59,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
               onPressed: () async {
                 try {
-                  await Provider.of<Auth>(context).instance
+                  await Provider.of<Auth>(context, listen: false)
                       .createUserWithEmailAndPassword(
                           email: email, password: password)
                       .then((value) =>

@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 // helpers
 import 'repos/auth_repo.dart';
+import 'package:mobile_dev_cgpa_app/repos/data_repo.dart';
 // services
 import 'user_interface/routing/app_router.dart';
 import 'constants/app_theme.dart';
@@ -19,11 +20,15 @@ Future<void> main() async {
 class MyCGPAApp extends StatelessWidget {
   MyCGPAApp({super.key});
 
+  BaseRepo mainRepo = BaseRepo();
+  mainRepo.addDummyData();
+
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
         Provider(create: (context) => Auth()),
+        Provider(create: (context) => mainRepo),
       ],
       child: MaterialApp(
         title: 'Flutter Demo',

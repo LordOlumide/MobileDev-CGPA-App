@@ -56,11 +56,11 @@ class _LoginScreenState extends State<LoginScreen> {
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
               onPressed: () async {
                 try {
-                  await Provider.of<Auth>(context).instance
-                      .signInWithEmailAndPassword(
-                      email: email, password: password)
+                  await Provider.of<Auth>(context, listen: false)
+                      .logInWithEmailAndPassword(
+                          email: email, password: password)
                       .then((value) =>
-                      Navigator.pushNamed(context, HomeScreen.screenId));
+                          Navigator.pushNamed(context, HomeScreen.screenId));
                 } catch (e) {
                   print('FirebaseAuth Error: $e');
                 }

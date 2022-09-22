@@ -18,11 +18,11 @@ class YearCardDisplay extends StatelessWidget {
         padding:  const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
         margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
         decoration: BoxDecoration(
-          boxShadow: const [
-            BoxShadow(
-              offset: Offset(1, 1),
-            ),
-          ],
+          // boxShadow: const [
+          //   BoxShadow(
+          //     offset: Offset(1, 1),
+          //   ),
+          // ],
           color: Theme.of(context).colorScheme.background,
           borderRadius: BorderRadius.circular(5),
         ),
