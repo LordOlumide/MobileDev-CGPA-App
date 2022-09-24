@@ -36,7 +36,7 @@ class SemesterScreen extends StatelessWidget {
               ),
               const SizedBox(height: 20),
               SemesterCard(
-                semesterResult: yearResult.firstSem,
+                yearResultIndex: yearResultIndex,
                 onPressed: () {
                   Navigator.pushNamed(context, CourseScreen.screenId,
                       arguments: {
@@ -48,7 +48,7 @@ class SemesterScreen extends StatelessWidget {
               ),
               const SizedBox(height: 30),
               SemesterCard(
-                semesterResult: yearResult.secondSem,
+                yearResultIndex: yearResultIndex,
                 onPressed: () {
                   Navigator.pushNamed(context, CourseScreen.screenId,
                       arguments: {

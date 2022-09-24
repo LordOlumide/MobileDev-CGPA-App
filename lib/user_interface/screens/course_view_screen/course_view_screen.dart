@@ -56,7 +56,9 @@ class CourseScreen extends StatelessWidget {
               for (CourseResult course in semesterResult.courseResults)
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10),
-                  child: Text('${course.courseTitle} : ${course.marks}'),
+                  child: Text('${course.courseTitle}, marks: ${course.marks},'
+                      ' units: ${course.units}, gpaScore: ${course.gpaScore},'
+                      ' grade: ${course.grade}}'),
                 ),
             ],
           ),
@@ -76,16 +78,19 @@ class CourseScreen extends StatelessWidget {
                     bottom: MediaQuery.of(context).viewInsets.bottom),
                 child: Provider(
                   create: (context) => variablesObject,
-                  dispose: (context, _) {
-                    variablesObject.reset();
-                  },
                   child: CourseInputSheet(),
                 ),
               ),
             ),
           ).then((value) {
+            CourseResult newCourse = variablesObject.toCourse();
+            print(newCourse);
             if (value == true) {
-              print(variablesObject.variables['courseTitle']);
+              Provider.of<Database>(context, listen: false).addCourse(
+                newCourse: newCourse,
+                yearResultIndex: yearResultIndex,
+                isFirstSemester: isFirstSemester,
+              );
             } else {
               print('false');
             }

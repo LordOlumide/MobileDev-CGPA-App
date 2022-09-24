@@ -15,11 +15,11 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
 
-  runApp(MyCGPAApp());
+  runApp(const MyCGPAApp());
 }
 
 class MyCGPAApp extends StatefulWidget {
-  MyCGPAApp({super.key});
+  const MyCGPAApp({super.key});
 
   @override
   State<MyCGPAApp> createState() => _MyCGPAAppState();
@@ -39,7 +39,7 @@ class _MyCGPAAppState extends State<MyCGPAApp> {
     return MultiProvider(
       providers: [
         Provider(create: (context) => Auth()),
-        Provider(create: (context) => mainDatabase),
+        ChangeNotifierProvider(create: (context) => mainDatabase),
       ],
       child: MaterialApp(
         title: 'Flutter Demo',

@@ -1,21 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:mobile_dev_cgpa_app/models/course_result.dart';
 import 'package:mobile_dev_cgpa_app/models/semester_result.dart';
+import 'package:mobile_dev_cgpa_app/repos/database.dart';
 
 class SemesterCard extends StatelessWidget {
-  SemesterResult semesterResult;
+  int yearResultIndex;
   VoidCallback onPressed;
   bool isFirstSemester;
 
   SemesterCard({
     Key? key,
-    required this.semesterResult,
+    required this.yearResultIndex,
     required this.onPressed,
     required this.isFirstSemester,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    SemesterResult semesterResult = isFirstSemester == true
+        ? Provider.of<Database>(context).main[yearResultIndex].firstSem
+        : Provider.of<Database>(context).main[yearResultIndex].secondSem;
+
     return Expanded(
       child: RawMaterialButton(
         onPressed: onPressed,
@@ -24,17 +30,17 @@ class SemesterCard extends StatelessWidget {
         shape: RoundedRectangleBorder(
           borderRadius: isFirstSemester == true
               ? const BorderRadius.only(
-                  topLeft: Radius.circular(30),
-                  topRight: Radius.circular(30),
-                  bottomLeft: Radius.circular(5),
-                  bottomRight: Radius.circular(5),
-                )
+            topLeft: Radius.circular(30),
+            topRight: Radius.circular(30),
+            bottomLeft: Radius.circular(5),
+            bottomRight: Radius.circular(5),
+          )
               : const BorderRadius.only(
-                  topLeft: Radius.circular(5),
-                  topRight: Radius.circular(5),
-                  bottomLeft: Radius.circular(30),
-                  bottomRight: Radius.circular(30),
-                ),
+            topLeft: Radius.circular(5),
+            topRight: Radius.circular(5),
+            bottomLeft: Radius.circular(30),
+            bottomRight: Radius.circular(30),
+          ),
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -69,7 +75,7 @@ class SemesterCard extends StatelessWidget {
               'Number of Units:  ${semesterResult.totalNoOfUnits}',
               style: TextStyle(),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
           ],
         ),
       ),

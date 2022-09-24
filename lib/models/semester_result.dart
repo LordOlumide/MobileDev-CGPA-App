@@ -7,7 +7,6 @@ class SemesterResult {
     courseResults.add(courseResult);
   }
 
-
   int get totalNoOfCourses {
     return courseResults.length;
   }

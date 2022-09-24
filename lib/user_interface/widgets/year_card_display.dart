@@ -24,7 +24,7 @@ class YearCardDisplay extends StatelessWidget {
             arguments: yearResultIndex);
       },
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
         margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
         decoration: BoxDecoration(
           color: Theme.of(context).colorScheme.secondary,
@@ -44,6 +44,8 @@ class YearCardDisplay extends StatelessWidget {
                 ),
               ],
             ),
+
+            // Year GPA
             RichText(
               text: TextSpan(
                 children: [

@@ -3,6 +3,7 @@ import 'package:mobile_dev_cgpa_app/models/form_variables.dart';
 import 'package:provider/provider.dart';
 
 class InputField extends StatelessWidget {
+  final bool isFirstField;
   final String fieldTitle;
   String fieldVariableName;
   final String hint;
@@ -11,6 +12,7 @@ class InputField extends StatelessWidget {
 
   InputField({
     Key? key,
+    required this.isFirstField,
     required this.fieldTitle,
     required this.fieldVariableName,
     required this.hint,
@@ -30,7 +32,7 @@ class InputField extends StatelessWidget {
           ),
         ),
         TextFormField(
-          autofocus: true,
+          autofocus: isFirstField,
           onChanged: (newString) {
             Provider.of<FormVariables>(context, listen: false)
                 .variables[fieldVariableName] = newString;

@@ -1,21 +1,36 @@
+import 'package:flutter/material.dart';
 import 'package:mobile_dev_cgpa_app/models/year_result.dart';
 import 'package:mobile_dev_cgpa_app/models/course_result.dart';
 
-class Database {
-  final List<YearResult> main = [];
+class Database extends ChangeNotifier {
+  final List<YearResult> _main = [];
+
+  List<YearResult> get main => _main;
 
   initialize() {
     addDummyData();
   }
 
   addNewYear() {
-    main.add(YearResult(year: main.length + 1));
+    _main.add(YearResult(year: _main.length + 1));
+    notifyListeners();
+  }
+
+  addCourse({
+    required CourseResult newCourse,
+    required int yearResultIndex,
+    required bool isFirstSemester,
+  }) {
+    isFirstSemester == true
+        ? _main[yearResultIndex].addCourseToFirstSem(newCourse)
+        : _main[yearResultIndex].addCourseToSecondSem(newCourse);
+    notifyListeners();
   }
 
   double get currentCGPA {
     int cumulativeScore = 0;
     int cumulativeUnits = 0;
-    for (YearResult year in main) {
+    for (YearResult year in _main) {
       for (CourseResult course in year.firstSem.courseResults) {
         cumulativeScore += course.gpaScore!;
         cumulativeUnits += course.units;

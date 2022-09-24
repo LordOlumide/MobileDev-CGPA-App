@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import '../../widgets/input_field.dart';
-import 'package:mobile_dev_cgpa_app/models/form_variables.dart';
 
 class CourseInputSheet extends StatelessWidget {
   CourseInputSheet({Key? key}) : super(key: key);
@@ -17,6 +15,7 @@ class CourseInputSheet extends StatelessWidget {
         child: Column(
           children: [
             InputField(
+              isFirstField: true,
               fieldTitle: 'Course Title',
               fieldVariableName: 'courseTitle',
               hint: 'e.g. GNS 101',
@@ -26,6 +25,7 @@ class CourseInputSheet extends StatelessWidget {
 
             // courseDescription
             InputField(
+              isFirstField: false,
               fieldTitle: 'Course Name',
               fieldVariableName: 'courseDescription',
               hint: 'e.g. History and Philosophy',
@@ -35,6 +35,7 @@ class CourseInputSheet extends StatelessWidget {
 
             // marks
             InputField(
+              isFirstField: false,
               fieldTitle: 'Score (%)',
               fieldVariableName: 'marks',
               hint: 'e.g. 75',
@@ -44,6 +45,7 @@ class CourseInputSheet extends StatelessWidget {
 
             // units
             InputField(
+              isFirstField: false,
               fieldTitle: 'No. of Units',
               fieldVariableName: 'units',
               hint: 'e.g. 2',
@@ -54,13 +56,7 @@ class CourseInputSheet extends StatelessWidget {
             // "Add course" button
             ElevatedButton(
               onPressed: () {
-                FormVariables variablesObject =
-                    Provider.of<FormVariables>(context, listen: false);
-
                 if (_formKey.currentState!.validate()) {
-                  // TODO: Remove this testing statement
-                  print('${variablesObject.variables}');
-
                   Navigator.pop(context, true);
                 }
               },
