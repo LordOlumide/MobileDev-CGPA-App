@@ -26,11 +26,24 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 15),
-                Text(
-                  'Your CGPA: ${Provider.of<Database>(context).currentCGPA}',
-                  style: const TextStyle(
-                    fontSize: 25,
-                    fontWeight: FontWeight.w500,
+                RichText(
+                  text: TextSpan(
+                    style: TextStyle(
+                      fontSize: 25,
+                      fontWeight: FontWeight.w500,
+                      color: Theme.of(context).textTheme.bodyMedium!.color,
+                    ),
+                    children: [
+                      TextSpan(text: 'Your CGPA: '),
+                      TextSpan(
+                        text: '${Provider.of<Database>(context).currentCGPA}',
+                        style: TextStyle(
+                          fontSize: 28,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.green,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ],
@@ -69,6 +82,7 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ),
               ),
+              const SizedBox(height: 30),
             ],
           ),
         ],

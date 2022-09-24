@@ -24,11 +24,11 @@ class YearResult {
     int cumulativeScore = 0;
     int cumulativeUnits = 0;
     for (CourseResult course in firstSem.courseResults) {
-      cumulativeScore += course.gpaScore!;
+      cumulativeScore += course.gpaScore! * course.units;
       cumulativeUnits += course.units;
     }
     for (CourseResult course in secondSem.courseResults) {
-      cumulativeScore += course.gpaScore!;
+      cumulativeScore += course.gpaScore! * course.units;
       cumulativeUnits += course.units;
     }
     // if cumulative units == 0, 0/0 = NaN

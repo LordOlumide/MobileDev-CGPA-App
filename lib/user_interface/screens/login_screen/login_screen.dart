@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:mobile_dev_cgpa_app/constants/decorations.dart';
 import 'package:mobile_dev_cgpa_app/repos/auth_repo.dart';
 import 'package:mobile_dev_cgpa_app/user_interface/screens/home_screen/home_screen.dart';
-import 'package:mobile_dev_cgpa_app/utils/y_space.dart';
 import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -36,7 +35,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 hintText: 'Enter your email',
               ),
             ),
-            const YSpace(30),
+            const SizedBox(height: 30),
 
             // password textfield
             TextField(
@@ -49,7 +48,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 hintText: 'Enter your password',
               ),
             ),
-            const YSpace(30),
+            const SizedBox(height: 30),
 
             // Login button
             MaterialButton(
@@ -70,7 +69,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 style: TextStyle(),
               ),
             ),
-            const YSpace(20),
+            const SizedBox(height: 20),
 
             MaterialButton(
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),

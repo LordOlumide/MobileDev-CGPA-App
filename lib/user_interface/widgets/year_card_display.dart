@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_dev_cgpa_app/models/year_result.dart';
-import 'package:mobile_dev_cgpa_app/helpers/number_to_position.dart';
+import 'package:mobile_dev_cgpa_app/utils/number_to_position.dart';
 import 'package:mobile_dev_cgpa_app/repos/database.dart';
 import 'package:provider/provider.dart';
 import '../screens/semester_view_screen/semester_view_screen.dart';

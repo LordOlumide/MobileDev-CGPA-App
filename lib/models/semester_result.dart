@@ -23,7 +23,7 @@ class SemesterResult {
     int cumulativeScore = 0;
     int cumulativeUnits = 0;
     for (CourseResult course in courseResults) {
-      cumulativeScore += course.gpaScore!;
+      cumulativeScore += course.gpaScore! * course.units;
       cumulativeUnits += course.units;
     }
     return cumulativeUnits != 0

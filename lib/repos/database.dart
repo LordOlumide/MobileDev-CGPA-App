@@ -32,11 +32,11 @@ class Database extends ChangeNotifier {
     int cumulativeUnits = 0;
     for (YearResult year in _main) {
       for (CourseResult course in year.firstSem.courseResults) {
-        cumulativeScore += course.gpaScore!;
+        cumulativeScore += course.gpaScore! * course.units;
         cumulativeUnits += course.units;
       }
       for (CourseResult course in year.secondSem.courseResults) {
-        cumulativeScore += course.gpaScore!;
+        cumulativeScore += course.gpaScore! * course.units;
         cumulativeUnits += course.units;
       }
     }

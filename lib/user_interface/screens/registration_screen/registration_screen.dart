@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mobile_dev_cgpa_app/utils/y_space.dart';
 import 'package:provider/provider.dart';
 import 'package:mobile_dev_cgpa_app/constants/decorations.dart';
 import '../../../repos/auth_repo.dart';
@@ -39,7 +38,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 hintText: 'Enter your email',
               ),
             ),
-            const YSpace(30),
+            const SizedBox(height: 30),
 
             // password textfield
             TextField(
@@ -52,7 +51,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 hintText: 'Enter your password.',
               ),
             ),
-            const YSpace(30),
+            const SizedBox(height: 30),
 
             // "Registration" button
             MaterialButton(
@@ -73,7 +72,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 style: TextStyle(),
               ),
             ),
-            const YSpace(20),
+            const SizedBox(height: 20),
 
             MaterialButton(
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),

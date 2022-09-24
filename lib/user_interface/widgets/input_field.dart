@@ -32,7 +32,7 @@ class InputField extends StatelessWidget {
           ),
         ),
         TextFormField(
-          autofocus: isFirstField,
+          autofocus: isFirstField,  // TODO: Fix the keyboard dropping issue
           onChanged: (newString) {
             Provider.of<FormVariables>(context, listen: false)
                 .variables[fieldVariableName] = newString;

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_dev_cgpa_app/user_interface/screens/login_screen/login_screen.dart';
 import 'package:mobile_dev_cgpa_app/user_interface/screens/registration_screen/registration_screen.dart';
-import 'package:mobile_dev_cgpa_app/utils/y_space.dart';
 
 class WelcomeScreen extends StatelessWidget {
   static const screenId = 'Welcome screen';
@@ -19,7 +18,7 @@ class WelcomeScreen extends StatelessWidget {
               'Welcome to CGPA App',
               style: TextStyle(fontSize: 30),
             ),
-            const YSpace(50),
+            const SizedBox(height: 50),
 
             // Registration Button
             MaterialButton(
@@ -32,7 +31,7 @@ class WelcomeScreen extends StatelessWidget {
                 style: TextStyle(),
               ),
             ),
-            const YSpace(50),
+            const SizedBox(height: 50),
 
             // Login button
             MaterialButton(

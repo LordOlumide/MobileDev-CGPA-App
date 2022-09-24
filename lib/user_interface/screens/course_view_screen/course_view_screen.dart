@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:mobile_dev_cgpa_app/helpers/number_to_position.dart';
+import 'package:provider/provider.dart';
+import 'package:mobile_dev_cgpa_app/utils/number_to_position.dart';
 import 'package:mobile_dev_cgpa_app/models/course_result.dart';
 import 'package:mobile_dev_cgpa_app/models/form_variables.dart';
 import 'package:mobile_dev_cgpa_app/models/semester_result.dart';
 import 'package:mobile_dev_cgpa_app/repos/database.dart';
 import 'course_input_sheet.dart';
-import 'package:provider/provider.dart';
+import '../../widgets/course_card_display.dart';
 
 class CourseScreen extends StatelessWidget {
   static const screenId = 'Course screen';
@@ -28,7 +29,7 @@ class CourseScreen extends StatelessWidget {
       body: SafeArea(
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 50),
-          child: ListView(
+          child: Column(
             children: [
               // Year
               Text(
@@ -52,14 +53,19 @@ class CourseScreen extends StatelessWidget {
               ),
               const SizedBox(height: 20),
 
-              // Courses
-              for (CourseResult course in semesterResult.courseResults)
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 10),
-                  child: Text('${course.courseTitle}, marks: ${course.marks},'
-                      ' units: ${course.units}, gpaScore: ${course.gpaScore},'
-                      ' grade: ${course.grade}}'),
+              Expanded(
+                child: ListView(
+                  children: [
+                    // Courses
+                    for (int i = 0; i < semesterResult.courseResults.length; i++)
+                      CourseCard(
+                        yearResultIndex: yearResultIndex,
+                        isFirstSemester: isFirstSemester,
+                        courseResultIndex: i,
+                      ),
+                  ],
                 ),
+              ),
             ],
           ),
         ),

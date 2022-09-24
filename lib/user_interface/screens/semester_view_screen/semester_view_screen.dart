@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mobile_dev_cgpa_app/helpers/number_to_position.dart';
+import 'package:mobile_dev_cgpa_app/utils/number_to_position.dart';
 import 'package:provider/provider.dart';
 import 'package:mobile_dev_cgpa_app/models/year_result.dart';
 import 'package:mobile_dev_cgpa_app/repos/database.dart';
@@ -22,7 +22,7 @@ class SemesterScreen extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
         child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 100),
+          padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 80),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.stretch,
