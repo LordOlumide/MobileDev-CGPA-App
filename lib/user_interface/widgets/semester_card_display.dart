@@ -16,36 +16,62 @@ class SemesterCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.secondary,
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: Column(
-        children: [
-          Text(
-            isFirstSemester == true ? 'First Semester' : 'Second Semester',
-            style: TextStyle(
-              fontSize: 27,
+    return Expanded(
+      child: RawMaterialButton(
+        onPressed: onPressed,
+        fillColor: Theme.of(context).colorScheme.secondary,
+        padding: const EdgeInsets.symmetric(vertical: 10),
+        shape: RoundedRectangleBorder(
+          borderRadius: isFirstSemester == true
+              ? const BorderRadius.only(
+                  topLeft: Radius.circular(30),
+                  topRight: Radius.circular(30),
+                  bottomLeft: Radius.circular(5),
+                  bottomRight: Radius.circular(5),
+                )
+              : const BorderRadius.only(
+                  topLeft: Radius.circular(5),
+                  topRight: Radius.circular(5),
+                  bottomLeft: Radius.circular(30),
+                  bottomRight: Radius.circular(30),
+                ),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              isFirstSemester == true ? 'First Semester' : 'Second Semester',
+              style: TextStyle(
+                fontSize: 27,
+                fontWeight: FontWeight.w500,
+              ),
             ),
-          ),
-          Text(
-            'Semester GPA: ${semesterResult.semesterGPA}',
-            style: TextStyle(),
-          ),
-          FittedBox(
-            child: Column(
-              children: [
-                for (CourseResult courseResult
-                    in semesterResult.courseResults)
-                  Text(
-                    '${courseResult.courseTitle} :   ${courseResult.grade}',
-                    style: TextStyle(),
-                  ),
-              ],
+            const SizedBox(height: 15),
+
+            // Semester GPA
+            Text(
+              'Semester GPA:  ${semesterResult.semesterGPA}',
+              style: TextStyle(
+                fontSize: 22,
+              ),
             ),
-          ),
-        ],
+            const SizedBox(height: 10),
+
+            // Number of Courses
+            Text(
+              'Number of Courses:  ${semesterResult.totalNoOfCourses}',
+              style: TextStyle(),
+            ),
+            const SizedBox(height: 5),
+
+            // Number of Units
+            Text(
+              'Number of Units:  ${semesterResult.totalNoOfUnits}',
+              style: TextStyle(),
+            ),
+            SizedBox(height: 20),
+          ],
+        ),
       ),
     );
   }

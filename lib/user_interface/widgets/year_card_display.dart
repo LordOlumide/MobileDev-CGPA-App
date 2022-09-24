@@ -27,8 +27,8 @@ class YearCardDisplay extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
         margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
         decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.background,
-          borderRadius: BorderRadius.circular(3),
+          color: Theme.of(context).colorScheme.secondary,
+          borderRadius: BorderRadius.circular(6),
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -38,13 +38,27 @@ class YearCardDisplay extends StatelessWidget {
                 // The year: 1st year
                 Text(
                   '${noToPosition(yearResult.year)} year',
-                  style: TextStyle(),
+                  style: TextStyle(
+                    fontSize: 20,
+                  ),
                 ),
               ],
             ),
-            Text(
-              'GPA: ${yearResult.yearGPA}',
-              style: TextStyle(),
+            RichText(
+              text: TextSpan(
+                children: [
+                  TextSpan(text: 'GPA: '),
+                  TextSpan(
+                    text: '${yearResult.yearGPA}',
+                    style: const TextStyle(
+                      fontSize: 24,
+                    ),
+                  )
+                ],
+                style: TextStyle(
+                    fontSize: 18,
+                    color: Theme.of(context).textTheme.bodyMedium!.color),
+              ),
             ),
           ],
         ),

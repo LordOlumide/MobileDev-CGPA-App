@@ -27,6 +27,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   'CGPA Calculator',
                   style: TextStyle(
                     fontSize: 30,
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
                 const SizedBox(height: 15),
@@ -34,6 +35,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   'Your CGPA: ${Provider.of<Database>(context).currentCGPA}',
                   style: const TextStyle(
                     fontSize: 25,
+                    fontWeight: FontWeight.w500,
                   ),
                 ),
               ],

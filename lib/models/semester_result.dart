@@ -7,6 +7,19 @@ class SemesterResult {
     courseResults.add(courseResult);
   }
 
+
+  int get totalNoOfCourses {
+    return courseResults.length;
+  }
+
+  int get totalNoOfUnits {
+    int nOOfUnits = 0;
+    for (CourseResult course in courseResults) {
+      nOOfUnits += course.units;
+    }
+    return nOOfUnits;
+  }
+
   double get semesterGPA {
     int cumulativeScore = 0;
     int cumulativeUnits = 0;
@@ -14,12 +27,13 @@ class SemesterResult {
       cumulativeScore += course.gpaScore!;
       cumulativeUnits += course.units;
     }
-    return double.parse((cumulativeScore / cumulativeUnits).toStringAsFixed(2));
+    return cumulativeUnits != 0
+        ? double.parse((cumulativeScore / cumulativeUnits).toStringAsFixed(2))
+        : 0;
   }
 
   @override
   String toString() {
     return 'Semester Results: ${courseResults.map((e) => e.toString())}';
   }
-
 }

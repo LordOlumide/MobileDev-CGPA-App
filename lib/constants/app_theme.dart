@@ -4,9 +4,11 @@ import 'package:flutter/services.dart';
 
 class AppTheme {
   static Color lightPrimaryColor = const Color(0xFFffffff);
-  static Color lightSecondaryColor = const Color(0xFFd789ff);
+  static Color lightSecondaryColor = const Color(0xffdfe5ff);
   static Color lightBackgroundColor = const Color(0xffc7c7c7);
-  static Color lightFloatingActionButtonColor = const Color(0xFF7c7c7c);
+  static Color lightFloatingActionButtonColor = const Color(0xffb3cef8);
+  static Color lightScaffoldBackgroundColor = const Color(0xfffefff2);
+  static Color lightTextColor = Colors.black87;
 
   static Color darkPrimaryColor = const Color(0xFF232323);
   static Color darkSecondaryColor = const Color(0xFF7700b2);
@@ -27,6 +29,10 @@ class AppTheme {
     floatingActionButtonTheme: FloatingActionButtonThemeData(
       backgroundColor: lightFloatingActionButtonColor,
     ),
+    scaffoldBackgroundColor: lightScaffoldBackgroundColor,
+    textTheme: TextTheme(
+      bodyMedium: TextStyle(color: lightTextColor),
+    )
   );
 
   static final darkTheme = ThemeData(
