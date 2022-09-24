@@ -21,6 +21,7 @@ class CourseInputSheet extends StatelessWidget {
               fieldVariableName: 'courseTitle',
               hint: 'e.g. GNS 101',
               textCapitalization: TextCapitalization.characters,
+              numInputExpected: false,
             ),
 
             // courseDescription
@@ -29,6 +30,7 @@ class CourseInputSheet extends StatelessWidget {
               fieldVariableName: 'courseDescription',
               hint: 'e.g. History and Philosophy',
               textCapitalization: TextCapitalization.words,
+              numInputExpected: false,
             ),
 
             // marks
@@ -37,6 +39,7 @@ class CourseInputSheet extends StatelessWidget {
               fieldVariableName: 'marks',
               hint: 'e.g. 75',
               textCapitalization: TextCapitalization.none,
+              numInputExpected: true,
             ),
 
             // units
@@ -45,19 +48,20 @@ class CourseInputSheet extends StatelessWidget {
               fieldVariableName: 'units',
               hint: 'e.g. 2',
               textCapitalization: TextCapitalization.none,
+              numInputExpected: true,
             ),
 
             // "Add course" button
             ElevatedButton(
               onPressed: () {
-                FormVariables variablesObject
-                    = Provider.of<FormVariables>(context, listen: false);
+                FormVariables variablesObject =
+                    Provider.of<FormVariables>(context, listen: false);
 
                 if (_formKey.currentState!.validate()) {
-                  print('${variablesObject.variables['courseTitle']!},'
-                      ' ${variablesObject.variables['courseDescription']!}, '
-                      '${variablesObject.variables['marks']!},'
-                      ' ${variablesObject.variables['units']!}');
+                  // TODO: Remove this testing statement
+                  print('${variablesObject.variables}');
+
+                  Navigator.pop(context, true);
                 }
               },
               style: ButtonStyle(

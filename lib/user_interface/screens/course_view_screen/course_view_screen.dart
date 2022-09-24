@@ -83,7 +83,13 @@ class CourseScreen extends StatelessWidget {
                 ),
               ),
             ),
-          );
+          ).then((value) {
+            if (value == true) {
+              print(variablesObject.variables['courseTitle']);
+            } else {
+              print('false');
+            }
+          });
         },
         tooltip: 'Add Course',
         child: const Icon(Icons.add),

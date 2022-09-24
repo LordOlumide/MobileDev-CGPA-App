@@ -7,6 +7,7 @@ class InputField extends StatelessWidget {
   String fieldVariableName;
   final String hint;
   final TextCapitalization textCapitalization;
+  final bool numInputExpected;
 
   InputField({
     Key? key,
@@ -14,6 +15,7 @@ class InputField extends StatelessWidget {
     required this.fieldVariableName,
     required this.hint,
     required this.textCapitalization,
+    required this.numInputExpected,
   }) : super(key: key);
 
   @override
@@ -52,6 +54,9 @@ class InputField extends StatelessWidget {
           validator: (value) {
             if (value == null || value.isEmpty) {
               return 'Course must have $fieldTitle';
+            }
+            if (numInputExpected == true && double.tryParse(value) == null) {
+              return '$fieldTitle must be a number';
             }
             return null;
           },
