@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mobile_dev_cgpa_app/models/year_result.dart';
-import 'package:mobile_dev_cgpa_app/repos/data_repo.dart';
+import 'package:mobile_dev_cgpa_app/repos/database.dart';
 import 'package:provider/provider.dart';
 import '../../widgets/year_card_display.dart';
 
@@ -22,18 +20,30 @@ class _HomeScreenState extends State<HomeScreen> {
         children: [
           Container(
             padding: const EdgeInsets.fromLTRB(15, 40, 0, 10),
-            child: const Text(
-              'CGPA Calculator',
-              style: TextStyle(
-                fontSize: 30,
-              ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  'CGPA Calculator',
+                  style: TextStyle(
+                    fontSize: 30,
+                  ),
+                ),
+                const SizedBox(height: 15),
+                Text(
+                  'Your CGPA: ${Provider.of<Database>(context).currentCGPA}',
+                  style: const TextStyle(
+                    fontSize: 25,
+                  ),
+                ),
+              ],
             ),
           ),
           const SizedBox(height: 15),
           Column(
             children: [
-              for (YearResult result in Provider.of<DataRepo>(context).main)
-                YearCardDisplay(yearResult: result),
+              for (int i = 0; i < Provider.of<Database>(context).main.length; i++)
+                YearCardDisplay(yearResultIndex: i),
             ],
           ),
         ],
@@ -42,7 +52,9 @@ class _HomeScreenState extends State<HomeScreen> {
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add),
         onPressed: () {
-          Provider.of<DataRepo>(context, listen: false).addNewYear();
+          setState(() {
+            Provider.of<Database>(context, listen: false).addNewYear();
+          });
           print('Added new year');
         },
       ),

@@ -1,14 +1,14 @@
 class CourseResult {
-  String courseName;
   String courseTitle;
+  String courseDescription;
   int marks;
   int units;
   int? gpaScore;
   String? grade;
 
   CourseResult({
-    required this.courseName,
     required this.courseTitle,
+    required this.courseDescription,
     required this.marks,
     required this.units,
   }) {
@@ -35,6 +35,7 @@ class CourseResult {
 
   @override
   String toString() {
-    return '{courseName: $courseName, courseTitle: $courseTitle, marks: $marks}';
+    return '{courseName: $courseTitle, courseTitle: $courseDescription, marks: $marks,'
+        ' units: $units, gpaScore: $gpaScore, grade: $grade}';
   }
 }

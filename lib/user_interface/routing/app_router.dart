@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_dev_cgpa_app/models/year_result.dart';
 import 'package:mobile_dev_cgpa_app/user_interface/screens/registration_screen/registration_screen.dart';
+import 'package:mobile_dev_cgpa_app/user_interface/screens/semester_view_screen/semester_view_screen.dart';
 import 'package:mobile_dev_cgpa_app/user_interface/screens/welcome_screen/welcome_screen.dart';
 
 // screens
@@ -19,6 +21,10 @@ class AppRouter {
         return MaterialPageRoute(builder: (context) => LoginScreen());
       case HomeScreen.screenId:
         return MaterialPageRoute(builder: (context) => HomeScreen());
+      case SemesterScreen.screenId:
+        return MaterialPageRoute(
+            builder: (context) =>
+                SemesterScreen(yearResultIndex: settings.arguments as int));
       default:
         throw Exception('Route not found!');
     }

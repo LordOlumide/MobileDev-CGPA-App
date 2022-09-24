@@ -17,4 +17,9 @@ class SemesterResult {
     return double.parse((cumulativeScore / cumulativeUnits).toStringAsFixed(2));
   }
 
+  @override
+  String toString() {
+    return 'Semester Results: ${courseResults.map((e) => e.toString())}';
+  }
+
 }

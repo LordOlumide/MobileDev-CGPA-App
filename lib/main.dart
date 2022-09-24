@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 // helpers
 import 'repos/auth_repo.dart';
-import 'package:mobile_dev_cgpa_app/repos/data_repo.dart';
+import 'package:mobile_dev_cgpa_app/repos/database.dart';
 // services
 import 'user_interface/routing/app_router.dart';
 import 'constants/app_theme.dart';
@@ -26,12 +26,12 @@ class MyCGPAApp extends StatefulWidget {
 }
 
 class _MyCGPAAppState extends State<MyCGPAApp> {
-  DataRepo mainRepo = DataRepo();
+  Database mainDatabase = Database();
 
   @override
   void initState() {
     super.initState();
-    mainRepo.initialize();
+    mainDatabase.initialize();
   }
 
   @override
@@ -39,7 +39,7 @@ class _MyCGPAAppState extends State<MyCGPAApp> {
     return MultiProvider(
       providers: [
         Provider(create: (context) => Auth()),
-        Provider(create: (context) => mainRepo),
+        Provider(create: (context) => mainDatabase),
       ],
       child: MaterialApp(
         title: 'Flutter Demo',

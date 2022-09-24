@@ -4,7 +4,7 @@ import 'package:flutter/services.dart';
 
 class AppTheme {
   static Color lightPrimaryColor = const Color(0xFFffffff);
-  static Color lightSecondaryColor = const Color(0xFF006fff);
+  static Color lightSecondaryColor = const Color(0xFFd789ff);
   static Color lightBackgroundColor = const Color(0xffc7c7c7);
   static Color lightFloatingActionButtonColor = const Color(0xFF7c7c7c);
 
