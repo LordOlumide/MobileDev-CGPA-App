@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_dev_cgpa_app/models/form_variables.dart';
+import 'package:provider/provider.dart';
 
 class InputField extends StatelessWidget {
   final String fieldTitle;
-  String fieldVariable;
+  String fieldVariableName;
   final String hint;
   final TextCapitalization textCapitalization;
 
   InputField({
     Key? key,
     required this.fieldTitle,
-    required this.fieldVariable,
+    required this.fieldVariableName,
     required this.hint,
     required this.textCapitalization,
   }) : super(key: key);
@@ -28,8 +30,10 @@ class InputField extends StatelessWidget {
         TextFormField(
           autofocus: true,
           onChanged: (newString) {
-            fieldVariable = newString;
+            Provider.of<FormVariables>(context, listen: false)
+                .variables[fieldVariableName] = newString;
           },
+          cursorColor: Colors.black87,
           decoration: InputDecoration(
             hintText: hint,
             contentPadding: const EdgeInsets.symmetric(vertical: 2.0),
@@ -38,11 +42,9 @@ class InputField extends StatelessWidget {
             ),
             enabledBorder: const OutlineInputBorder(
               borderSide: BorderSide(color: Colors.black87, width: 1.0),
-              // borderRadius: BorderRadius.all(Radius.circular(4.0)),
             ),
             focusedBorder: const OutlineInputBorder(
               borderSide: BorderSide(color: Colors.black87, width: 2.0),
-              // borderRadius: BorderRadius.all(Radius.circular(4.0)),
             ),
           ),
           textCapitalization: textCapitalization,

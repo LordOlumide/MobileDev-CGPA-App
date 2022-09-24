@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_dev_cgpa_app/helpers/number_to_position.dart';
 import 'package:mobile_dev_cgpa_app/models/course_result.dart';
+import 'package:mobile_dev_cgpa_app/models/form_variables.dart';
 import 'package:mobile_dev_cgpa_app/models/semester_result.dart';
 import 'package:mobile_dev_cgpa_app/repos/database.dart';
 import 'course_input_sheet.dart';
@@ -64,6 +65,8 @@ class CourseScreen extends StatelessWidget {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton(
         onPressed: () {
+          FormVariables variablesObject = FormVariables();
+
           showModalBottomSheet(
             context: context,
             isScrollControlled: true,
@@ -71,7 +74,13 @@ class CourseScreen extends StatelessWidget {
               child: Container(
                 padding: EdgeInsets.only(
                     bottom: MediaQuery.of(context).viewInsets.bottom),
-                child: CourseInputSheet(),
+                child: Provider(
+                  create: (context) => variablesObject,
+                  dispose: (context, _) {
+                    variablesObject.reset();
+                  },
+                  child: CourseInputSheet(),
+                ),
               ),
             ),
           );
