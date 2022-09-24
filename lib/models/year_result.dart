@@ -3,17 +3,18 @@ import 'package:mobile_dev_cgpa_app/models/semester_result.dart';
 
 class YearResult {
   int year;
-  SemesterResult? firstSem;
-  SemesterResult? secondSem;
 
   YearResult({required this.year});
 
-  initFirstSem() {
-    firstSem = SemesterResult();
-  }
+  SemesterResult firstSem = SemesterResult();
+  SemesterResult secondSem = SemesterResult();
 
   addCourseToFirstSem(CourseResult courseResult) {
-    firstSem!.add(courseResult);
+    firstSem.add(courseResult);
+  }
+
+  addCourseToSecondSem(CourseResult courseResult) {
+    secondSem.add(courseResult);
   }
 
   double get yearGPA {
@@ -34,11 +35,4 @@ class YearResult {
     return double.parse((cumulativeScore / cumulativeUnits).toStringAsFixed(2));
   }
 
-  initSecondSem() {
-    secondSem = SemesterResult();
-  }
-
-  addCourseToSecondSem(CourseResult courseResult) {
-    secondSem!.add(courseResult);
-  }
 }

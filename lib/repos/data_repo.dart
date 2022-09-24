@@ -1,8 +1,12 @@
 import 'package:mobile_dev_cgpa_app/models/year_result.dart';
 import 'package:mobile_dev_cgpa_app/models/course_result.dart';
 
-class BaseRepo {
+class DataRepo {
   final List<YearResult> main = [];
+
+  initialize() {
+    addDummyData();
+  }
 
   addNewYear() {
     main.add(YearResult(year: main.length + 1));
@@ -29,6 +33,9 @@ class BaseRepo {
   }
 
   addDummyData() { // add more dummy data
+    addNewYear();
+    addNewYear();
+    addNewYear();
     addNewYear();
   }
 

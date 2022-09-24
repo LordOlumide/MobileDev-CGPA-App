@@ -9,6 +9,7 @@ import 'user_interface/routing/app_router.dart';
 import 'constants/app_theme.dart';
 // screens
 import 'user_interface/screens/welcome_screen/welcome_screen.dart';
+import 'user_interface/screens/home_screen/home_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -17,11 +18,21 @@ Future<void> main() async {
   runApp(MyCGPAApp());
 }
 
-class MyCGPAApp extends StatelessWidget {
+class MyCGPAApp extends StatefulWidget {
   MyCGPAApp({super.key});
 
-  BaseRepo mainRepo = BaseRepo();
-  mainRepo.addDummyData();
+  @override
+  State<MyCGPAApp> createState() => _MyCGPAAppState();
+}
+
+class _MyCGPAAppState extends State<MyCGPAApp> {
+  DataRepo mainRepo = DataRepo();
+
+  @override
+  void initState() {
+    super.initState();
+    mainRepo.initialize();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +46,8 @@ class MyCGPAApp extends StatelessWidget {
         theme: AppTheme.lightTheme,
         // darkTheme: AppTheme.darkTheme,
         onGenerateRoute: AppRouter.onGenerateRoute,
-        initialRoute: WelcomeScreen.screenId,
+        // initialRoute: WelcomeScreen.screenId,
+        initialRoute: HomeScreen.screenId,
       ),
     );
   }

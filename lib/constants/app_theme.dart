@@ -6,10 +6,12 @@ class AppTheme {
   static Color lightPrimaryColor = const Color(0xFFffffff);
   static Color lightSecondaryColor = const Color(0xFF006fff);
   static Color lightBackgroundColor = const Color(0xffc7c7c7);
+  static Color lightFloatingActionButtonColor = const Color(0xFF7c7c7c);
 
   static Color darkPrimaryColor = const Color(0xFF232323);
   static Color darkSecondaryColor = const Color(0xFF7700b2);
   static Color darkBackgroundColor = const Color(0xffbcbcbc);
+  static Color darkFloatingActionButtonColor = const Color(0xFFb41eff);
 
   const AppTheme._();
 
@@ -22,6 +24,9 @@ class AppTheme {
       secondary: lightSecondaryColor,
       background: lightBackgroundColor,
     ),
+    floatingActionButtonTheme: FloatingActionButtonThemeData(
+      backgroundColor: lightFloatingActionButtonColor,
+    ),
   );
 
   static final darkTheme = ThemeData(
@@ -29,6 +34,9 @@ class AppTheme {
       primary: darkPrimaryColor,
       secondary: darkSecondaryColor,
       background: darkBackgroundColor,
+    ),
+    floatingActionButtonTheme: FloatingActionButtonThemeData(
+      backgroundColor: darkFloatingActionButtonColor,
     ),
   );
 

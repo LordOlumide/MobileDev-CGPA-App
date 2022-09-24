@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_dev_cgpa_app/models/year_result.dart';
+import 'package:mobile_dev_cgpa_app/helpers/number_to_position.dart';
 
 class YearCardDisplay extends StatelessWidget {
-  String yearTitle;// number of units
-  double? yearGPA;
+  YearResult yearResult;// number of units
 
   YearCardDisplay({
     Key? key,
-    required this.yearTitle,
-    this.yearGPA,
+    required this.yearResult,
   }) : super(key: key);
 
   @override
@@ -18,23 +18,23 @@ class YearCardDisplay extends StatelessWidget {
         padding:  const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
         margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
         decoration: BoxDecoration(
-          // boxShadow: const [
-          //   BoxShadow(
-          //     offset: Offset(1, 1),
-          //   ),
-          // ],
           color: Theme.of(context).colorScheme.background,
           borderRadius: BorderRadius.circular(5),
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            Text(
-              yearTitle,
-              style: TextStyle(),
+            Column(
+              children: [
+                // The year: 1st year
+                Text(
+                  '${noToPosition(yearResult.year)} year',
+                  style: TextStyle(),
+                ),
+              ],
             ),
             Text(
-              'GPA: $yearGPA',
+              'GPA: ${yearResult.yearGPA}',
               style: TextStyle(),
             ),
           ],

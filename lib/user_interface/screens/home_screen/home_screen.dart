@@ -1,11 +1,20 @@
 import 'package:flutter/material.dart';
-import 'widgets/year_card_display.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mobile_dev_cgpa_app/models/year_result.dart';
+import 'package:mobile_dev_cgpa_app/repos/data_repo.dart';
+import 'package:provider/provider.dart';
+import '../../widgets/year_card_display.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   static const screenId = 'Home screen';
 
-  HomeScreen({Key? key}) : super(key: key);
+  const HomeScreen({Key? key}) : super(key: key);
 
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,15 +29,22 @@ class HomeScreen extends StatelessWidget {
               ),
             ),
           ),
-
-          YearCardDisplay(yearTitle: '1st year'),
-
-
-          // ExpansionTile(
-          //   title: Text('title'),
-          //   children: strings.map((e) => ListTile(title: Text(e))).toList(),
-          // ),
+          const SizedBox(height: 15),
+          Column(
+            children: [
+              for (YearResult result in Provider.of<DataRepo>(context).main)
+                YearCardDisplay(yearResult: result),
+            ],
+          ),
         ],
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: FloatingActionButton(
+        child: const Icon(Icons.add),
+        onPressed: () {
+          Provider.of<DataRepo>(context, listen: false).addNewYear();
+          print('Added new year');
+        },
       ),
     );
   }
