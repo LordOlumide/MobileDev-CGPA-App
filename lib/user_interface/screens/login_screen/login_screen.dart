@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mobile_dev_cgpa_app/constants/decorations.dart';
+import 'package:mobile_dev_cgpa_app/constants/constants.dart';
 import 'package:mobile_dev_cgpa_app/repos/auth_repo.dart';
 import 'package:mobile_dev_cgpa_app/user_interface/screens/home_screen/home_screen.dart';
 import 'package:provider/provider.dart';

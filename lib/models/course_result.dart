@@ -3,8 +3,8 @@ class CourseResult {
   String courseDescription;
   int marks;
   int units;
-  int? gpaScore;
-  String? grade;
+  late int gpaScore;
+  late String grade;
 
   CourseResult({
     required this.courseTitle,
@@ -31,6 +31,17 @@ class CourseResult {
       grade = 'A';
       gpaScore = 5;
     }
+  }
+
+  replaceCourse({
+    required CourseResult newCourse,
+  }) {
+    courseTitle = newCourse.courseTitle;
+    courseDescription = newCourse.courseDescription;
+    marks = newCourse.marks;
+    units = newCourse.units;
+    gpaScore = newCourse.gpaScore;
+    grade = newCourse.grade;
   }
 
   @override

@@ -8,7 +8,7 @@ import 'package:mobile_dev_cgpa_app/repos/database.dart';
 import 'course_input_sheet.dart';
 import '../../widgets/course_card_display.dart';
 
-class CourseScreen extends StatelessWidget {
+class CourseScreen extends StatefulWidget {
   static const screenId = 'Course screen';
   final int yearResultIndex;
   final bool isFirstSemester;
@@ -20,10 +20,29 @@ class CourseScreen extends StatelessWidget {
   }) : super(key: key);
 
   @override
+  State<CourseScreen> createState() => _CourseScreenState();
+}
+
+class _CourseScreenState extends State<CourseScreen> {
+  FormVariables formVariables = FormVariables();
+
+  @override
+  void initState() {
+    super.initState();
+    formVariables.initializeControllers();
+  }
+
+  @override
+  void dispose() {
+    formVariables.disposeControllers();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    SemesterResult semesterResult = isFirstSemester == true
-        ? Provider.of<Database>(context).main[yearResultIndex].firstSem
-        : Provider.of<Database>(context).main[yearResultIndex].secondSem;
+    SemesterResult semesterResult = widget.isFirstSemester == true
+        ? Provider.of<Database>(context).main[widget.yearResultIndex].firstSem
+        : Provider.of<Database>(context).main[widget.yearResultIndex].secondSem;
 
     return Scaffold(
       body: SafeArea(
@@ -33,7 +52,7 @@ class CourseScreen extends StatelessWidget {
             children: [
               // Year
               Text(
-                '${noToPosition(yearResultIndex + 1)} Year',
+                '${noToPosition(widget.yearResultIndex + 1)} Year',
                 style: TextStyle(
                   fontSize: 35,
                   fontWeight: FontWeight.w600,
@@ -43,7 +62,7 @@ class CourseScreen extends StatelessWidget {
 
               // Semester
               Text(
-                isFirstSemester == true
+                widget.isFirstSemester == true
                     ? '1st Semester Courses:'
                     : '2nd Semester Courses:',
                 style: TextStyle(
@@ -57,11 +76,14 @@ class CourseScreen extends StatelessWidget {
                 child: ListView(
                   children: [
                     // Courses
-                    for (int i = 0; i < semesterResult.courseResults.length; i++)
+                    for (int i = 0;
+                        i < semesterResult.courseResults.length;
+                        i++)
                       CourseCard(
-                        yearResultIndex: yearResultIndex,
-                        isFirstSemester: isFirstSemester,
+                        yearResultIndex: widget.yearResultIndex,
+                        isFirstSemester: widget.isFirstSemester,
                         courseResultIndex: i,
+                        onTapped: () {},// TODO: Implement onTapped
                       ),
                   ],
                 ),
@@ -73,8 +95,6 @@ class CourseScreen extends StatelessWidget {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          FormVariables variablesObject = FormVariables();
-
           showModalBottomSheet(
             context: context,
             isScrollControlled: true,
@@ -83,23 +103,28 @@ class CourseScreen extends StatelessWidget {
                 padding: EdgeInsets.only(
                     bottom: MediaQuery.of(context).viewInsets.bottom),
                 child: Provider(
-                  create: (context) => variablesObject,
-                  child: CourseInputSheet(),
+                  create: (context) => formVariables,
+                  child: CourseInputSheet(
+                    courseTitleController: formVariables.courseTitleController,
+                    courseDescriptionController: formVariables.courseDescController,
+                    marksController: formVariables.marksController,
+                    unitsController: formVariables.unitsController,
+                  ),
                 ),
               ),
             ),
           ).then((value) {
-            CourseResult newCourse = variablesObject.toCourse();
-            print(newCourse);
             if (value == true) {
+              CourseResult newCourse = formVariables.toCourse();
               Provider.of<Database>(context, listen: false).addCourse(
                 newCourse: newCourse,
-                yearResultIndex: yearResultIndex,
-                isFirstSemester: isFirstSemester,
+                yearResultIndex: widget.yearResultIndex,
+                isFirstSemester: widget.isFirstSemester,
               );
-            } else {
-              print('false');
             }
+            print(formVariables.toString());
+            // Reset the controllers after the screen is dismissed
+            formVariables.resetControllers();
           });
         },
         tooltip: 'Add Course',

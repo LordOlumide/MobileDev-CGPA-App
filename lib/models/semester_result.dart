@@ -23,7 +23,7 @@ class SemesterResult {
     int cumulativeScore = 0;
     int cumulativeUnits = 0;
     for (CourseResult course in courseResults) {
-      cumulativeScore += course.gpaScore! * course.units;
+      cumulativeScore += course.gpaScore * course.units;
       cumulativeUnits += course.units;
     }
     return cumulativeUnits != 0
@@ -33,6 +33,6 @@ class SemesterResult {
 
   @override
   String toString() {
-    return 'Semester Results: ${courseResults.map((e) => e.toString())}';
+    return 'Semester Results: \n${courseResults.map((e) => e.toString())}\n';
   }
 }

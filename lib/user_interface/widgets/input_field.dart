@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 
 class InputField extends StatelessWidget {
   final bool isFirstField;
+  final TextEditingController controller;
   final String fieldTitle;
   String fieldVariableName;
   final String hint;
@@ -13,6 +14,7 @@ class InputField extends StatelessWidget {
   InputField({
     Key? key,
     required this.isFirstField,
+    required this.controller,
     required this.fieldTitle,
     required this.fieldVariableName,
     required this.hint,
@@ -32,10 +34,12 @@ class InputField extends StatelessWidget {
           ),
         ),
         TextFormField(
-          autofocus: isFirstField,  // TODO: Fix the keyboard dropping issue
+          autofocus: isFirstField,
+          controller: controller,
           onChanged: (newString) {
-            Provider.of<FormVariables>(context, listen: false)
-                .variables[fieldVariableName] = newString;
+            // Provider.of<FormVariables>(context, listen: false)
+            //     .variables[fieldVariableName] = newString;
+            controller.text = newString;
           },
           cursorColor: Colors.black87,
           decoration: InputDecoration(

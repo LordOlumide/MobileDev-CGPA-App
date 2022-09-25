@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:mobile_dev_cgpa_app/constants/decorations.dart';
+import 'package:mobile_dev_cgpa_app/constants/constants.dart';
 import '../../../repos/auth_repo.dart';
 
 // screens

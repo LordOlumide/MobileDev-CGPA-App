@@ -1,20 +1,49 @@
+import 'package:flutter/material.dart';
 import 'package:mobile_dev_cgpa_app/models/course_result.dart';
 
 class FormVariables {
-  Map<String, String> variables = {
-    'courseTitle': '',
-    'courseDescription': '',
-    'marks': '',
-    'units': '',
-  };
+  // TextEditingControllers
+  late TextEditingController courseTitleController;
+  late TextEditingController courseDescController;
+  late TextEditingController marksController;
+  late TextEditingController unitsController;
+
+  initializeControllers() {
+    courseTitleController = TextEditingController();
+    courseDescController = TextEditingController();
+    marksController = TextEditingController();
+    unitsController = TextEditingController();
+
+    courseTitleController.text = 'It Works'; // TODO: Remove test
+  }
+
+  disposeControllers() {
+    courseTitleController.dispose();
+    courseDescController.dispose();
+    marksController.dispose();
+    unitsController.dispose();
+  }
+
+  resetControllers() {
+    courseTitleController.clear();
+    courseDescController.clear();
+    marksController.clear();
+    unitsController.clear();
+  }
 
   CourseResult toCourse() {
     return CourseResult(
-      courseTitle: variables['courseTitle']!,
-      courseDescription: variables['courseDescription']!,
-      marks: double.parse(variables['marks']!).toInt(),
-      units: double.parse(variables['units']!).toInt(),
+      courseTitle: courseTitleController.text,
+      courseDescription: courseDescController.text,
+      marks: double.parse(marksController.text).toInt(),
+      units: double.parse(unitsController.text).toInt(),
     );
+  }
+
+  @override
+  String toString() {
+    return 'title: ${courseTitleController.text}, desc: ${courseDescController.text}, '
+        'marks: ${marksController.text}, units: ${unitsController.text}';
   }
 
 }

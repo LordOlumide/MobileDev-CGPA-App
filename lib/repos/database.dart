@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_dev_cgpa_app/models/year_result.dart';
 import 'package:mobile_dev_cgpa_app/models/course_result.dart';
+import '../repos/dummy_courses.dart';
 
 class Database extends ChangeNotifier {
   final List<YearResult> _main = [];
@@ -27,16 +28,33 @@ class Database extends ChangeNotifier {
     notifyListeners();
   }
 
+  editCourse({
+    required CourseResult newCourse,
+    required int yearResultIndex,
+    required bool isFirstSemester,
+    required int courseResultIndex,
+  }) {
+    isFirstSemester == true
+        ? _main[yearResultIndex]
+            .firstSem
+            .courseResults[courseResultIndex]
+            .replaceCourse(newCourse: newCourse)
+        : _main[yearResultIndex]
+            .secondSem
+            .courseResults[courseResultIndex]
+            .replaceCourse(newCourse: newCourse);
+  }
+
   double get currentCGPA {
     int cumulativeScore = 0;
     int cumulativeUnits = 0;
     for (YearResult year in _main) {
       for (CourseResult course in year.firstSem.courseResults) {
-        cumulativeScore += course.gpaScore! * course.units;
+        cumulativeScore += course.gpaScore * course.units;
         cumulativeUnits += course.units;
       }
       for (CourseResult course in year.secondSem.courseResults) {
-        cumulativeScore += course.gpaScore! * course.units;
+        cumulativeScore += course.gpaScore * course.units;
         cumulativeUnits += course.units;
       }
     }
@@ -49,8 +67,18 @@ class Database extends ChangeNotifier {
   addDummyData() {
     // add more dummy data
     addNewYear();
+    for (CourseResult dummyCourse in firstYear1) {
+      addCourse(newCourse: dummyCourse, yearResultIndex: 0, isFirstSemester: true);
+    }
+    for (CourseResult dummyCourse in firstYear2) {
+      addCourse(newCourse: dummyCourse, yearResultIndex: 0, isFirstSemester: false);
+    }
     addNewYear();
-    addNewYear();
-    addNewYear();
+    for (CourseResult dummyCourse in secondYear1) {
+      addCourse(newCourse: dummyCourse, yearResultIndex: 1, isFirstSemester: true);
+    }
+    for (CourseResult dummyCourse in secondYear2) {
+      addCourse(newCourse: dummyCourse, yearResultIndex: 1, isFirstSemester: false);
+    }
   }
 }
