@@ -13,8 +13,6 @@ class FormVariables {
     courseDescController = TextEditingController();
     marksController = TextEditingController();
     unitsController = TextEditingController();
-
-    courseTitleController.text = 'It Works'; // TODO: Remove test
   }
 
   disposeControllers() {

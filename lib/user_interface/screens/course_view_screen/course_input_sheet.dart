@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../widgets/input_field.dart';
 
 class CourseInputSheet extends StatelessWidget {
+  final bool addNotEdit;
   TextEditingController courseTitleController;
   TextEditingController courseDescriptionController;
   TextEditingController marksController;
@@ -9,6 +10,7 @@ class CourseInputSheet extends StatelessWidget {
 
   CourseInputSheet({
     Key? key,
+    required this.addNotEdit,
     required this.courseTitleController,
     required this.courseDescriptionController,
     required this.marksController,
@@ -30,7 +32,8 @@ class CourseInputSheet extends StatelessWidget {
               fieldVariableName: 'courseTitle',
               hint: 'e.g. GNS 101',
               textCapitalization: TextCapitalization.characters,
-              numInputExpected: false,
+              isMarksField: false,
+              isUnitsField: false,
             ),
 
             // courseDescription
@@ -41,7 +44,8 @@ class CourseInputSheet extends StatelessWidget {
               fieldVariableName: 'courseDescription',
               hint: 'e.g. History and Philosophy',
               textCapitalization: TextCapitalization.words,
-              numInputExpected: false,
+              isMarksField: false,
+              isUnitsField: false,
             ),
 
             Row(
@@ -55,7 +59,8 @@ class CourseInputSheet extends StatelessWidget {
                     fieldVariableName: 'marks',
                     hint: 'e.g. 75',
                     textCapitalization: TextCapitalization.none,
-                    numInputExpected: true,
+                    isMarksField: true,
+                    isUnitsField: false,
                   ),
                 ),
                 const SizedBox(width: 30),
@@ -69,7 +74,8 @@ class CourseInputSheet extends StatelessWidget {
                     fieldVariableName: 'units',
                     hint: 'e.g. 2',
                     textCapitalization: TextCapitalization.none,
-                    numInputExpected: true,
+                    isMarksField: false,
+                    isUnitsField: true,
                   ),
                 ),
               ],

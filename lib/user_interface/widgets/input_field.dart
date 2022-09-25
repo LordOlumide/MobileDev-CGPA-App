@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mobile_dev_cgpa_app/models/form_variables.dart';
-import 'package:provider/provider.dart';
 
 class InputField extends StatelessWidget {
   final bool isFirstField;
@@ -9,7 +7,8 @@ class InputField extends StatelessWidget {
   String fieldVariableName;
   final String hint;
   final TextCapitalization textCapitalization;
-  final bool numInputExpected;
+  final bool isMarksField;
+  final bool isUnitsField;
 
   InputField({
     Key? key,
@@ -19,7 +18,8 @@ class InputField extends StatelessWidget {
     required this.fieldVariableName,
     required this.hint,
     required this.textCapitalization,
-    required this.numInputExpected,
+    required this.isMarksField,
+    required this.isUnitsField,
   }) : super(key: key);
 
   @override
@@ -35,16 +35,15 @@ class InputField extends StatelessWidget {
         ),
         TextFormField(
           autofocus: isFirstField,
-          controller: controller,
+          initialValue: controller.text,
           onChanged: (newString) {
-            // Provider.of<FormVariables>(context, listen: false)
-            //     .variables[fieldVariableName] = newString;
             controller.text = newString;
           },
           cursorColor: Colors.black87,
           decoration: InputDecoration(
             hintText: hint,
-            contentPadding: const EdgeInsets.symmetric(vertical: 2.0),
+            contentPadding:
+            const EdgeInsets.symmetric(vertical: 2.0, horizontal: 20),
             border: const OutlineInputBorder(
               borderRadius: BorderRadius.all(Radius.circular(4.0)),
             ),
@@ -55,14 +54,25 @@ class InputField extends StatelessWidget {
               borderSide: BorderSide(color: Colors.black87, width: 2.0),
             ),
           ),
+          keyboardType: (isMarksField == true || isUnitsField == true)
+              ? TextInputType.number : TextInputType.text,
           textCapitalization: textCapitalization,
           textAlign: TextAlign.center,
           validator: (value) {
             if (value == null || value.isEmpty) {
-              return 'Course must have $fieldTitle';
+              return 'Cannot be empty';
             }
-            if (numInputExpected == true && double.tryParse(value) == null) {
-              return '$fieldTitle must be a number';
+            if ((isMarksField == true || isUnitsField == true)
+                && double.tryParse(value) == null) {
+              return 'Must be number';
+            }
+            if (isMarksField == true &&
+                (double.parse(value) < 0 || double.parse(value) > 100)) {
+              return '0 <= Score <= 100';
+            }
+            if (isUnitsField == true &&
+                (double.parse(value) < 0 || double.parse(value) > 100)) {
+              return 'Be reasonable';
             }
             return null;
           },

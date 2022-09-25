@@ -24,6 +24,7 @@ class CourseScreen extends StatefulWidget {
 }
 
 class _CourseScreenState extends State<CourseScreen> {
+  /// This stores the input from the course_input_sheet temporarily.
   FormVariables formVariables = FormVariables();
 
   @override
@@ -43,6 +44,43 @@ class _CourseScreenState extends State<CourseScreen> {
     SemesterResult semesterResult = widget.isFirstSemester == true
         ? Provider.of<Database>(context).main[widget.yearResultIndex].firstSem
         : Provider.of<Database>(context).main[widget.yearResultIndex].secondSem;
+
+    /// bool addNotEdit is true when function is called to add a new course
+    /// and false when it's called to edit an existing course.
+    bringUpBottomSheet({required bool addNotEdit}) {
+      showModalBottomSheet(
+        context: context,
+        isScrollControlled: true,
+        builder: (context) => SingleChildScrollView(
+          child: Container(
+            padding: EdgeInsets.only(
+                bottom: MediaQuery.of(context).viewInsets.bottom,
+            ),
+            child: Provider(
+              create: (context) => formVariables,
+              child: CourseInputSheet(
+                addNotEdit: addNotEdit,
+                courseTitleController: formVariables.courseTitleController,
+                courseDescriptionController: formVariables.courseDescController,
+                marksController: formVariables.marksController,
+                unitsController: formVariables.unitsController,
+              ),
+            ),
+          ),
+        ),
+      ).then((value) {
+        if (value == true) {
+          CourseResult newCourse = formVariables.toCourse();
+          Provider.of<Database>(context, listen: false).addCourse(
+            newCourse: newCourse,
+            yearResultIndex: widget.yearResultIndex,
+            isFirstSemester: widget.isFirstSemester,
+          );
+        }
+        // Reset the controllers after the screen is dismissed
+        formVariables.resetControllers();
+      });
+    }
 
     return Scaffold(
       body: SafeArea(
@@ -95,37 +133,7 @@ class _CourseScreenState extends State<CourseScreen> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          showModalBottomSheet(
-            context: context,
-            isScrollControlled: true,
-            builder: (context) => SingleChildScrollView(
-              child: Container(
-                padding: EdgeInsets.only(
-                    bottom: MediaQuery.of(context).viewInsets.bottom),
-                child: Provider(
-                  create: (context) => formVariables,
-                  child: CourseInputSheet(
-                    courseTitleController: formVariables.courseTitleController,
-                    courseDescriptionController: formVariables.courseDescController,
-                    marksController: formVariables.marksController,
-                    unitsController: formVariables.unitsController,
-                  ),
-                ),
-              ),
-            ),
-          ).then((value) {
-            if (value == true) {
-              CourseResult newCourse = formVariables.toCourse();
-              Provider.of<Database>(context, listen: false).addCourse(
-                newCourse: newCourse,
-                yearResultIndex: widget.yearResultIndex,
-                isFirstSemester: widget.isFirstSemester,
-              );
-            }
-            print(formVariables.toString());
-            // Reset the controllers after the screen is dismissed
-            formVariables.resetControllers();
-          });
+          bringUpBottomSheet(addNotEdit: true);
         },
         tooltip: 'Add Course',
         child: const Icon(Icons.add),
