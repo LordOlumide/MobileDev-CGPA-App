@@ -24,6 +24,14 @@ class CourseInputSheet extends StatelessWidget {
       child: Form(
         child: Column(
           children: [
+            // Header
+            Text(
+              addNotEdit ? 'Add New Course' : 'Edit Course',
+              style: const TextStyle(
+                fontSize: 18,
+              ),
+            ),
+
             // course title
             InputField(
               isFirstField: true,
@@ -97,7 +105,7 @@ class CourseInputSheet extends StatelessWidget {
                         const EdgeInsets.symmetric(horizontal: 30, vertical: 5)),
                   ),
                   child: Text(
-                    'Add Course',
+                    addNotEdit ? 'Add Course' : 'Save Edit',
                     style: TextStyle(
                       color: Theme.of(context).textTheme.bodyMedium!.color,
                       fontSize: 17,

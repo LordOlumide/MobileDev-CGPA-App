@@ -34,9 +34,9 @@ class HomeScreen extends StatelessWidget {
                       color: Theme.of(context).textTheme.bodyMedium!.color,
                     ),
                     children: [
-                      TextSpan(text: 'Your CGPA: '),
+                      const TextSpan(text: 'Your CGPA: '),
                       TextSpan(
-                        text: '${Provider.of<Database>(context).currentCGPA}',
+                        text: Provider.of<Database>(context).currentCGPA.toStringAsFixed(2),
                         style: TextStyle(
                           fontSize: 28,
                           fontWeight: FontWeight.w600,

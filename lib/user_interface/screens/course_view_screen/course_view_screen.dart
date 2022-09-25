@@ -45,7 +45,7 @@ class _CourseScreenState extends State<CourseScreen> {
         ? Provider.of<Database>(context).main[widget.yearResultIndex].firstSem
         : Provider.of<Database>(context).main[widget.yearResultIndex].secondSem;
 
-    /// bool addNotEdit is true when function is called to add a new course
+    /// bool addNotEdit is true when this function is called to add a new course
     /// and false when it's called to edit an existing course.
     bringUpBottomSheet({required bool addNotEdit}) {
       showModalBottomSheet(

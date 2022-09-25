@@ -33,7 +33,7 @@ class YearResult {
     }
     // if cumulative units == 0, 0/0 = NaN
     return cumulativeUnits != 0
-        ? double.parse((cumulativeScore / cumulativeUnits).toStringAsFixed(2))
+        ? cumulativeScore / cumulativeUnits
         : 0;
   }
 }

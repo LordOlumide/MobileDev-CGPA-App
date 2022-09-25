@@ -43,6 +43,7 @@ class Database extends ChangeNotifier {
             .secondSem
             .courseResults[courseResultIndex]
             .replaceCourse(newCourse: newCourse);
+    notifyListeners();
   }
 
   double get currentCGPA {
@@ -60,7 +61,7 @@ class Database extends ChangeNotifier {
     }
     // if cumulative units == 0, 0/0 = NaN
     return cumulativeUnits != 0
-        ? double.parse((cumulativeScore / cumulativeUnits).toStringAsFixed(2))
+        ? cumulativeScore / cumulativeUnits
         : 0;
   }
 

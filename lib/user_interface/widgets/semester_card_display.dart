@@ -56,8 +56,8 @@ class SemesterCard extends StatelessWidget {
 
             // Semester GPA
             Text(
-              'Semester GPA:  ${semesterResult.semesterGPA}',
-              style: TextStyle(
+              'Semester GPA:  ${semesterResult.semesterGPA.toStringAsFixed(2)}',
+              style: const TextStyle(
                 fontSize: 22,
               ),
             ),

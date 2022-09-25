@@ -27,7 +27,7 @@ class SemesterResult {
       cumulativeUnits += course.units;
     }
     return cumulativeUnits != 0
-        ? double.parse((cumulativeScore / cumulativeUnits).toStringAsFixed(2))
+        ? cumulativeScore / cumulativeUnits
         : 0;
   }
 

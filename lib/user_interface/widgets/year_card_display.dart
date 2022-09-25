@@ -51,7 +51,7 @@ class YearCardDisplay extends StatelessWidget {
                 children: [
                   TextSpan(text: 'GPA: '),
                   TextSpan(
-                    text: '${yearResult.yearGPA}',
+                    text: yearResult.yearGPA.toStringAsFixed(2),
                     style: const TextStyle(
                       fontSize: 24,
                     ),
