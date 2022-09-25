@@ -24,7 +24,7 @@ class CourseScreen extends StatefulWidget {
 }
 
 class _CourseScreenState extends State<CourseScreen> {
-  /// This stores the input from the course_input_sheet temporarily.
+  /// This stores the initialValues and input from the course_input_sheet temporarily.
   FormVariables formVariables = FormVariables();
 
   @override
@@ -45,16 +45,36 @@ class _CourseScreenState extends State<CourseScreen> {
         ? Provider.of<Database>(context).main[widget.yearResultIndex].firstSem
         : Provider.of<Database>(context).main[widget.yearResultIndex].secondSem;
 
+    void addNewCourse() {
+      CourseResult newCourse = formVariables.toCourse();
+      Provider.of<Database>(context, listen: false).addCourse(
+        newCourse: newCourse,
+        yearResultIndex: widget.yearResultIndex,
+        isFirstSemester: widget.isFirstSemester,
+      );
+    }
+
+    void editCourse({required int courseResultIndex}) {
+      CourseResult newCourse = formVariables.toCourse();
+      Provider.of<Database>(context, listen: false).editCourse(
+        newCourse: newCourse,
+        yearResultIndex: widget.yearResultIndex,
+        isFirstSemester: widget.isFirstSemester,
+        courseResultIndex: courseResultIndex,
+      );
+    }
+
     /// bool addNotEdit is true when this function is called to add a new course
     /// and false when it's called to edit an existing course.
-    bringUpBottomSheet({required bool addNotEdit}) {
+    bringUpBottomSheet(
+        {required bool addNotEdit, required VoidCallback onFormSubmitted}) {
       showModalBottomSheet(
         context: context,
         isScrollControlled: true,
         builder: (context) => SingleChildScrollView(
           child: Container(
             padding: EdgeInsets.only(
-                bottom: MediaQuery.of(context).viewInsets.bottom,
+              bottom: MediaQuery.of(context).viewInsets.bottom,
             ),
             child: Provider(
               create: (context) => formVariables,
@@ -70,12 +90,7 @@ class _CourseScreenState extends State<CourseScreen> {
         ),
       ).then((value) {
         if (value == true) {
-          CourseResult newCourse = formVariables.toCourse();
-          Provider.of<Database>(context, listen: false).addCourse(
-            newCourse: newCourse,
-            yearResultIndex: widget.yearResultIndex,
-            isFirstSemester: widget.isFirstSemester,
-          );
+          onFormSubmitted();
         }
         // Reset the controllers after the screen is dismissed
         formVariables.resetControllers();
@@ -91,7 +106,7 @@ class _CourseScreenState extends State<CourseScreen> {
               // Year
               Text(
                 '${noToPosition(widget.yearResultIndex + 1)} Year',
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 35,
                   fontWeight: FontWeight.w600,
                 ),
@@ -103,7 +118,7 @@ class _CourseScreenState extends State<CourseScreen> {
                 widget.isFirstSemester == true
                     ? '1st Semester Courses:'
                     : '2nd Semester Courses:',
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.w500,
                 ),
@@ -121,7 +136,23 @@ class _CourseScreenState extends State<CourseScreen> {
                         yearResultIndex: widget.yearResultIndex,
                         isFirstSemester: widget.isFirstSemester,
                         courseResultIndex: i,
-                        onTapped: () {},// TODO: Implement onTapped
+                        onTapped: () {
+                          // set the controller values to the course values
+                          CourseResult initialCourseResult =
+                              semesterResult.courseResults[i];
+                          formVariables.manuallyAssign(
+                            courseTitle: initialCourseResult.courseTitle,
+                            courseDesc: initialCourseResult.courseDescription,
+                            marks: '${initialCourseResult.marks}',
+                            units: '${initialCourseResult.units}',
+                          );
+                          bringUpBottomSheet(
+                            addNotEdit: false,
+                            onFormSubmitted: () {
+                              editCourse(courseResultIndex: i);
+                            },
+                          );
+                        }, // TODO: Implement onTapped
                       ),
                   ],
                 ),
@@ -133,7 +164,12 @@ class _CourseScreenState extends State<CourseScreen> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          bringUpBottomSheet(addNotEdit: true);
+          bringUpBottomSheet(
+            addNotEdit: true,
+            onFormSubmitted: () {
+              addNewCourse();
+            },
+          );
         },
         tooltip: 'Add Course',
         child: const Icon(Icons.add),

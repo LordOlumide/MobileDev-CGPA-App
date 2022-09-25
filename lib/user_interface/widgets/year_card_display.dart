@@ -18,18 +18,17 @@ class YearCardDisplay extends StatelessWidget {
     YearResult yearResult =
         Provider.of<Database>(context).main[yearResultIndex];
 
-    return GestureDetector(
-      onTap: () {
-        Navigator.pushNamed(context, SemesterScreen.screenId,
-            arguments: yearResultIndex);
-      },
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
-        margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-        decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.secondary,
-          borderRadius: BorderRadius.circular(6),
-        ),
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+      child: RawMaterialButton(
+        onPressed: () {
+          Navigator.pushNamed(context, SemesterScreen.screenId,
+              arguments: yearResultIndex);
+        },
+        fillColor: Theme.of(context).colorScheme.secondary,
+        elevation: 3.0,
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [

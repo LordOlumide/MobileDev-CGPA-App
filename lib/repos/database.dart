@@ -9,7 +9,7 @@ class Database extends ChangeNotifier {
   List<YearResult> get main => _main;
 
   initialize() {
-    addDummyData();
+    // addDummyData();
   }
 
   addNewYear() {

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:mobile_dev_cgpa_app/user_interface/screens/login_screen/login_screen.dart';
-import 'package:mobile_dev_cgpa_app/user_interface/screens/registration_screen/registration_screen.dart';
+import '../login_screen/login_screen.dart';
+import '../registration_screen/registration_screen.dart';
+import '../home_screen/home_screen.dart';
 
 class WelcomeScreen extends StatelessWidget {
   static const screenId = 'Welcome screen';
@@ -26,12 +27,15 @@ class WelcomeScreen extends StatelessWidget {
               onPressed: () {
                 Navigator.pushNamed(context, RegistrationScreen.screenId);
               },
+              color: Theme.of(context).colorScheme.primary,
               child: Text(
                 'Register',
-                style: TextStyle(),
+                style: TextStyle(
+                  fontSize: 20,
+                ),
               ),
             ),
-            const SizedBox(height: 50),
+            const SizedBox(height: 30),
 
             // Login button
             MaterialButton(
@@ -39,11 +43,30 @@ class WelcomeScreen extends StatelessWidget {
               onPressed: () {
                 Navigator.pushNamed(context, LoginScreen.screenId);
               },
+              color: Theme.of(context).colorScheme.primary,
               child: Text(
                 'Log in',
-                style: TextStyle(),
+                style: TextStyle(
+                  fontSize: 20,
+                ),
               ),
-            )
+            ),
+            const SizedBox(height: 30),
+
+            // Login button
+            MaterialButton(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+              onPressed: () {
+                Navigator.pushReplacementNamed(context, HomeScreen.screenId);
+              },
+              color: Theme.of(context).colorScheme.primary,
+              child: Text(
+                'Use Offline',
+                style: TextStyle(
+                  fontSize: 20,
+                ),
+              ),
+            ),
           ],
         ),
       ),

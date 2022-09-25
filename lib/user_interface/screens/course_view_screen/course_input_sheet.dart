@@ -20,7 +20,7 @@ class CourseInputSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.fromLTRB(20, 30, 20, 20),
+      padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
       child: Form(
         child: Column(
           children: [
@@ -28,9 +28,11 @@ class CourseInputSheet extends StatelessWidget {
             Text(
               addNotEdit ? 'Add New Course' : 'Edit Course',
               style: const TextStyle(
-                fontSize: 18,
+                fontSize: 19,
+                fontWeight: FontWeight.w800,
               ),
             ),
+            const SizedBox(height: 5),
 
             // course title
             InputField(
@@ -57,6 +59,7 @@ class CourseInputSheet extends StatelessWidget {
             ),
 
             Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 // marks
                 Expanded(

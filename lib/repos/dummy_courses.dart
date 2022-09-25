@@ -2,7 +2,7 @@ import '../models/course_result.dart';
 
 List<CourseResult> firstYear1 = [
   CourseResult(courseTitle: 'GNS 101', courseDescription: 'Library and English usage', marks: 75, units: 2),
-  CourseResult(courseTitle: 'EEE 101', courseDescription: 'Elctricity', marks: 60, units: 3),
+  CourseResult(courseTitle: 'EEE 101', courseDescription: 'Electricity', marks: 60, units: 3),
   CourseResult(courseTitle: 'BIO 101', courseDescription: 'Intro to Biology', marks: 76, units: 1),
   CourseResult(courseTitle: 'PHY 101', courseDescription: 'Intro to Physics', marks: 77, units: 3),
   CourseResult(courseTitle: 'CHE 101', courseDescription: 'Intro to Chemistry', marks: 64, units: 2),
@@ -15,7 +15,7 @@ List<CourseResult> firstYear1 = [
 
 List<CourseResult> firstYear2 = [
   CourseResult(courseTitle: 'GNS 102', courseDescription: 'Library and English usage', marks: 75, units: 2),
-  CourseResult(courseTitle: 'EEE 102', courseDescription: 'Elctricity', marks: 60, units: 2),
+  CourseResult(courseTitle: 'EEE 102', courseDescription: 'Electricity', marks: 60, units: 2),
   CourseResult(courseTitle: 'BIO 102', courseDescription: 'Biological Beings', marks: 76, units: 3),
   CourseResult(courseTitle: 'PHY 102', courseDescription: 'Physical Science', marks: 77, units: 3),
   CourseResult(courseTitle: 'CHE 102', courseDescription: 'Intro to Chemistry', marks: 90, units: 2),
@@ -28,7 +28,7 @@ List<CourseResult> firstYear2 = [
 
 List<CourseResult> secondYear1 = [
   CourseResult(courseTitle: 'GNS 201', courseDescription: 'Library and English usage', marks: 75, units: 2),
-  CourseResult(courseTitle: 'EEE 201', courseDescription: 'Elctricity', marks: 60, units: 3),
+  CourseResult(courseTitle: 'EEE 201', courseDescription: 'Electricity', marks: 60, units: 3),
   CourseResult(courseTitle: 'BIO 201', courseDescription: 'Intro to Biology', marks: 76, units: 1),
   CourseResult(courseTitle: 'PHY 201', courseDescription: 'Intro to Physics', marks: 77, units: 3),
   CourseResult(courseTitle: 'CHE 201', courseDescription: 'Intro to Chemistry', marks: 64, units: 2),
@@ -41,7 +41,7 @@ List<CourseResult> secondYear1 = [
 
 List<CourseResult> secondYear2 = [
   CourseResult(courseTitle: 'GNS 202', courseDescription: 'Library and English usage', marks: 75, units: 2),
-  CourseResult(courseTitle: 'EEE 202', courseDescription: 'Elctricity', marks: 87, units: 2),
+  CourseResult(courseTitle: 'EEE 202', courseDescription: 'Electricity', marks: 87, units: 2),
   CourseResult(courseTitle: 'BIO 202', courseDescription: 'Biological Beings', marks: 76, units: 3),
   CourseResult(courseTitle: 'PHY 202', courseDescription: 'Physical Science', marks: 77, units: 3),
   CourseResult(courseTitle: 'CHE 202', courseDescription: 'Intro to Chemistry', marks: 90, units: 2),

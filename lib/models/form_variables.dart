@@ -15,6 +15,18 @@ class FormVariables {
     unitsController = TextEditingController();
   }
 
+  manuallyAssign({
+    required String courseTitle,
+    required String courseDesc,
+    required String marks,
+    required String units,
+  }) {
+    courseTitleController.text = courseTitle;
+    courseDescController.text = courseDesc;
+    marksController.text = marks;
+    unitsController.text = units;
+  }
+
   disposeControllers() {
     courseTitleController.dispose();
     courseDescController.dispose();
@@ -43,5 +55,4 @@ class FormVariables {
     return 'title: ${courseTitleController.text}, desc: ${courseDescController.text}, '
         'marks: ${marksController.text}, units: ${unitsController.text}';
   }
-
 }

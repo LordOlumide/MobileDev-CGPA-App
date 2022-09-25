@@ -46,8 +46,7 @@ class _MyCGPAAppState extends State<MyCGPAApp> {
         theme: AppTheme.lightTheme,
         // darkTheme: AppTheme.darkTheme,
         onGenerateRoute: AppRouter.onGenerateRoute,
-        // initialRoute: WelcomeScreen.screenId,
-        initialRoute: HomeScreen.screenId,
+        initialRoute: WelcomeScreen.screenId,
       ),
     );
   }

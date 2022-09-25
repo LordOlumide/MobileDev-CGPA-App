@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_dev_cgpa_app/constants/decorations.dart';
 
 class InputField extends StatelessWidget {
   final bool isFirstField;
@@ -40,19 +41,8 @@ class InputField extends StatelessWidget {
             controller.text = newString;
           },
           cursorColor: Colors.black87,
-          decoration: InputDecoration(
+          decoration: kTextFieldDecoration.copyWith(
             hintText: hint,
-            contentPadding:
-            const EdgeInsets.symmetric(vertical: 2.0, horizontal: 20),
-            border: const OutlineInputBorder(
-              borderRadius: BorderRadius.all(Radius.circular(4.0)),
-            ),
-            enabledBorder: const OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.black87, width: 1.0),
-            ),
-            focusedBorder: const OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.black87, width: 2.0),
-            ),
           ),
           keyboardType: (isMarksField == true || isUnitsField == true)
               ? TextInputType.number : TextInputType.text,
@@ -77,7 +67,7 @@ class InputField extends StatelessWidget {
             return null;
           },
         ),
-        const SizedBox(height: 15),
+        const SizedBox(height: 7),
       ],
     );
   }

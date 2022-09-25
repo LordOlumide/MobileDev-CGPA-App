@@ -3,7 +3,7 @@ import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 
 class AppTheme {
-  static Color lightPrimaryColor = const Color(0xFFffffff);
+  static Color lightPrimaryColor = const Color(0xffd5f8cc);
   static Color lightSecondaryColor = const Color(0xffdfe5ff);
   static Color lightBackgroundColor = const Color(0xffc7c7c7);
   static Color lightFloatingActionButtonColor = const Color(0xffb3cef8);

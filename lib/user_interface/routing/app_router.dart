@@ -13,7 +13,6 @@ class AppRouter {
 
   static Route<dynamic> onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
-
       case WelcomeScreen.screenId:
         return MaterialPageRoute(builder: (context) => WelcomeScreen());
       case RegistrationScreen.screenId:
@@ -22,7 +21,10 @@ class AppRouter {
         return MaterialPageRoute(builder: (context) => LoginScreen());
 
       case HomeScreen.screenId:
-        return MaterialPageRoute(builder: (context) => HomeScreen());
+        return MaterialPageRoute(
+            builder: (context) => settings.arguments != null
+                ? HomeScreen(userEmail: settings.arguments as String)
+                : HomeScreen());
 
       case SemesterScreen.screenId:
         return MaterialPageRoute(
@@ -32,10 +34,11 @@ class AppRouter {
       case CourseScreen.screenId:
         Map argumentsMap = settings.arguments as Map<String, dynamic>;
 
-        return MaterialPageRoute(builder: (context) => CourseScreen(
-          yearResultIndex: argumentsMap['yearResultIndex'],
-          isFirstSemester: argumentsMap['isFirstSemester'],
-        ));
+        return MaterialPageRoute(
+            builder: (context) => CourseScreen(
+                  yearResultIndex: argumentsMap['yearResultIndex'],
+                  isFirstSemester: argumentsMap['isFirstSemester'],
+                ));
 
       default:
         throw Exception('Route not found!');
