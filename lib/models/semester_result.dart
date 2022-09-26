@@ -7,6 +7,10 @@ class SemesterResult {
     courseResults.add(courseResult);
   }
 
+  void removeCourse(int courseResultIndex) {
+    courseResults.removeAt(courseResultIndex);
+  }
+
   int get totalNoOfCourses {
     return courseResults.length;
   }

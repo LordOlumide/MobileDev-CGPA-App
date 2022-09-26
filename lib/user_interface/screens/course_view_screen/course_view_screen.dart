@@ -64,6 +64,15 @@ class _CourseScreenState extends State<CourseScreen> {
       );
     }
 
+    deleteCourse({required int courseResultIndex}) {
+      Provider.of<Database>(context, listen: false).deleteCourse(
+        yearResultIndex: widget.yearResultIndex,
+        isFirstSemester: widget.isFirstSemester,
+        courseResultIndex: courseResultIndex,
+      );
+      print('course deleted');
+    }
+
     /// bool addNotEdit is true when this function is called to add a new course
     /// and false when it's called to edit an existing course.
     bringUpBottomSheet(
@@ -98,67 +107,112 @@ class _CourseScreenState extends State<CourseScreen> {
     }
 
     return Scaffold(
+      appBar: AppBar(
+        toolbarHeight: 0,
+        backgroundColor: Theme.of(context).colorScheme.primary,
+        elevation: 0,
+      ),
       body: SafeArea(
-        child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 50),
-          child: Column(
-            children: [
-              // Year
-              Text(
-                '${noToPosition(widget.yearResultIndex + 1)} Year',
-                style: const TextStyle(
-                  fontSize: 35,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-              const SizedBox(height: 20),
-
-              // Semester
-              Text(
-                widget.isFirstSemester == true
-                    ? '1st Semester Courses:'
-                    : '2nd Semester Courses:',
-                style: const TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-              const SizedBox(height: 20),
-
-              Expanded(
-                child: ListView(
+        child: Column(
+          children: [
+            Material(
+              elevation: 1,
+              child: Container(
+                color: Theme.of(context).colorScheme.primary,
+                padding: const EdgeInsets.fromLTRB(30, 25, 10, 10),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    // Courses
-                    for (int i = 0;
-                        i < semesterResult.courseResults.length;
-                        i++)
-                      CourseCard(
-                        yearResultIndex: widget.yearResultIndex,
-                        isFirstSemester: widget.isFirstSemester,
-                        courseResultIndex: i,
-                        onTapped: () {
-                          // set the controller values to the course values
-                          CourseResult initialCourseResult =
-                              semesterResult.courseResults[i];
-                          formVariables.manuallyAssign(
-                            courseTitle: initialCourseResult.courseTitle,
-                            courseDesc: initialCourseResult.courseDescription,
-                            marks: '${initialCourseResult.marks}',
-                            units: '${initialCourseResult.units}',
-                          );
-                          bringUpBottomSheet(
-                            addNotEdit: false,
-                            onFormSubmitted: () {
-                              editCourse(courseResultIndex: i);
-                            },
-                          );
-                        }, // TODO: Implement onTapped
+                    // Year
+                    Text(
+                      '${noToPosition(widget.yearResultIndex + 1)} Year',
+                      style: const TextStyle(
+                        fontSize: 35,
+                        fontWeight: FontWeight.w600,
                       ),
+                    ),
+                    const SizedBox(height: 10),
+
+                    Text(
+                      widget.isFirstSemester == true
+                          ? '1st Semester'
+                          : '2nd Semester',
+                      style: const TextStyle(
+                        fontSize: 22,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      'Semester GPA: ${semesterResult.semesterGPA.toStringAsFixed(2)}',
+                      style: const TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    const SizedBox(height: 10),
                   ],
                 ),
               ),
-            ],
-          ),
+            ),
+
+            Expanded(
+              child: Container(
+                padding: const EdgeInsets.fromLTRB(30, 10, 10, 50),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      'Courses: ',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+
+                    // Courses
+                    Expanded(
+                      child: ListView(
+                        children: [
+                          // Courses
+                          for (int i = 0;
+                              i < semesterResult.courseResults.length;
+                              i++)
+                            CourseCard(
+                              yearResultIndex: widget.yearResultIndex,
+                              isFirstSemester: widget.isFirstSemester,
+                              courseResultIndex: i,
+                              deleteThisCourse: () {
+                                deleteCourse(courseResultIndex: i);
+                              },
+                              onTapped: () {
+                                // set the controller values to the course values
+                                CourseResult initialCourseResult =
+                                    semesterResult.courseResults[i];
+                                formVariables.manuallyAssign(
+                                  courseTitle: initialCourseResult.courseTitle,
+                                  courseDesc: initialCourseResult.courseDescription,
+                                  marks: '${initialCourseResult.marks}',
+                                  units: '${initialCourseResult.units}',
+                                );
+                                bringUpBottomSheet(
+                                  addNotEdit: false,
+                                  onFormSubmitted: () {
+                                    editCourse(courseResultIndex: i);
+                                  },
+                                );
+                              },
+                            ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,

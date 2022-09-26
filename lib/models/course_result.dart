@@ -33,7 +33,7 @@ class CourseResult {
     }
   }
 
-  replaceCourse({
+  updateCourse({
     required CourseResult newCourse,
   }) {
     courseTitle = newCourse.courseTitle;
