@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mobile_dev_cgpa_app/repos/auth_repo.dart';
 import 'package:mobile_dev_cgpa_app/repos/database.dart';
 import 'package:provider/provider.dart';
 import '../../widgets/year_card_display.dart';
@@ -9,7 +8,7 @@ class HomeScreen extends StatelessWidget {
 
   final String userEmail;
 
-  HomeScreen({Key? key, this.userEmail = ''}) : super(key: key);
+  const HomeScreen({Key? key, this.userEmail = ''}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -83,7 +82,7 @@ class HomeScreen extends StatelessWidget {
             Expanded(
               flex: 4,
               child: Container(
-                padding: const EdgeInsets.fromLTRB(15, 10, 10, 5),
+                padding: const EdgeInsets.fromLTRB(15, 10, 10, 0),
                 child: ListView(
                   children: [
                     for (int i = 0;
@@ -101,32 +100,39 @@ class HomeScreen extends StatelessWidget {
                 ),
               ),
             ),
+            const Divider(
+              height: 1.5,
+              thickness: 1.5,
+              color: Colors.black54,
+            ),
 
             // "Add New Year" button
-            ElevatedButton(
-              onPressed: () {
-                Provider.of<Database>(context, listen: false).addNewYear();
-              },
-              style: ButtonStyle(
-                padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
-                    const EdgeInsets.symmetric(horizontal: 30, vertical: 10)),
-                backgroundColor: MaterialStateProperty.all<Color>(
-                    Theme.of(context)
-                        .floatingActionButtonTheme
-                        .backgroundColor!),
-                shape: MaterialStateProperty.all<OutlinedBorder>(
-                    RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10))),
-              ),
-              child: Text(
-                'Add New Year',
-                style: TextStyle(
-                  fontSize: 24,
-                  color: Theme.of(context).textTheme.bodyMedium!.color,
+            Padding(
+              padding: const EdgeInsets.only(bottom: 20, top: 10),
+              child: ElevatedButton(
+                onPressed: () {
+                  Provider.of<Database>(context, listen: false).addNewYear();
+                },
+                style: ButtonStyle(
+                  padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+                      const EdgeInsets.symmetric(horizontal: 30, vertical: 10)),
+                  backgroundColor: MaterialStateProperty.all<Color>(
+                      Theme.of(context)
+                          .floatingActionButtonTheme
+                          .backgroundColor!),
+                  shape: MaterialStateProperty.all<OutlinedBorder>(
+                      RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10))),
+                ),
+                child: Text(
+                  'Add New Year',
+                  style: TextStyle(
+                    fontSize: 24,
+                    color: Theme.of(context).textTheme.bodyMedium!.color,
+                  ),
                 ),
               ),
             ),
-            const SizedBox(height: 30),
           ],
         ),
       ),

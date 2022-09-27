@@ -21,6 +21,21 @@ class WelcomeScreen extends StatelessWidget {
             ),
             const SizedBox(height: 50),
 
+            MaterialButton(
+              padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+              onPressed: () {
+                Navigator.pushReplacementNamed(context, HomeScreen.screenId);
+              },
+              color: Theme.of(context).colorScheme.primary,
+              child: const Text(
+                'Use Offline',
+                style: TextStyle(
+                  fontSize: 20,
+                ),
+              ),
+            ),
+            const SizedBox(height: 40),
+
             // Registration Button
             MaterialButton(
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
@@ -35,7 +50,7 @@ class WelcomeScreen extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(height: 30),
+            const SizedBox(height: 10),
 
             // Login button
             MaterialButton(
@@ -46,22 +61,6 @@ class WelcomeScreen extends StatelessWidget {
               color: Theme.of(context).colorScheme.primary,
               child: Text(
                 'Log in',
-                style: TextStyle(
-                  fontSize: 20,
-                ),
-              ),
-            ),
-            const SizedBox(height: 30),
-
-            // Login button
-            MaterialButton(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-              onPressed: () {
-                Navigator.pushReplacementNamed(context, HomeScreen.screenId);
-              },
-              color: Theme.of(context).colorScheme.primary,
-              child: Text(
-                'Use Offline',
                 style: TextStyle(
                   fontSize: 20,
                 ),

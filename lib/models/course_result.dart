@@ -1,4 +1,7 @@
+import 'package:mobile_dev_cgpa_app/utils/uuid_generator.dart';
+
 class CourseResult {
+  String? uniqueId;
   String courseTitle;
   String courseDescription;
   int marks;
@@ -7,11 +10,17 @@ class CourseResult {
   late String grade;
 
   CourseResult({
+    this.uniqueId,
     required this.courseTitle,
     required this.courseDescription,
     required this.marks,
     required this.units,
   }) {
+    uniqueId ?? generateTimeBasedId();
+    updateGradeAndGpaScore();
+  }
+
+  updateGradeAndGpaScore() {
     if (marks < 40) {
       grade = 'F';
       gpaScore = 0;
@@ -33,6 +42,24 @@ class CourseResult {
     }
   }
 
+  factory CourseResult.fromMap(Map<String, dynamic> json) =>
+      CourseResult(
+        uniqueId: json['uniqueId'],
+        courseTitle: json['courseTitle'],
+        courseDescription: json['courseDescription'],
+        marks: json['marks'],
+        units: json['units'],
+      );
+
+  Map<String, dynamic> toMap() =>
+      {
+        'uniqueId': uniqueId,
+        'courseTitle': courseTitle,
+        'courseDescription': courseDescription,
+        'marks': marks,
+        'units': units,
+      };
+
   updateCourse({
     required CourseResult newCourse,
   }) {
@@ -40,13 +67,12 @@ class CourseResult {
     courseDescription = newCourse.courseDescription;
     marks = newCourse.marks;
     units = newCourse.units;
-    gpaScore = newCourse.gpaScore;
-    grade = newCourse.grade;
+    updateGradeAndGpaScore();
   }
 
   @override
   String toString() {
-    return '{courseName: $courseTitle, courseTitle: $courseDescription, marks: $marks,'
-        ' units: $units, gpaScore: $gpaScore, grade: $grade}';
+    return '{uniqueId: $uniqueId, courseTitle: $courseTitle, courseDesc: $courseDescription, '
+        'marks: $marks, units: $units, gpaScore: $gpaScore, grade: $grade}';
   }
 }

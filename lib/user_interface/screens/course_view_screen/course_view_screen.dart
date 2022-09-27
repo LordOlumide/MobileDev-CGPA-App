@@ -70,7 +70,6 @@ class _CourseScreenState extends State<CourseScreen> {
         isFirstSemester: widget.isFirstSemester,
         courseResultIndex: courseResultIndex,
       );
-      print('course deleted');
     }
 
     /// bool addNotEdit is true when this function is called to add a new course
@@ -158,22 +157,25 @@ class _CourseScreenState extends State<CourseScreen> {
             ),
 
             Expanded(
-              child: Container(
-                padding: const EdgeInsets.fromLTRB(30, 10, 10, 50),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      'Courses: ',
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Padding(
+                    padding: EdgeInsets.only(left: 30, top: 10),
+                    child: Text(
+                      'Courses:',
                       style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    const SizedBox(height: 10),
+                  ),
+                  const SizedBox(height: 8),
 
-                    // Courses
-                    Expanded(
+                  // Courses
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 30, right: 10),
                       child: ListView(
                         children: [
                           // Courses
@@ -208,8 +210,15 @@ class _CourseScreenState extends State<CourseScreen> {
                         ],
                       ),
                     ),
-                  ],
-                ),
+                  ),
+
+                  const Divider(
+                    height: 1.0,
+                    thickness: 1.0,
+                    color: Colors.black38,
+                  ),
+                  const SizedBox(height: 50),
+                ],
               ),
             ),
           ],

@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_dev_cgpa_app/models/year_result.dart';
 import 'package:mobile_dev_cgpa_app/models/course_result.dart';
-import '../repos/dummy_courses.dart';
+import '../constants/dummy_courses.dart';
 
 class Database extends ChangeNotifier {
-  final List<YearResult> _main =
-      []; // TODO: Implement Delete course and last year
+  final List<YearResult> _main = [];
 
   List<YearResult> get main => _main;
 
@@ -13,6 +12,10 @@ class Database extends ChangeNotifier {
     addNewYear();
     addDummyData();
   }
+
+  // Hive storage reference format
+  //   = "Y-$YearResultIndex - S-${isFirstSemester ? 1 : 2} - C-${courseResult.uniqueId}"
+  // Example: "Y2S2C4"
 
   addNewYear() {
     _main.add(YearResult(year: _main.length + 1));
