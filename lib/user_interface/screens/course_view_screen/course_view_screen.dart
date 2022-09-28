@@ -55,7 +55,11 @@ class _CourseScreenState extends State<CourseScreen> {
     }
 
     void editCourse({required int courseResultIndex}) {
-      CourseResult newCourse = formVariables.toCourse();
+      String courseToBeReplacedID =
+          semesterResult.courseResults[courseResultIndex].uniqueId!;
+      CourseResult newCourse =
+          formVariables.toCourse(uniqueID: courseToBeReplacedID);
+
       Provider.of<Database>(context, listen: false).editCourse(
         newCourse: newCourse,
         yearResultIndex: widget.yearResultIndex,
@@ -65,10 +69,13 @@ class _CourseScreenState extends State<CourseScreen> {
     }
 
     deleteCourse({required int courseResultIndex}) {
+      String courseToDeleteID =
+          semesterResult.courseResults[courseResultIndex].uniqueId!;
       Provider.of<Database>(context, listen: false).deleteCourse(
         yearResultIndex: widget.yearResultIndex,
         isFirstSemester: widget.isFirstSemester,
         courseResultIndex: courseResultIndex,
+        courseToDeleteID: courseToDeleteID,
       );
     }
 
@@ -155,7 +162,6 @@ class _CourseScreenState extends State<CourseScreen> {
                 ),
               ),
             ),
-
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -174,41 +180,41 @@ class _CourseScreenState extends State<CourseScreen> {
 
                   // Courses
                   Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 30, right: 10),
-                      child: ListView(
-                        children: [
-                          // Courses
-                          for (int i = 0;
-                              i < semesterResult.courseResults.length;
-                              i++)
-                            CourseCard(
-                              yearResultIndex: widget.yearResultIndex,
-                              isFirstSemester: widget.isFirstSemester,
-                              courseResultIndex: i,
-                              deleteThisCourse: () {
-                                deleteCourse(courseResultIndex: i);
-                              },
-                              onTapped: () {
-                                // set the controller values to the course values
-                                CourseResult initialCourseResult =
-                                    semesterResult.courseResults[i];
-                                formVariables.manuallyAssign(
-                                  courseTitle: initialCourseResult.courseTitle,
-                                  courseDesc: initialCourseResult.courseDescription,
-                                  marks: '${initialCourseResult.marks}',
-                                  units: '${initialCourseResult.units}',
-                                );
-                                bringUpBottomSheet(
-                                  addNotEdit: false,
-                                  onFormSubmitted: () {
-                                    editCourse(courseResultIndex: i);
-                                  },
-                                );
-                              },
-                            ),
-                        ],
-                      ),
+                    child: ListView(
+                      padding: const EdgeInsets.only(
+                          left: 30, right: 10, bottom: 20),
+                      children: [
+                        // Courses
+                        for (int i = 0;
+                            i < semesterResult.courseResults.length;
+                            i++)
+                          CourseCard(
+                            yearResultIndex: widget.yearResultIndex,
+                            isFirstSemester: widget.isFirstSemester,
+                            courseResultIndex: i,
+                            deleteThisCourse: () {
+                              deleteCourse(courseResultIndex: i);
+                            },
+                            onTapped: () {
+                              // set the controller values to the course values
+                              CourseResult initialCourseResult =
+                                  semesterResult.courseResults[i];
+                              formVariables.manuallyAssign(
+                                courseTitle: initialCourseResult.courseTitle,
+                                courseDesc:
+                                    initialCourseResult.courseDescription,
+                                marks: '${initialCourseResult.marks}',
+                                units: '${initialCourseResult.units}',
+                              );
+                              bringUpBottomSheet(
+                                addNotEdit: false,
+                                onFormSubmitted: () {
+                                  editCourse(courseResultIndex: i);
+                                },
+                              );
+                            },
+                          ),
+                      ],
                     ),
                   ),
 

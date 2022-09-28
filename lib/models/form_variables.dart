@@ -41,8 +41,9 @@ class FormVariables {
     unitsController.clear();
   }
 
-  CourseResult toCourse() {
+  CourseResult toCourse({String? uniqueID}) {
     return CourseResult(
+      uniqueId: uniqueID,
       courseTitle: courseTitleController.text,
       courseDescription: courseDescController.text,
       marks: double.parse(marksController.text).toInt(),

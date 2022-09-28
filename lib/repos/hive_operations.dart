@@ -1,6 +1,5 @@
 import 'package:hive/hive.dart';
 import 'package:mobile_dev_cgpa_app/models/course_result.dart';
-import 'package:mobile_dev_cgpa_app/models/year_result.dart';
 import 'package:mobile_dev_cgpa_app/utils/reference_getter.dart';
 
 /// Box "courses" for storing the CourseItems
@@ -37,9 +36,29 @@ class HiveOperations {
     await coursesBox.put(courseReference, newCourse);
   }
 
-  static Future<void> editCourseInDatabase() async {}
+  static Future<void> editCourseInDatabase({
+    required CourseResult newCourse,
+    required int yearResultIndex,
+    required bool isFirstSemester,
+  }) async {
+    String courseReference = getReference(
+        yearResultIndex: yearResultIndex,
+        isFirstSemester: isFirstSemester,
+        courseUniqueID: newCourse.uniqueId!);
+    coursesBox.put(courseReference, newCourse);
+  }
 
-  static Future<void> deleteCourseFromDatabase() async {}
+  static Future<void> deleteCourseFromDatabase({
+    required int yearResultIndex,
+    required bool isFirstSemester,
+    required String courseUniqueID,
+  }) async {
+    String courseReference = getReference(
+        yearResultIndex: yearResultIndex,
+        isFirstSemester: isFirstSemester,
+        courseUniqueID: courseUniqueID);
+    coursesBox.delete(courseReference);
+  }
 
   static Future<void> clearPreviousCourses() async {
     await coursesBox.clear();

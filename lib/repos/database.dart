@@ -4,6 +4,8 @@ import 'package:mobile_dev_cgpa_app/models/course_result.dart';
 import '../constants/dummy_courses.dart';
 import 'hive_operations.dart';
 
+/// The active Database is stored in _main.
+/// Every CRUD operation is done twice. Once to main and once to the Hive box "courses".
 class Database extends ChangeNotifier {
   final List<YearResult> _main = [];
 
@@ -87,7 +89,6 @@ class Database extends ChangeNotifier {
       isFirstSemester: isFirstSemester,
       newCourse: newCourse,
     );
-
     notifyListeners();
   }
 
@@ -106,6 +107,12 @@ class Database extends ChangeNotifier {
             .secondSem
             .courseResults[courseResultIndex]
             .updateCourse(newCourse: newCourse);
+
+    await HiveOperations.editCourseInDatabase(
+      newCourse: newCourse,
+      yearResultIndex: yearResultIndex,
+      isFirstSemester: isFirstSemester,
+    );
     notifyListeners();
   }
 
@@ -113,10 +120,16 @@ class Database extends ChangeNotifier {
     required int yearResultIndex,
     required bool isFirstSemester,
     required int courseResultIndex,
+    required String courseToDeleteID,
   }) async {
     isFirstSemester == true
         ? _main[yearResultIndex].firstSem.removeCourse(courseResultIndex)
         : _main[yearResultIndex].secondSem.removeCourse(courseResultIndex);
+
+    await HiveOperations.deleteCourseFromDatabase(
+        courseUniqueID: courseToDeleteID,
+        yearResultIndex: yearResultIndex,
+        isFirstSemester: isFirstSemester);
     notifyListeners();
   }
 

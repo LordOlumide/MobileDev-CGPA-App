@@ -108,7 +108,7 @@ class YearCardDisplay extends StatelessWidget {
                 context: context,
                 builder: (context) => DeletePopup(
                     objectToDeleteName:
-                        '${noToPosition(yearResult.year)} year'),
+                        '${noToPosition(yearResult.year)} year and all its contents'),
               ).then((value) {
                 if (value == true) {
                   deleteThisYear();
