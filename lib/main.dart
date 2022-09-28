@@ -61,4 +61,10 @@ class _MyCGPAAppState extends State<MyCGPAApp> {
       ),
     );
   }
+
+  @override
+  void dispose() {
+    Hive.box('courses').close();
+    super.dispose();
+  }
 }

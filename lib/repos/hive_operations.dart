@@ -1,27 +1,27 @@
 import 'package:hive/hive.dart';
 import 'package:mobile_dev_cgpa_app/models/course_result.dart';
+import 'package:mobile_dev_cgpa_app/models/year_result.dart';
 import 'package:mobile_dev_cgpa_app/utils/reference_getter.dart';
 
 /// Box "courses" for storing the CourseItems
 ///
 /// Storage reference format
 ///   = "Y-$YearResultIndex - S-${isFirstSemester ? 1 : 2} - C-${courseResult.uniqueId}"
-/// Example: "Y2S2C4"
-
-// TODO: store the number of years
-
+/// Example: "Y-0 S-2 C-XXXXXXXXXXXXXXXXX" - course in 1st year, 2nd semester
 class HiveOperations {
-  static Future loadData() async {
-    final coursesBox = await Hive.openBox('courses');
-    final indexesList = coursesBox.keys as List<String>;
+  static late Box coursesBox;
 
-    List<CourseResult> courseResults = [];
-    for (String key in indexesList) {
-      CourseResult course = coursesBox.get(key);
-      courseResults.add(course);
+  static Future<void> init() async {
+    coursesBox = await Hive.openBox('courses');
+  }
+
+  static Map<String, CourseResult> loadMapOfReferenceToCourse() {
+    Map<String, CourseResult> referencesToCourseResults = {};
+    for (dynamic reference in coursesBox.keys) {
+      referencesToCourseResults[reference.toString()] =
+          coursesBox.get(reference) as CourseResult;
     }
-
-    await coursesBox.close();
+    return referencesToCourseResults;
   }
 
   static Future<void> addCourseToLocalDatabase({
@@ -34,9 +34,7 @@ class HiveOperations {
         isFirstSemester: isFirstSemester,
         courseUniqueID: newCourse.uniqueId!);
 
-    final coursesBox = await Hive.openBox('courses');
     await coursesBox.put(courseReference, newCourse);
-    await coursesBox.close();
   }
 
   static Future<void> editCourseInDatabase() async {}
@@ -44,24 +42,15 @@ class HiveOperations {
   static Future<void> deleteCourseFromDatabase() async {}
 
   static Future<void> clearPreviousCourses() async {
-    final coursesBox = await Hive.openBox('courses');
-    print('Currently here');
-    final x = await coursesBox.clear();
-    print('there');
-    print(x);
-    await coursesBox.close();
-    print('Complete');
+    await coursesBox.clear();
   }
 
-  static Future<void> runTest() async {
-    final coursesBox = await Hive.openBox('courses');
-    final List<String> indexesList = [];
+  static void runTest() {
+    final List<String> referencesList = [];
     for (dynamic i in coursesBox.keys) {
-      indexesList.add('\n${i.toString()}');
+      referencesList.add('\n${i.toString()}');
     }
-    print('No of courses in Database: ${indexesList.length}');
-    print(indexesList);
-
-    await coursesBox.close();
+    print('\nNo of courses in Database: ${referencesList.length}');
+    print(referencesList);
   }
 }

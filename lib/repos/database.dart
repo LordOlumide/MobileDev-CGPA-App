@@ -10,14 +10,58 @@ class Database extends ChangeNotifier {
   List<YearResult> get main => _main;
 
   Future<void> initialize() async {
-    await addDummyData();
+    await HiveOperations.init();
 
-    await HiveOperations.runTest();
+    // await addDummyData();
 
-    // loadDataFromLocalMemory();
+    await loadDataFromLocalMemory();
+
+    HiveOperations.runTest();
   }
 
-  loadDataFromLocalMemory() {}
+  loadDataFromLocalMemory() async {
+    // Dump all the courses from memory to a Map<reference, CourseResult>
+    Map<String, CourseResult> referencesToCourseResults =
+        HiveOperations.loadMapOfReferenceToCourse();
+    // To get the number of years
+    int highestYearIndex = 0;
+    for (String reference in referencesToCourseResults.keys) {
+      int yearIndex = double.parse(reference.toString()[2]).toInt();
+      if (yearIndex >= highestYearIndex) {
+        highestYearIndex = yearIndex;
+      }
+    }
+    if (highestYearIndex == 0) return;
+    // Creating the YearResult objects
+    List<YearResult> yearResults = [];
+    for (int yearIndex = 0; yearIndex <= highestYearIndex; yearIndex++) {
+      YearResult yearResult = YearResult(year: yearIndex + 1);
+      yearResults.add(yearResult);
+    }
+    // Distributing the courses to the year and semester they belong
+    for (String reference in referencesToCourseResults.keys) {
+      int yearIndex = double.parse(reference.toString()[2]).toInt();
+      late bool isFirstSemester;
+      switch (double.parse(reference.toString()[6]).toInt()) {
+        case (1):
+          isFirstSemester = true;
+          break;
+        case (2):
+          isFirstSemester = false;
+          break;
+        default:
+          throw Exception('The storage reference format is incorrect');
+      }
+      isFirstSemester == true
+          ? yearResults[yearIndex]
+              .addCourseToFirstSem(referencesToCourseResults[reference]!)
+          : yearResults[yearIndex]
+              .addCourseToSecondSem(referencesToCourseResults[reference]!);
+    }
+    // Adding the retrieved courses to _main
+    _main.addAll([...yearResults]);
+    notifyListeners();
+  }
 
   addNewYear() {
     _main.add(YearResult(year: _main.length + 1));
