@@ -7,10 +7,10 @@ import 'package:provider/provider.dart';
 import '../screens/semester_view_screen/semester_view_screen.dart';
 
 class YearCardDisplay extends StatelessWidget {
-  int yearResultIndex; // number of units
+  final int yearResultIndex; // number of units
   final VoidCallback deleteThisYear;
 
-  YearCardDisplay({
+  const YearCardDisplay({
     Key? key,
     required this.yearResultIndex,
     required this.deleteThisYear,
@@ -34,8 +34,8 @@ class YearCardDisplay extends StatelessWidget {
               fillColor: Theme.of(context).colorScheme.secondary,
               elevation: 3.0,
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-              shape:
-                  RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(6)),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -59,7 +59,7 @@ class YearCardDisplay extends StatelessWidget {
                       RichText(
                         text: TextSpan(
                           children: [
-                            TextSpan(text: 'GPA: '),
+                            const TextSpan(text: 'GPA: '),
                             TextSpan(
                               text: yearResult.yearGPA.toStringAsFixed(2),
                               style: const TextStyle(
@@ -69,30 +69,31 @@ class YearCardDisplay extends StatelessWidget {
                           ],
                           style: TextStyle(
                               fontSize: 18,
-                              color: Theme.of(context).textTheme.bodyMedium!.color),
+                              color: Theme.of(context)
+                                  .textTheme
+                                  .bodyMedium!
+                                  .color),
                         ),
                       ),
                     ],
                   ),
-
                   const Text(
                     'First Semester:',
                     style: TextStyle(),
                   ),
                   Text(
-                        '\t\tCourses: ${yearResult.firstSem.totalNoOfCourses}'
-                        '\t\tCourse Weight: ${yearResult.firstSem.totalNoOfUnits}',
+                    '\t\tCourses: ${yearResult.firstSem.totalNoOfCourses}'
+                    '\t\tCourse Weight: ${yearResult.firstSem.totalNoOfUnits}',
                     style: const TextStyle(),
                   ),
                   const SizedBox(height: 3),
-
                   const Text(
                     'Second Semester:',
                     style: TextStyle(),
                   ),
                   Text(
-                        '\t\tCourses: ${yearResult.secondSem.totalNoOfCourses}'
-                        '\t\tCourse Weight: ${yearResult.secondSem.totalNoOfUnits}',
+                    '\t\tCourses: ${yearResult.secondSem.totalNoOfCourses}'
+                    '\t\tCourse Weight: ${yearResult.secondSem.totalNoOfUnits}',
                     style: const TextStyle(),
                   ),
                 ],
@@ -105,8 +106,9 @@ class YearCardDisplay extends StatelessWidget {
             onPressed: () {
               showDialog<bool>(
                 context: context,
-                builder: (context) =>
-                    DeletePopup(objectToDeleteName: '${noToPosition(yearResult.year)} year'),
+                builder: (context) => DeletePopup(
+                    objectToDeleteName:
+                        '${noToPosition(yearResult.year)} year'),
               ).then((value) {
                 if (value == true) {
                   deleteThisYear();

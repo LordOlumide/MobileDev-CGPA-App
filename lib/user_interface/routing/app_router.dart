@@ -14,17 +14,18 @@ class AppRouter {
   static Route<dynamic> onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
       case WelcomeScreen.screenId:
-        return MaterialPageRoute(builder: (context) => WelcomeScreen());
+        return MaterialPageRoute(builder: (context) => const WelcomeScreen());
       case RegistrationScreen.screenId:
-        return MaterialPageRoute(builder: (context) => RegistrationScreen());
+        return MaterialPageRoute(
+            builder: (context) => const RegistrationScreen());
       case LoginScreen.screenId:
-        return MaterialPageRoute(builder: (context) => LoginScreen());
+        return MaterialPageRoute(builder: (context) => const LoginScreen());
 
       case HomeScreen.screenId:
         return MaterialPageRoute(
             builder: (context) => settings.arguments != null
                 ? HomeScreen(userEmail: settings.arguments as String)
-                : HomeScreen());
+                : const HomeScreen());
 
       case SemesterScreen.screenId:
         return MaterialPageRoute(

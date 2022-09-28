@@ -7,7 +7,7 @@ import 'package:provider/provider.dart';
 class LoginScreen extends StatefulWidget {
   static const screenId = 'Login screen';
 
-  LoginScreen({Key? key}) : super(key: key);
+  const LoginScreen({Key? key}) : super(key: key);
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
@@ -54,6 +54,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
               // Login button
               MaterialButton(
+                // TODO: Add loading animation for login and registration
                 padding:
                     const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
                 color: Theme.of(context).colorScheme.primary,
@@ -87,7 +88,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   Navigator.of(context).pop();
                 },
                 color: Theme.of(context).colorScheme.primary,
-                child: Text(
+                child: const Text(
                   'Go back',
                   style: TextStyle(
                     fontSize: 15,

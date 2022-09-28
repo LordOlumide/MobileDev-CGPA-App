@@ -5,18 +5,16 @@ class InputField extends StatelessWidget {
   final bool isFirstField;
   final TextEditingController controller;
   final String fieldTitle;
-  String fieldVariableName;
   final String hint;
   final TextCapitalization textCapitalization;
   final bool isMarksField;
   final bool isUnitsField;
 
-  InputField({
+  const InputField({
     Key? key,
     required this.isFirstField,
     required this.controller,
     required this.fieldTitle,
-    required this.fieldVariableName,
     required this.hint,
     required this.textCapitalization,
     required this.isMarksField,
@@ -30,7 +28,7 @@ class InputField extends StatelessWidget {
       children: [
         Text(
           fieldTitle,
-          style: TextStyle(
+          style: const TextStyle(
             fontSize: 15,
           ),
         ),
@@ -45,15 +43,16 @@ class InputField extends StatelessWidget {
             hintText: hint,
           ),
           keyboardType: (isMarksField == true || isUnitsField == true)
-              ? TextInputType.number : TextInputType.text,
+              ? TextInputType.number
+              : TextInputType.text,
           textCapitalization: textCapitalization,
           textAlign: TextAlign.center,
           validator: (value) {
             if (value == null || value.isEmpty) {
               return 'Cannot be empty';
             }
-            if ((isMarksField == true || isUnitsField == true)
-                && double.tryParse(value) == null) {
+            if ((isMarksField == true || isUnitsField == true) &&
+                double.tryParse(value) == null) {
               return 'Must be number';
             }
             if (isMarksField == true &&

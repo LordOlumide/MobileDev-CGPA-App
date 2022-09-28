@@ -15,7 +15,7 @@ class WelcomeScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
+            const Text(
               'Welcome to CGPA App',
               style: TextStyle(fontSize: 30),
             ),
@@ -43,7 +43,7 @@ class WelcomeScreen extends StatelessWidget {
                 Navigator.pushNamed(context, RegistrationScreen.screenId);
               },
               color: Theme.of(context).colorScheme.primary,
-              child: Text(
+              child: const Text(
                 'Register',
                 style: TextStyle(
                   fontSize: 20,
@@ -59,7 +59,7 @@ class WelcomeScreen extends StatelessWidget {
                 Navigator.pushNamed(context, LoginScreen.screenId);
               },
               color: Theme.of(context).colorScheme.primary,
-              child: Text(
+              child: const Text(
                 'Log in',
                 style: TextStyle(
                   fontSize: 20,

@@ -1,11 +1,21 @@
+import 'package:hive/hive.dart';
 import 'package:mobile_dev_cgpa_app/utils/uuid_generator.dart';
 
+part 'course_result.g.dart';
+
+@HiveType(typeId: 0)
 class CourseResult {
+  @HiveField(0)
   String? uniqueId;
+  @HiveField(1)
   String courseTitle;
+  @HiveField(2)
   String courseDescription;
+  @HiveField(3)
   int marks;
+  @HiveField(4)
   int units;
+  // The following properties autoAssign on creation and refresh on edit
   late int gpaScore;
   late String grade;
 
@@ -16,7 +26,7 @@ class CourseResult {
     required this.marks,
     required this.units,
   }) {
-    uniqueId ?? generateTimeBasedId();
+    uniqueId = uniqueId ?? generateTimeBasedId();
     updateGradeAndGpaScore();
   }
 
@@ -42,8 +52,15 @@ class CourseResult {
     }
   }
 
-  factory CourseResult.fromMap(Map<String, dynamic> json) =>
-      CourseResult(
+  updateCourse({required CourseResult newCourse}) {
+    courseTitle = newCourse.courseTitle;
+    courseDescription = newCourse.courseDescription;
+    marks = newCourse.marks;
+    units = newCourse.units;
+    updateGradeAndGpaScore();
+  }
+
+  factory CourseResult.fromMap(Map<String, dynamic> json) => CourseResult(
         uniqueId: json['uniqueId'],
         courseTitle: json['courseTitle'],
         courseDescription: json['courseDescription'],
@@ -51,24 +68,13 @@ class CourseResult {
         units: json['units'],
       );
 
-  Map<String, dynamic> toMap() =>
-      {
+  Map<String, dynamic> toMap() => {
         'uniqueId': uniqueId,
         'courseTitle': courseTitle,
         'courseDescription': courseDescription,
         'marks': marks,
         'units': units,
       };
-
-  updateCourse({
-    required CourseResult newCourse,
-  }) {
-    courseTitle = newCourse.courseTitle;
-    courseDescription = newCourse.courseDescription;
-    marks = newCourse.marks;
-    units = newCourse.units;
-    updateGradeAndGpaScore();
-  }
 
   @override
   String toString() {

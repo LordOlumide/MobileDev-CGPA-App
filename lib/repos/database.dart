@@ -2,20 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:mobile_dev_cgpa_app/models/year_result.dart';
 import 'package:mobile_dev_cgpa_app/models/course_result.dart';
 import '../constants/dummy_courses.dart';
+import 'hive_operations.dart';
 
 class Database extends ChangeNotifier {
   final List<YearResult> _main = [];
 
   List<YearResult> get main => _main;
 
-  initialize() {
-    addNewYear();
-    addDummyData();
+  Future<void> initialize() async {
+    await addDummyData();
+
+    await HiveOperations.runTest();
+
+    // loadDataFromLocalMemory();
   }
 
-  // Hive storage reference format
-  //   = "Y-$YearResultIndex - S-${isFirstSemester ? 1 : 2} - C-${courseResult.uniqueId}"
-  // Example: "Y2S2C4"
+  loadDataFromLocalMemory() {}
 
   addNewYear() {
     _main.add(YearResult(year: _main.length + 1));
@@ -27,23 +29,30 @@ class Database extends ChangeNotifier {
     notifyListeners();
   }
 
-  addCourse({
+  Future<void> addCourse({
     required CourseResult newCourse,
     required int yearResultIndex,
     required bool isFirstSemester,
-  }) {
+  }) async {
     isFirstSemester == true
         ? _main[yearResultIndex].addCourseToFirstSem(newCourse)
         : _main[yearResultIndex].addCourseToSecondSem(newCourse);
+
+    await HiveOperations.addCourseToLocalDatabase(
+      yearResultIndex: yearResultIndex,
+      isFirstSemester: isFirstSemester,
+      newCourse: newCourse,
+    );
+
     notifyListeners();
   }
 
-  editCourse({
+  Future<void> editCourse({
     required CourseResult newCourse,
     required int yearResultIndex,
     required bool isFirstSemester,
     required int courseResultIndex,
-  }) {
+  }) async {
     isFirstSemester == true
         ? _main[yearResultIndex]
             .firstSem
@@ -56,11 +65,11 @@ class Database extends ChangeNotifier {
     notifyListeners();
   }
 
-  deleteCourse({
+  Future<void> deleteCourse({
     required int yearResultIndex,
     required bool isFirstSemester,
     required int courseResultIndex,
-  }) {
+  }) async {
     isFirstSemester == true
         ? _main[yearResultIndex].firstSem.removeCourse(courseResultIndex)
         : _main[yearResultIndex].secondSem.removeCourse(courseResultIndex);
@@ -84,24 +93,26 @@ class Database extends ChangeNotifier {
     return cumulativeUnits != 0 ? cumulativeScore / cumulativeUnits : 0;
   }
 
-  addDummyData() {
+  Future<void> addDummyData() async {
+    await HiveOperations.clearPreviousCourses();
     // add more dummy data
     addNewYear();
     for (CourseResult dummyCourse in firstYear1) {
-      addCourse(
+      await addCourse(
           newCourse: dummyCourse, yearResultIndex: 0, isFirstSemester: true);
     }
     for (CourseResult dummyCourse in firstYear2) {
-      addCourse(
+      await addCourse(
           newCourse: dummyCourse, yearResultIndex: 0, isFirstSemester: false);
     }
+
     addNewYear();
     for (CourseResult dummyCourse in secondYear1) {
-      addCourse(
+      await addCourse(
           newCourse: dummyCourse, yearResultIndex: 1, isFirstSemester: true);
     }
     for (CourseResult dummyCourse in secondYear2) {
-      addCourse(
+      await addCourse(
           newCourse: dummyCourse, yearResultIndex: 1, isFirstSemester: false);
     }
   }

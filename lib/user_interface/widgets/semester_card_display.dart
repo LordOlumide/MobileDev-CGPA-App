@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:mobile_dev_cgpa_app/models/course_result.dart';
 import 'package:mobile_dev_cgpa_app/models/semester_result.dart';
 import 'package:mobile_dev_cgpa_app/repos/database.dart';
 
 class SemesterCard extends StatelessWidget {
-  int yearResultIndex;
-  VoidCallback onPressed;
-  bool isFirstSemester;
+  final int yearResultIndex;
+  final VoidCallback onPressed;
+  final bool isFirstSemester;
 
-  SemesterCard({
+  const SemesterCard({
     Key? key,
     required this.yearResultIndex,
     required this.onPressed,
@@ -30,24 +29,24 @@ class SemesterCard extends StatelessWidget {
         shape: RoundedRectangleBorder(
           borderRadius: isFirstSemester == true
               ? const BorderRadius.only(
-            topLeft: Radius.circular(30),
-            topRight: Radius.circular(30),
-            bottomLeft: Radius.circular(5),
-            bottomRight: Radius.circular(5),
-          )
+                  topLeft: Radius.circular(30),
+                  topRight: Radius.circular(30),
+                  bottomLeft: Radius.circular(5),
+                  bottomRight: Radius.circular(5),
+                )
               : const BorderRadius.only(
-            topLeft: Radius.circular(5),
-            topRight: Radius.circular(5),
-            bottomLeft: Radius.circular(30),
-            bottomRight: Radius.circular(30),
-          ),
+                  topLeft: Radius.circular(5),
+                  topRight: Radius.circular(5),
+                  bottomLeft: Radius.circular(30),
+                  bottomRight: Radius.circular(30),
+                ),
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
               isFirstSemester == true ? 'First Semester' : 'Second Semester',
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 27,
                 fontWeight: FontWeight.w500,
               ),
@@ -66,14 +65,14 @@ class SemesterCard extends StatelessWidget {
             // Number of Courses
             Text(
               'Number of Courses:  ${semesterResult.totalNoOfCourses}',
-              style: TextStyle(),
+              style: const TextStyle(),
             ),
             const SizedBox(height: 5),
 
             // Number of Units
             Text(
               'Number of Units:  ${semesterResult.totalNoOfUnits}',
-              style: TextStyle(),
+              style: const TextStyle(),
             ),
             const SizedBox(height: 20),
           ],

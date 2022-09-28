@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_dev_cgpa_app/models/course_result.dart';
 import 'package:provider/provider.dart';
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
@@ -14,41 +15,50 @@ import 'constants/app_theme.dart';
 
 // screens
 import 'user_interface/screens/welcome_screen/welcome_screen.dart';
-import 'user_interface/screens/home_screen/home_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
 
-  Database mainDatabase = Database();
-  mainDatabase.initialize();
-
   final directory = await path_provider.getApplicationDocumentsDirectory();
-  print('Type is: ${directory.runtimeType}');
   Hive.init(directory.path);
+  Hive.registerAdapter(CourseResultAdapter());
 
   runApp(
-    MultiProvider(
+    const MyCGPAApp(),
+  );
+}
+
+class MyCGPAApp extends StatefulWidget {
+  const MyCGPAApp({super.key});
+
+  @override
+  State<MyCGPAApp> createState() => _MyCGPAAppState();
+}
+
+class _MyCGPAAppState extends State<MyCGPAApp> {
+  Database mainDatabase = Database();
+
+  @override
+  void initState() {
+    super.initState();
+    mainDatabase.initialize();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return MultiProvider(
       providers: [
         Provider(create: (context) => Auth()),
         ChangeNotifierProvider(create: (context) => mainDatabase),
       ],
-      child: const MyCGPAApp(),
-    ),
-  );
-}
-
-class MyCGPAApp extends StatelessWidget {
-  const MyCGPAApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: AppTheme.lightTheme,
-      // darkTheme: AppTheme.darkTheme,
-      onGenerateRoute: AppRouter.onGenerateRoute,
-      initialRoute: WelcomeScreen.screenId,
+      child: MaterialApp(
+        title: 'Flutter Demo',
+        theme: AppTheme.lightTheme,
+        // darkTheme: AppTheme.darkTheme,
+        onGenerateRoute: AppRouter.onGenerateRoute,
+        initialRoute: WelcomeScreen.screenId,
+      ),
     );
   }
 }

@@ -90,7 +90,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   Navigator.of(context).pop();
                 },
                 color: Theme.of(context).colorScheme.primary,
-                child: Text(
+                child: const Text(
                   'Go back',
                   style: TextStyle(
                     fontSize: 15,

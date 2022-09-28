@@ -55,7 +55,8 @@ class HomeScreen extends StatelessWidget {
                           style: TextStyle(
                             fontSize: 25,
                             fontWeight: FontWeight.w500,
-                            color: Theme.of(context).textTheme.bodyMedium!.color,
+                            color:
+                                Theme.of(context).textTheme.bodyMedium!.color,
                           ),
                           children: [
                             const TextSpan(text: 'Your CGPA: '),
@@ -63,7 +64,7 @@ class HomeScreen extends StatelessWidget {
                               text: Provider.of<Database>(context)
                                   .currentCGPA
                                   .toStringAsFixed(2),
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontSize: 28,
                                 fontWeight: FontWeight.w600,
                                 color: Colors.green,

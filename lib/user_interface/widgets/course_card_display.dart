@@ -50,7 +50,7 @@ class CourseCard extends StatelessWidget {
                   // Course title
                   Text(
                     courseResult.courseTitle,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 17,
                       fontWeight: FontWeight.w600,
                     ),
@@ -61,7 +61,7 @@ class CourseCard extends StatelessWidget {
                   Text(
                     courseResult.courseDescription,
                     overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 16,
                     ),
                   ),
@@ -73,7 +73,7 @@ class CourseCard extends StatelessWidget {
                       // Units
                       Text(
                         'Units: ${courseResult.units}',
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 15,
                         ),
                       ),
@@ -81,7 +81,7 @@ class CourseCard extends StatelessWidget {
                       // Score
                       Text(
                         'Score: ${courseResult.marks}',
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 15,
                         ),
                       ),
@@ -91,13 +91,14 @@ class CourseCard extends StatelessWidget {
                         text: TextSpan(
                           style: TextStyle(
                             fontSize: 15,
-                            color: Theme.of(context).textTheme.bodyMedium!.color,
+                            color:
+                                Theme.of(context).textTheme.bodyMedium!.color,
                           ),
                           children: [
                             const TextSpan(text: 'Grade: '),
                             TextSpan(
                               text: courseResult.grade,
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontSize: 17,
                                 fontWeight: FontWeight.w600,
                               ),
