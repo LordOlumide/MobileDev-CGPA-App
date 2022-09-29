@@ -79,13 +79,14 @@ class HomeScreen extends StatelessWidget {
               ),
             ),
 
-            // The years ListView  TODO: Implement deleteYearFromDatabase()
+            // The years ListView  TODO: Implement deleteYear(). Each Year should only be deletable if it is empty. Implement Multi course deleting
             Expanded(
               flex: 4,
               child: Container(
-                padding: const EdgeInsets.fromLTRB(15, 10, 10, 0),
+                padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
                 child: ListView(
                   children: [
+                    const SizedBox(height: 10),
                     for (int i = 0;
                         i < Provider.of<Database>(context).main.length;
                         i++)

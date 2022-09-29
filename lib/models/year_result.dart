@@ -32,8 +32,11 @@ class YearResult {
       cumulativeUnits += course.units;
     }
     // if cumulative units == 0, 0/0 = NaN
-    return cumulativeUnits != 0
-        ? cumulativeScore / cumulativeUnits
-        : 0;
+    return cumulativeUnits != 0 ? cumulativeScore / cumulativeUnits : 0;
   }
+
+  bool isEmpty() =>
+      firstSem.courseResults.isEmpty && secondSem.courseResults.isEmpty
+          ? true
+          : false;
 }

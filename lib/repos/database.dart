@@ -72,6 +72,9 @@ class Database extends ChangeNotifier {
 
   deleteYear({required int yearResultIndex}) {
     _main.removeAt(yearResultIndex);
+    for (YearResult yearResult in _main) {
+      yearResult.year = _main.indexOf(yearResult) + 1;
+    }
     notifyListeners();
   }
 
