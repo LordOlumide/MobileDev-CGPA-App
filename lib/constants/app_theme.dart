@@ -21,18 +21,24 @@ class AppTheme {
       SchedulerBinding.instance.window.platformBrightness;
 
   static final lightTheme = ThemeData(
+    // colorScheme: ColorScheme.fromSwatch(
+    //   primarySwatch: Colors.blue,
+    // ).copyWith(
+    //   secondary: const Color(0xFFD9614C),
+    // ),
     colorScheme: const ColorScheme.light().copyWith(
       primary: lightPrimaryColor,
       secondary: lightSecondaryColor,
       background: lightBackgroundColor,
     ),
+    fontFamily: 'Nunito',
     floatingActionButtonTheme: FloatingActionButtonThemeData(
       backgroundColor: lightFloatingActionButtonColor,
     ),
     scaffoldBackgroundColor: lightScaffoldBackgroundColor,
     textTheme: TextTheme(
       bodyMedium: TextStyle(color: lightTextColor),
-    )
+    ),
   );
 
   static final darkTheme = ThemeData(
@@ -41,6 +47,7 @@ class AppTheme {
       secondary: darkSecondaryColor,
       background: darkBackgroundColor,
     ),
+    fontFamily: 'Nunito',
     floatingActionButtonTheme: FloatingActionButtonThemeData(
       backgroundColor: darkFloatingActionButtonColor,
     ),
@@ -50,9 +57,9 @@ class AppTheme {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
       statusBarIconBrightness:
-      themeMode == ThemeMode.light ? Brightness.dark : Brightness.light,
+          themeMode == ThemeMode.light ? Brightness.dark : Brightness.light,
       systemNavigationBarIconBrightness:
-      themeMode == ThemeMode.light ? Brightness.dark : Brightness.light,
+          themeMode == ThemeMode.light ? Brightness.dark : Brightness.light,
       systemNavigationBarColor: themeMode == ThemeMode.light
           ? lightBackgroundColor
           : darkBackgroundColor,

@@ -28,7 +28,7 @@ class _CourseScreenState extends State<CourseScreen> {
   void initState() {
     super.initState();
     formVariables.initializeControllers();
-    resetStates();
+    refreshStatesList();
   }
 
   /// This stores the input from the course_input_sheet temporarily to be converted to a Course object.
@@ -39,7 +39,8 @@ class _CourseScreenState extends State<CourseScreen> {
   // To store the isSelected states of every course in the semesterResult.
   List<bool> courseCardStates = [];
 
-  void resetStates() {
+  void refreshStatesList() {
+    courseCardStates.clear();
     SemesterResult semesterResult = widget.isFirstSemester == true
         ? Provider.of<Database>(context, listen: false)
             .main[widget.yearResultIndex]
@@ -53,7 +54,23 @@ class _CourseScreenState extends State<CourseScreen> {
   }
 
   void toggleState({required int index}) {
-    courseCardStates[index] = !courseCardStates[index];
+    setState(() {
+      courseCardStates[index] = !courseCardStates[index];
+    });
+  }
+
+  deactivateInSelectionState() {
+    setState(() {
+      inSelectionMode = false;
+    });
+    refreshStatesList();
+  }
+
+  activateInSelectionState(int activatingCourseIndex) {
+    setState(() {
+      inSelectionMode = true;
+    });
+    toggleState(index: activatingCourseIndex);
   }
 
   @override
@@ -75,6 +92,7 @@ class _CourseScreenState extends State<CourseScreen> {
         yearResultIndex: widget.yearResultIndex,
         isFirstSemester: widget.isFirstSemester,
       );
+      refreshStatesList();
     }
 
     void editCourse({required int courseResultIndex}) {
@@ -89,6 +107,7 @@ class _CourseScreenState extends State<CourseScreen> {
         isFirstSemester: widget.isFirstSemester,
         courseResultIndex: courseResultIndex,
       );
+      refreshStatesList();
     }
 
     void deleteCourse({required int courseResultIndex}) {
@@ -100,6 +119,7 @@ class _CourseScreenState extends State<CourseScreen> {
         courseResultIndex: courseResultIndex,
         courseToDeleteID: courseToDeleteID,
       );
+      refreshStatesList();
     }
 
     /// bool addNotEdit is true when this function is called to add a new course
@@ -138,9 +158,7 @@ class _CourseScreenState extends State<CourseScreen> {
     return WillPopScope(
       onWillPop: () async {
         if (inSelectionMode == true) {
-          setState(() {
-            inSelectionMode = false;
-          });
+          deactivateInSelectionState();
           return false;
         } else {
           return true;
@@ -148,7 +166,7 @@ class _CourseScreenState extends State<CourseScreen> {
       },
       child: Scaffold(
         appBar: AppBar(
-          toolbarHeight: 0,
+          toolbarHeight: 10,
           backgroundColor: Theme.of(context).colorScheme.primary,
           elevation: 0,
         ),
@@ -218,108 +236,90 @@ class _CourseScreenState extends State<CourseScreen> {
                         padding: const EdgeInsets.only(
                             left: 30, right: 30, bottom: 20),
                         itemCount: semesterResult.courseResults.length,
-                        itemBuilder: (context, index) {
+                        itemBuilder: (context, courseIndex) {
                           return Provider(
                             create: (context) => courseCardStates,
-                            child: CourseCard(
-                                yearResultIndex: widget.yearResultIndex,
-                                isFirstSemester: widget.isFirstSemester,
-                                courseResultIndex: index,
-                                inSelectionMode: inSelectionMode,
-                                deleteThisCourse: () {
-                                  deleteCourse(courseResultIndex: index);
-                                },
-                                onNormalModeTap: () {
-                                  // set the controller values to the course values
-                                  CourseResult initialCourseResult =
-                                      semesterResult.courseResults[index];
-                                  formVariables.manuallyAssign(
-                                    courseTitle:
-                                        initialCourseResult.courseTitle,
-                                    courseDesc:
-                                        initialCourseResult.courseDescription,
-                                    marks: '${initialCourseResult.marks}',
-                                    units: '${initialCourseResult.units}',
-                                  );
-                                  bringUpBottomSheet(
-                                    addNotEdit: false,
-                                    onFormSubmitted: () {
-                                      editCourse(courseResultIndex: index);
-                                    },
-                                  );
-                                },
-                                onSelectionModeTap: () {
-                                  toggleState(index: index);
-                                },
-                                onLongPress: () {
-                                  if (inSelectionMode == false) {
-                                    setState(() {
-                                      inSelectionMode = true;
-                                    });
-                                  }
-                                }),
+                            child: Container(
+                              margin: const EdgeInsets.symmetric(vertical: 4),
+                              child: CourseCard(
+                                  yearResultIndex: widget.yearResultIndex,
+                                  isFirstSemester: widget.isFirstSemester,
+                                  courseResultIndex: courseIndex,
+                                  inSelectionMode: inSelectionMode,
+                                  isSelected: courseCardStates[courseIndex],
+                                  onNormalModeTap: () {
+                                    // set the controller values to the course values
+                                    CourseResult initialCourseResult =
+                                        semesterResult
+                                            .courseResults[courseIndex];
+                                    formVariables.manuallyAssign(
+                                      courseTitle:
+                                          initialCourseResult.courseTitle,
+                                      courseDesc:
+                                          initialCourseResult.courseDescription,
+                                      marks: '${initialCourseResult.marks}',
+                                      units: '${initialCourseResult.units}',
+                                    );
+                                    bringUpBottomSheet(
+                                      addNotEdit: false,
+                                      onFormSubmitted: () {
+                                        editCourse(
+                                            courseResultIndex: courseIndex);
+                                      },
+                                    );
+                                  },
+                                  onSelectionModeTap: () {
+                                    toggleState(index: courseIndex);
+                                  },
+                                  onLongPress: (int activatingCourseIndex) {
+                                    if (inSelectionMode == false) {
+                                      activateInSelectionState(
+                                          activatingCourseIndex);
+                                    }
+                                  }),
+                            ),
                           );
                         },
-                        // child: ListView(
-                        //   children: [
-                        //     // Courses
-                        //     for (int i = 0;
-                        //         i < semesterResult.courseResults.length;
-                        //         i++)
-                        //       MultiProvider(
-                        //         providers: [
-                        //           Provider(create: (context) => inSelectionMode),
-                        //           Provider(create: (context) => courseCardStates)
-                        //         ],
-                        //         child: CourseCard(
-                        //             yearResultIndex: widget.yearResultIndex,
-                        //             isFirstSemester: widget.isFirstSemester,
-                        //             courseResultIndex: i,
-                        //             inSelectionMode: inSelectionMode,
-                        //             deleteThisCourse: () {
-                        //               deleteCourse(courseResultIndex: i);
-                        //             },
-                        //             onNormalModeTap: () {
-                        //               // set the controller values to the course values
-                        //               CourseResult initialCourseResult =
-                        //                   semesterResult.courseResults[i];
-                        //               formVariables.manuallyAssign(
-                        //                 courseTitle:
-                        //                     initialCourseResult.courseTitle,
-                        //                 courseDesc:
-                        //                     initialCourseResult.courseDescription,
-                        //                 marks: '${initialCourseResult.marks}',
-                        //                 units: '${initialCourseResult.units}',
-                        //               );
-                        //               bringUpBottomSheet(
-                        //                 addNotEdit: false,
-                        //                 onFormSubmitted: () {
-                        //                   editCourse(courseResultIndex: i);
-                        //                 },
-                        //               );
-                        //             },
-                        //             onSelectionModeTap: () {
-                        //               toggleState(index: i);
-                        //             },
-                        //             onLongPress: () {
-                        //               if (inSelectionMode == false) {
-                        //                 setState(() {
-                        //                   inSelectionMode = true;
-                        //                 });
-                        //               }
-                        //               print(inSelectionMode);
-                        //             }),
-                        //       ),
-                        //   ],
                       ),
                     ),
 
                     const Divider(
-                      height: 1.0,
-                      thickness: 1.0,
-                      color: Colors.black38,
+                      height: 1.2,
+                      thickness: 1.2,
+                      color: Color.fromARGB(95, 136, 136, 136),
                     ),
-                    const SizedBox(height: 50),
+                    inSelectionMode
+                        ? Container(
+                            height: 60,
+                            color: Theme.of(context).scaffoldBackgroundColor,
+                            child: Center(
+                              child: IconButton(
+                                padding: const EdgeInsets.all(3),
+                                onPressed: () {},
+                                color: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium!
+                                    .color,
+                                iconSize: 25,
+                                icon: Column(
+                                  children: [
+                                    const Icon(Icons.delete_outline),
+                                    Text(
+                                      'Delete',
+                                      style: TextStyle(
+                                        fontSize: 11,
+                                        color: Theme.of(context)
+                                            .textTheme
+                                            .bodyMedium!
+                                            .color,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          )
+                        : const SizedBox(),
                   ],
                 ),
               ),
@@ -327,18 +327,20 @@ class _CourseScreenState extends State<CourseScreen> {
           ),
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            bringUpBottomSheet(
-              addNotEdit: true,
-              onFormSubmitted: () {
-                addNewCourse();
-              },
-            );
-          },
-          tooltip: 'Add Course',
-          child: const Icon(Icons.add),
-        ),
+        floatingActionButton: inSelectionMode == false
+            ? FloatingActionButton(
+                onPressed: () {
+                  bringUpBottomSheet(
+                    addNotEdit: true,
+                    onFormSubmitted: () {
+                      addNewCourse();
+                    },
+                  );
+                },
+                tooltip: 'Add Course',
+                child: const Icon(Icons.add),
+              )
+            : const SizedBox(),
       ),
     );
   }

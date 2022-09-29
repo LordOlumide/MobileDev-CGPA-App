@@ -3,63 +3,53 @@ import 'package:mobile_dev_cgpa_app/models/course_result.dart';
 import 'package:mobile_dev_cgpa_app/repos/database.dart';
 import 'package:provider/provider.dart';
 
-class CourseCard extends StatefulWidget {
+class CourseCard extends StatelessWidget {
   final int yearResultIndex;
   final bool isFirstSemester;
   final int courseResultIndex;
-  bool inSelectionMode;
+  final bool inSelectionMode;
+  final bool isSelected;
   final VoidCallback onNormalModeTap;
   final VoidCallback onSelectionModeTap;
-  final VoidCallback onLongPress;
-  final VoidCallback deleteThisCourse;
+  final Function onLongPress;
 
-  CourseCard({
+  const CourseCard({
     Key? key,
     required this.yearResultIndex,
     required this.isFirstSemester,
     required this.courseResultIndex,
     required this.inSelectionMode,
+    required this.isSelected,
     required this.onNormalModeTap,
     required this.onSelectionModeTap,
-    required this.deleteThisCourse,
     required this.onLongPress,
   }) : super(key: key);
 
   @override
-  State<CourseCard> createState() => _CourseCardState();
-}
-
-class _CourseCardState extends State<CourseCard> {
-  @override
   Widget build(BuildContext context) {
-    CourseResult courseResult = widget.isFirstSemester == true
+    CourseResult courseResult = isFirstSemester == true
         ? Provider.of<Database>(context)
-            .main[widget.yearResultIndex]
+            .main[yearResultIndex]
             .firstSem
-            .courseResults[widget.courseResultIndex]
+            .courseResults[courseResultIndex]
         : Provider.of<Database>(context)
-            .main[widget.yearResultIndex]
+            .main[yearResultIndex]
             .secondSem
-            .courseResults[widget.courseResultIndex];
-
-    // bool inSelectionMode = Provider.of<bool>(context);
-    bool isSelected =
-        Provider.of<List<bool>>(context)[widget.courseResultIndex];
+            .courseResults[courseResultIndex];
 
     return InkWell(
       onTap: () {
-        if (widget.inSelectionMode == false) {
-          widget.onNormalModeTap();
+        if (inSelectionMode == false) {
+          onNormalModeTap();
         } else {
-          widget.onSelectionModeTap();
+          onSelectionModeTap();
         }
       },
       onLongPress: () {
-        widget.onLongPress();
+        onLongPress(courseResultIndex);
       },
       child: Container(
         padding: const EdgeInsets.fromLTRB(15, 4, 10, 4),
-        margin: const EdgeInsets.symmetric(vertical: 4),
         decoration: BoxDecoration(
           color: Theme.of(context).colorScheme.secondary,
           borderRadius: BorderRadius.circular(10),
@@ -134,18 +124,19 @@ class _CourseCardState extends State<CourseCard> {
                 ],
               ),
             ),
-            widget.inSelectionMode
+            inSelectionMode
                 ? SizedBox(
                     width: 25,
                     height: 25,
                     child: Checkbox(
+                      activeColor: const Color.fromARGB(255, 101, 199, 121),
                       value: isSelected,
                       onChanged: (_) {
-                        widget.onSelectionModeTap();
+                        onSelectionModeTap();
                       },
                     ),
                   )
-                : const SizedBox(),
+                : const SizedBox(width: 20),
             // // Delete button
             // IconButton(
             //   padding: const EdgeInsets.symmetric(vertical: 4),

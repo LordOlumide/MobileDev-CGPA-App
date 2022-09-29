@@ -1,10 +1,10 @@
 name: mobile_dev_cgpa_app
 description: A new Flutter project.
 
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+publish_to: "none" # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 environment:
-  sdk: '>=2.19.0-13.0.dev <3.0.0'
+  sdk: ">=2.19.0-13.0.dev <3.0.0"
 
 dependencies:
   flutter:
@@ -33,9 +33,22 @@ flutter:
     - assets/images/
   #   - images/a_dot_ham.jpeg
 
-  # fonts:
-  #   - family: Schyler
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
-  #       - asset: fonts/Schyler-Italic.ttf
-  #         style: italic
+  fonts:
+    - family: Nunito
+      fonts:
+        - asset: assets/fonts/Nunito/Nunito-Black.ttf
+        - asset: assets/fonts/Nunito/Nunito-BlackItalic.ttf
+        - asset: assets/fonts/Nunito/Nunito-Bold.ttf
+        - asset: assets/fonts/Nunito/Nunito-BoldItalic.ttf
+        - asset: assets/fonts/Nunito/Nunito-ExtraBold.ttf
+        - asset: assets/fonts/Nunito/Nunito-ExtraBoldItalic.ttf
+        - asset: assets/fonts/Nunito/Nunito-ExtraLight.ttf
+        - asset: assets/fonts/Nunito/Nunito-ExtraLightItalic.ttf
+        - asset: assets/fonts/Nunito/Nunito-Italic.ttf
+        - asset: assets/fonts/Nunito/Nunito-Light.ttf
+        - asset: assets/fonts/Nunito/Nunito-LightItalic.ttf
+        - asset: assets/fonts/Nunito/Nunito-Medium.ttf
+        - asset: assets/fonts/Nunito/Nunito-MediumItalic.ttf
+        - asset: assets/fonts/Nunito/Nunito-Regular.ttf
+        - asset: assets/fonts/Nunito/Nunito-SemiBold.ttf
+        - asset: assets/fonts/Nunito/Nunito-SemiBoldItalic.ttf
