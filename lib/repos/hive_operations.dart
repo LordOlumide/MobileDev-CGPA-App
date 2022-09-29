@@ -6,7 +6,7 @@ import 'package:mobile_dev_cgpa_app/utils/reference_getter.dart';
 ///
 /// Storage reference format
 ///   = "Y-$YearResultIndex - S-${isFirstSemester ? 1 : 2} - C-${courseResult.uniqueId}"
-/// Example: "Y-0 S-2 C-XXXXXXXXXXXXXXXXX" - course in 1st year, 2nd semester
+/// Example: "Y-0 S-2 C-XXXXXXXXXXXXXXXXX" refers to a course in 1st year, 2nd semester
 class HiveOperations {
   static late Box coursesBox;
 
@@ -70,6 +70,6 @@ class HiveOperations {
       referencesList.add('\n${i.toString()}');
     }
     print('\nNo of courses in Database: ${referencesList.length}');
-    print(referencesList);
+    // print(referencesList);
   }
 }

@@ -1,49 +1,72 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_dev_cgpa_app/models/course_result.dart';
 import 'package:mobile_dev_cgpa_app/repos/database.dart';
-import 'package:mobile_dev_cgpa_app/user_interface/widgets/delete_popup.dart';
 import 'package:provider/provider.dart';
 
-class CourseCard extends StatelessWidget {
+class CourseCard extends StatefulWidget {
   final int yearResultIndex;
   final bool isFirstSemester;
   final int courseResultIndex;
-  final VoidCallback onTapped;
+  bool inSelectionMode;
+  final VoidCallback onNormalModeTap;
+  final VoidCallback onSelectionModeTap;
+  final VoidCallback onLongPress;
   final VoidCallback deleteThisCourse;
 
-  const CourseCard({
+  CourseCard({
     Key? key,
     required this.yearResultIndex,
     required this.isFirstSemester,
     required this.courseResultIndex,
-    required this.onTapped,
+    required this.inSelectionMode,
+    required this.onNormalModeTap,
+    required this.onSelectionModeTap,
     required this.deleteThisCourse,
+    required this.onLongPress,
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    CourseResult courseResult = isFirstSemester == true
-        ? Provider.of<Database>(context)
-            .main[yearResultIndex]
-            .firstSem
-            .courseResults[courseResultIndex]
-        : Provider.of<Database>(context)
-            .main[yearResultIndex]
-            .secondSem
-            .courseResults[courseResultIndex];
+  State<CourseCard> createState() => _CourseCardState();
+}
 
-    return Row(
-      children: [
-        Expanded(
-          child: InkWell(
-            onTap: onTapped,
-            child: Container(
-              padding: const EdgeInsets.fromLTRB(15, 4, 10, 4),
-              margin: const EdgeInsets.symmetric(vertical: 4),
-              decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.secondary,
-                borderRadius: BorderRadius.circular(10),
-              ),
+class _CourseCardState extends State<CourseCard> {
+  @override
+  Widget build(BuildContext context) {
+    CourseResult courseResult = widget.isFirstSemester == true
+        ? Provider.of<Database>(context)
+            .main[widget.yearResultIndex]
+            .firstSem
+            .courseResults[widget.courseResultIndex]
+        : Provider.of<Database>(context)
+            .main[widget.yearResultIndex]
+            .secondSem
+            .courseResults[widget.courseResultIndex];
+
+    // bool inSelectionMode = Provider.of<bool>(context);
+    bool isSelected =
+        Provider.of<List<bool>>(context)[widget.courseResultIndex];
+
+    return InkWell(
+      onTap: () {
+        if (widget.inSelectionMode == false) {
+          widget.onNormalModeTap();
+        } else {
+          widget.onSelectionModeTap();
+        }
+      },
+      onLongPress: () {
+        widget.onLongPress();
+      },
+      child: Container(
+        padding: const EdgeInsets.fromLTRB(15, 4, 10, 4),
+        margin: const EdgeInsets.symmetric(vertical: 4),
+        decoration: BoxDecoration(
+          color: Theme.of(context).colorScheme.secondary,
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: Row(
+          children: [
+            Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -111,26 +134,37 @@ class CourseCard extends StatelessWidget {
                 ],
               ),
             ),
-          ),
+            widget.inSelectionMode
+                ? SizedBox(
+                    width: 25,
+                    height: 25,
+                    child: Checkbox(
+                      value: isSelected,
+                      onChanged: (_) {
+                        widget.onSelectionModeTap();
+                      },
+                    ),
+                  )
+                : const SizedBox(),
+            // // Delete button
+            // IconButton(
+            //   padding: const EdgeInsets.symmetric(vertical: 4),
+            //   onPressed: () {
+            //     showDialog<bool>(
+            //       context: context,
+            //       builder: (context) =>
+            //           DeletePopup(objectToDeleteName: courseResult.courseTitle),
+            //     ).then((value) {
+            //       if (value == true) {
+            //         widget.deleteThisCourse();
+            //       }
+            //     });
+            //   },
+            //   icon: const Icon(Icons.delete),
+            // ),
+          ],
         ),
-
-        // Delete button
-        IconButton(
-          padding: const EdgeInsets.symmetric(vertical: 4),
-          onPressed: () {
-            showDialog<bool>(
-              context: context,
-              builder: (context) =>
-                  DeletePopup(objectToDeleteName: courseResult.courseTitle),
-            ).then((value) {
-              if (value == true) {
-                deleteThisCourse();
-              }
-            });
-          },
-          icon: const Icon(Icons.delete),
-        ),
-      ],
+      ),
     );
   }
 }
