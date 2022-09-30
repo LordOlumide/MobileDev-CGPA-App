@@ -48,7 +48,7 @@ class SemesterCard extends StatelessWidget {
               isFirstSemester == true ? 'First Semester' : 'Second Semester',
               style: const TextStyle(
                 fontSize: 27,
-                fontWeight: FontWeight.w500,
+                fontWeight: FontWeight.w700,
               ),
             ),
             const SizedBox(height: 15),
@@ -58,6 +58,7 @@ class SemesterCard extends StatelessWidget {
               'Semester GPA:  ${semesterResult.semesterGPA.toStringAsFixed(2)}',
               style: const TextStyle(
                 fontSize: 22,
+                fontWeight: FontWeight.w600,
               ),
             ),
             const SizedBox(height: 10),

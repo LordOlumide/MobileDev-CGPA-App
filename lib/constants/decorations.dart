@@ -4,6 +4,7 @@ InputDecoration kTextFieldDecoration = const InputDecoration(
   hintStyle: TextStyle(
     color: Color(0xFF9E9E9E),
   ),
+  labelStyle: TextStyle(fontWeight: FontWeight.w600),
   contentPadding: EdgeInsets.symmetric(vertical: 2.0, horizontal: 20),
   border: OutlineInputBorder(
     borderRadius: BorderRadius.all(Radius.circular(4.0)),

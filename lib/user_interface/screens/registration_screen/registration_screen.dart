@@ -27,7 +27,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           margin: const EdgeInsets.symmetric(horizontal: 20),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
+            // crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               // email textfield
               TextField(
@@ -39,6 +39,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 decoration: kTextFieldDecoration.copyWith(
                   hintText: 'Enter your email',
                 ),
+                cursorColor: Colors.black87,
               ),
               const SizedBox(height: 30),
 
@@ -52,14 +53,17 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 decoration: kTextFieldDecoration.copyWith(
                   hintText: 'Enter your password.',
                 ),
+                cursorColor: Colors.black87,
               ),
               const SizedBox(height: 30),
 
               // "Registration" button
               MaterialButton(
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
                 color: Theme.of(context).colorScheme.primary,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(5)),
                 onPressed: () async {
                   try {
                     await Provider.of<Auth>(context, listen: false)
@@ -77,24 +81,35 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 child: const Text(
                   'Register',
                   style: TextStyle(
-                    fontSize: 20,
+                    fontSize: 25,
+                    fontWeight: FontWeight.w700,
                   ),
                 ),
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 30),
 
-              MaterialButton(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+              TextButton(
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
-                color: Theme.of(context).colorScheme.primary,
-                child: const Text(
-                  'Go back',
-                  style: TextStyle(
-                    fontSize: 15,
-                  ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.arrow_back,
+                      size: 28,
+                      color: Theme.of(context).textTheme.bodyMedium!.color,
+                    ),
+                    const SizedBox(width: 5),
+                    Text(
+                      'Go back',
+                      style: TextStyle(
+                        fontSize: 17,
+                        fontWeight: FontWeight.w700,
+                        color: Theme.of(context).textTheme.bodyMedium!.color,
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],

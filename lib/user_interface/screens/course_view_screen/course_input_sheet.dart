@@ -20,99 +20,112 @@ class CourseInputSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
-      child: Form(
-        child: Column(
-          children: [
-            // Header
-            Text(
-              addNotEdit ? 'Add New Course' : 'Edit Course',
-              style: const TextStyle(
-                fontSize: 19,
-                fontWeight: FontWeight.w800,
-              ),
+      padding: const EdgeInsets.only(top: 15),
+      child: Column(
+        children: [
+          // Header
+          Text(
+            addNotEdit ? 'Add New Course' : 'Edit Course',
+            style: const TextStyle(
+              fontSize: 21,
+              fontWeight: FontWeight.w800,
             ),
-            const SizedBox(height: 5),
+          ),
+          const SizedBox(height: 5),
+          const Divider(
+            color: Colors.black38,
+            thickness: 1.2,
+          ),
 
-            // course title
-            InputField(
-              isFirstField: true,
-              controller: courseTitleController,
-              fieldTitle: 'Course Title',
-              hint: 'e.g. GNS 101',
-              textCapitalization: TextCapitalization.characters,
-              isMarksField: false,
-              isUnitsField: false,
-            ),
-
-            // courseDescription
-            InputField(
-              isFirstField: false,
-              controller: courseDescriptionController,
-              fieldTitle: 'Course Name',
-              hint: 'e.g. History and Philosophy',
-              textCapitalization: TextCapitalization.words,
-              isMarksField: false,
-              isUnitsField: false,
-            ),
-
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // marks
-                Expanded(
-                  child: InputField(
-                    isFirstField: false,
-                    controller: marksController,
-                    fieldTitle: 'Score (%)',
-                    hint: 'e.g. 75',
-                    textCapitalization: TextCapitalization.none,
-                    isMarksField: true,
+          Padding(
+            padding: const EdgeInsets.fromLTRB(20, 10, 20, 15),
+            child: Form(
+              child: Column(
+                children: [
+                  // course title
+                  InputField(
+                    isFirstField: true,
+                    controller: courseTitleController,
+                    fieldTitle: 'Course Title',
+                    hint: 'e.g. GNS 101',
+                    textCapitalization: TextCapitalization.characters,
+                    isMarksField: false,
                     isUnitsField: false,
                   ),
-                ),
-                const SizedBox(width: 30),
 
-                // units
-                Expanded(
-                  child: InputField(
+                  // courseDescription
+                  InputField(
                     isFirstField: false,
-                    controller: unitsController,
-                    fieldTitle: 'No. of Units',
-                    hint: 'e.g. 2',
-                    textCapitalization: TextCapitalization.none,
+                    controller: courseDescriptionController,
+                    fieldTitle: 'Course Name',
+                    hint: 'e.g. History and Philosophy',
+                    textCapitalization: TextCapitalization.words,
                     isMarksField: false,
-                    isUnitsField: true,
+                    isUnitsField: false,
                   ),
-                ),
-              ],
-            ),
 
-            // "Add course" button
-            Builder(builder: (context) {
-              return ElevatedButton(
-                onPressed: () {
-                  if (Form.of(context)!.validate()) {
-                    Navigator.pop(context, true);
-                  }
-                },
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all<Color>(
-                      Theme.of(context).colorScheme.secondary),
-                  padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
-                      const EdgeInsets.symmetric(horizontal: 30, vertical: 5)),
-                ),
-                child: Text(
-                  addNotEdit ? 'Add Course' : 'Save Edit',
-                  style: TextStyle(
-                    color: Theme.of(context).textTheme.bodyMedium!.color,
-                    fontSize: 17,
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // marks
+                      Expanded(
+                        child: InputField(
+                          isFirstField: false,
+                          controller: marksController,
+                          fieldTitle: 'Score (%)',
+                          hint: 'e.g. 75',
+                          textCapitalization: TextCapitalization.none,
+                          isMarksField: true,
+                          isUnitsField: false,
+                        ),
+                      ),
+                      const SizedBox(width: 30),
+
+                      // units
+                      Expanded(
+                        child: InputField(
+                          isFirstField: false,
+                          controller: unitsController,
+                          fieldTitle: 'No. of Units',
+                          hint: 'e.g. 2',
+                          textCapitalization: TextCapitalization.none,
+                          isMarksField: false,
+                          isUnitsField: true,
+                        ),
+                      ),
+                    ],
                   ),
-                ),
-              );
-            }),
-          ],
-        ),
+
+                  // "Add course" button
+                  Builder(builder: (context) {
+                    return ElevatedButton(
+                      onPressed: () {
+                        if (Form.of(context)!.validate()) {
+                          Navigator.pop(context, true);
+                        }
+                      },
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all<Color>(
+                            Theme.of(context).colorScheme.secondary),
+                        padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+                            const EdgeInsets.symmetric(
+                                horizontal: 30, vertical: 5)),
+                      ),
+                      child: Text(
+                        addNotEdit ? 'Add Course' : 'Save Edit',
+                        style: TextStyle(
+                          color: Theme.of(context).textTheme.bodyMedium!.color,
+                          fontSize: 18,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                    );
+                  }),
+                ],
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

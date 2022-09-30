@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 
 class DeletePopup extends StatelessWidget {
   final String objectToDeleteName;
-  const DeletePopup({Key? key, required this.objectToDeleteName}) : super(key: key);
+  const DeletePopup({Key? key, required this.objectToDeleteName})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -18,21 +19,20 @@ class DeletePopup extends StatelessWidget {
           children: [
             // title
             const Padding(
-              padding: EdgeInsets.fromLTRB(15, 20, 15, 0),
+              padding: EdgeInsets.fromLTRB(20, 20, 15, 0),
               child: Text(
-                'Delete course',
+                'Delete',
                 style: TextStyle(
-                  fontSize: 16.0,
+                  fontSize: 20.0,
                   color: Colors.black,
-                  fontWeight: FontWeight.w500,
+                  fontWeight: FontWeight.w800,
                 ),
               ),
             ),
 
             // body
             Padding(
-              padding:
-              const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
               child: Text(
                 'Are you sure you want to delete $objectToDeleteName?',
                 style: TextStyle(
@@ -59,6 +59,7 @@ class DeletePopup extends StatelessWidget {
                     style: TextStyle(
                       color: Colors.black54,
                       fontSize: 16,
+                      fontWeight: FontWeight.w700,
                     ),
                   ),
                 ),
@@ -74,6 +75,7 @@ class DeletePopup extends StatelessWidget {
                     style: TextStyle(
                       color: Colors.red,
                       fontSize: 16,
+                      fontWeight: FontWeight.w700,
                     ),
                   ),
                 ),

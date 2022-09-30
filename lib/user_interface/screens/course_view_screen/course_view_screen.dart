@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_dev_cgpa_app/user_interface/widgets/delete_popup.dart';
 import 'package:provider/provider.dart';
 import 'package:mobile_dev_cgpa_app/utils/number_to_position.dart';
 import 'package:mobile_dev_cgpa_app/models/course_result.dart';
@@ -35,9 +36,22 @@ class _CourseScreenState extends State<CourseScreen> {
   FormVariables formVariables = FormVariables();
 
   bool inSelectionMode = false;
+  bool allCoursesAreSelected = false;
 
   // To store the isSelected states of every course in the semesterResult.
   List<bool> courseCardStates = [];
+  int selectedCardCount = 0;
+
+  void refreshSelectedCount() {
+    setState(() {
+      selectedCardCount = 0;
+      for (bool i in courseCardStates) {
+        if (i == true) {
+          selectedCardCount += 1;
+        }
+      }
+    });
+  }
 
   void refreshStatesList() {
     courseCardStates.clear();
@@ -51,26 +65,41 @@ class _CourseScreenState extends State<CourseScreen> {
     for (int i = 0; i < semesterResult.courseResults.length; i++) {
       courseCardStates.add(false);
     }
+    refreshSelectedCount();
   }
 
   void toggleState({required int index}) {
     setState(() {
       courseCardStates[index] = !courseCardStates[index];
+      allCoursesAreSelected =
+          courseCardStates.every((state) => state == true) ? true : false;
     });
+    refreshSelectedCount();
   }
 
-  deactivateInSelectionState() {
+  void toggleAllCoursesAreSelected() {
+    allCoursesAreSelected = !allCoursesAreSelected;
+    for (int i = 0; i < courseCardStates.length; i++) {
+      setState(() {
+        courseCardStates[i] = allCoursesAreSelected;
+      });
+    }
+    refreshSelectedCount();
+  }
+
+  void deactivateInSelectionMode() {
     setState(() {
       inSelectionMode = false;
     });
     refreshStatesList();
   }
 
-  activateInSelectionState(int activatingCourseIndex) {
+  void activateInSelectionMode(int activatingCourseIndex) {
     setState(() {
       inSelectionMode = true;
     });
     toggleState(index: activatingCourseIndex);
+    refreshSelectedCount();
   }
 
   @override
@@ -110,21 +139,21 @@ class _CourseScreenState extends State<CourseScreen> {
       refreshStatesList();
     }
 
-    void deleteCourse({required int courseResultIndex}) {
-      String courseToDeleteID =
-          semesterResult.courseResults[courseResultIndex].uniqueId!;
+    /// Have to delete by uniqueID only because index changes during batch-deleting
+    void deleteCourse({required String uniqueIdOfCourseToDelete}) {
       Provider.of<Database>(context, listen: false).deleteCourse(
         yearResultIndex: widget.yearResultIndex,
         isFirstSemester: widget.isFirstSemester,
-        courseResultIndex: courseResultIndex,
-        courseToDeleteID: courseToDeleteID,
+        courseResultIndex: semesterResult.courseResults.indexWhere(
+            (course) => course.uniqueId == uniqueIdOfCourseToDelete),
+        courseToDeleteID: uniqueIdOfCourseToDelete,
       );
-      refreshStatesList();
+      deactivateInSelectionMode();
     }
 
     /// bool addNotEdit is true when this function is called to add a new course
     /// and false when it's called to edit an existing course.
-    bringUpBottomSheet(
+    void bringUpBottomSheet(
         {required bool addNotEdit, required VoidCallback onFormSubmitted}) {
       showModalBottomSheet(
         context: context,
@@ -158,18 +187,54 @@ class _CourseScreenState extends State<CourseScreen> {
     return WillPopScope(
       onWillPop: () async {
         if (inSelectionMode == true) {
-          deactivateInSelectionState();
+          deactivateInSelectionMode();
           return false;
         } else {
           return true;
         }
       },
       child: Scaffold(
-        appBar: AppBar(
-          toolbarHeight: 10,
-          backgroundColor: Theme.of(context).colorScheme.primary,
-          elevation: 0,
-        ),
+        appBar: inSelectionMode
+            ? AppBar(
+                toolbarHeight: 50,
+                backgroundColor: Theme.of(context).colorScheme.primary,
+                elevation: 1,
+                title: Text(
+                  selectedCardCount == 0
+                      ? ''
+                      : selectedCardCount == 1
+                          ? '$selectedCardCount course selected'
+                          : '$selectedCardCount courses selected',
+                  style: TextStyle(
+                    fontWeight: FontWeight.w500,
+                    color: Theme.of(context).textTheme.bodyMedium!.color,
+                  ),
+                ),
+                titleSpacing: 0,
+                leading: IconButton(
+                  onPressed: () {
+                    deactivateInSelectionMode();
+                  },
+                  icon: Icon(
+                    Icons.arrow_back,
+                    color: Theme.of(context).textTheme.bodyMedium!.color,
+                  ),
+                ),
+                actions: [
+                  Checkbox(
+                    value: allCoursesAreSelected,
+                    activeColor: const Color.fromARGB(255, 101, 199, 121),
+                    onChanged: (_) {
+                      toggleAllCoursesAreSelected();
+                    },
+                  )
+                ],
+              )
+            : AppBar(
+                toolbarHeight: 0,
+                backgroundColor: Theme.of(context).colorScheme.primary,
+                elevation: 0,
+              ),
         body: SafeArea(
           child: Column(
             children: [
@@ -177,7 +242,9 @@ class _CourseScreenState extends State<CourseScreen> {
                 elevation: 1,
                 child: Container(
                   color: Theme.of(context).colorScheme.primary,
-                  padding: const EdgeInsets.fromLTRB(30, 25, 10, 10),
+                  padding: inSelectionMode
+                      ? const EdgeInsets.fromLTRB(30, 5, 10, 10)
+                      : const EdgeInsets.fromLTRB(30, 40, 10, 10),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -187,29 +254,50 @@ class _CourseScreenState extends State<CourseScreen> {
                         '${noToPosition(widget.yearResultIndex + 1)} Year',
                         style: const TextStyle(
                           fontSize: 35,
-                          fontWeight: FontWeight.w600,
+                          fontWeight: FontWeight.w800,
                         ),
                       ),
                       const SizedBox(height: 10),
 
-                      Text(
-                        widget.isFirstSemester == true
-                            ? '1st Semester'
-                            : '2nd Semester',
-                        style: const TextStyle(
-                          fontSize: 22,
-                          fontWeight: FontWeight.w600,
-                        ),
+                      Row(
+                        children: [
+                          Text(
+                            widget.isFirstSemester == true
+                                ? '1st Semester: '
+                                : '2nd Semester: ',
+                            style: const TextStyle(
+                              fontSize: 22,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                          Text(
+                            '${semesterResult.courseResults.length} courses',
+                            style: const TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ],
                       ),
                       const SizedBox(height: 4),
-                      Text(
-                        'Semester GPA: ${semesterResult.semesterGPA.toStringAsFixed(2)}',
-                        style: const TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w500,
-                        ),
+                      Row(
+                        children: [
+                          const Text(
+                            'Semester GPA: ',
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                          Text(
+                            semesterResult.semesterGPA.toStringAsFixed(2),
+                            style: const TextStyle(
+                              fontSize: 24,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                        ],
                       ),
-                      const SizedBox(height: 10),
                     ],
                   ),
                 ),
@@ -219,12 +307,13 @@ class _CourseScreenState extends State<CourseScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Padding(
-                      padding: EdgeInsets.only(left: 30, top: 10),
+                      padding: EdgeInsets.only(left: 30, top: 5),
                       child: Text(
-                        'Courses:',
+                        'Courses: ',
                         style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
+                          fontSize: 22,
+                          fontWeight: FontWeight.w800,
+                          decoration: TextDecoration.underline,
                         ),
                       ),
                     ),
@@ -234,7 +323,7 @@ class _CourseScreenState extends State<CourseScreen> {
                     Expanded(
                       child: ListView.builder(
                         padding: const EdgeInsets.only(
-                            left: 30, right: 30, bottom: 20),
+                            left: 30, right: 30, bottom: 80, top: 6),
                         itemCount: semesterResult.courseResults.length,
                         itemBuilder: (context, courseIndex) {
                           return Provider(
@@ -273,7 +362,7 @@ class _CourseScreenState extends State<CourseScreen> {
                                   },
                                   onLongPress: (int activatingCourseIndex) {
                                     if (inSelectionMode == false) {
-                                      activateInSelectionState(
+                                      activateInSelectionMode(
                                           activatingCourseIndex);
                                     }
                                   }),
@@ -295,7 +384,30 @@ class _CourseScreenState extends State<CourseScreen> {
                             child: Center(
                               child: IconButton(
                                 padding: const EdgeInsets.all(3),
-                                onPressed: () {},
+                                onPressed: () {
+                                  List<String> uniqueIDsToBeDeleted = [];
+                                  for (int i = 0;
+                                      i < courseCardStates.length;
+                                      i++) {
+                                    if (courseCardStates[i] == true) {
+                                      uniqueIDsToBeDeleted.add(semesterResult
+                                          .courseResults[i].uniqueId!);
+                                    }
+                                  }
+                                  showDialog<bool>(
+                                    context: context,
+                                    builder: (context) => const DeletePopup(
+                                        objectToDeleteName:
+                                            'the selected courses'),
+                                  ).then((value) {
+                                    if (value == true) {
+                                      for (String id in uniqueIDsToBeDeleted) {
+                                        deleteCourse(
+                                            uniqueIdOfCourseToDelete: id);
+                                      }
+                                    }
+                                  });
+                                },
                                 color: Theme.of(context)
                                     .textTheme
                                     .bodyMedium!
@@ -338,7 +450,7 @@ class _CourseScreenState extends State<CourseScreen> {
                   );
                 },
                 tooltip: 'Add Course',
-                child: const Icon(Icons.add),
+                child: const Icon(Icons.add, size: 30),
               )
             : const SizedBox(),
       ),

@@ -65,7 +65,7 @@ class CourseCard extends StatelessWidget {
                     courseResult.courseTitle,
                     style: const TextStyle(
                       fontSize: 17,
-                      fontWeight: FontWeight.w600,
+                      fontWeight: FontWeight.w700,
                     ),
                   ),
                   const SizedBox(height: 1),
@@ -76,6 +76,7 @@ class CourseCard extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                     style: const TextStyle(
                       fontSize: 16,
+                      fontWeight: FontWeight.w600,
                     ),
                   ),
                   const SizedBox(height: 4),
@@ -137,22 +138,6 @@ class CourseCard extends StatelessWidget {
                     ),
                   )
                 : const SizedBox(width: 20),
-            // // Delete button
-            // IconButton(
-            //   padding: const EdgeInsets.symmetric(vertical: 4),
-            //   onPressed: () {
-            //     showDialog<bool>(
-            //       context: context,
-            //       builder: (context) =>
-            //           DeletePopup(objectToDeleteName: courseResult.courseTitle),
-            //     ).then((value) {
-            //       if (value == true) {
-            //         widget.deleteThisCourse();
-            //       }
-            //     });
-            //   },
-            //   icon: const Icon(Icons.delete),
-            // ),
           ],
         ),
       ),

@@ -41,24 +41,33 @@ class SemesterScreen extends StatelessWidget {
                     '${noToPosition(yearResult.year)} Year',
                     style: const TextStyle(
                       fontSize: 35,
-                      fontWeight: FontWeight.w600,
+                      fontWeight: FontWeight.w800,
                     ),
                   ),
                   const SizedBox(height: 10),
-                  Text(
-                    '${noToPosition(yearResult.year)} Year GPA: '
-                        '${yearResult.yearGPA.toStringAsFixed(2)}',
-                    style: const TextStyle(
-                      fontSize: 17,
-                      fontWeight: FontWeight.w500,
-                    ),
+                  Row(
+                    children: [
+                      Text(
+                        '${noToPosition(yearResult.year)} Year GPA: ',
+                        style: const TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      Text(
+                        yearResult.yearGPA.toStringAsFixed(2),
+                        style: const TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                    ],
                   ),
                   const SizedBox(height: 20),
                 ],
               ),
             ),
           ),
-
           Expanded(
             child: Container(
               padding: const EdgeInsets.fromLTRB(30, 30, 30, 80),

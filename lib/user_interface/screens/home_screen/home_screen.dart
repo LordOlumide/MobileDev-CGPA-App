@@ -32,20 +32,25 @@ class HomeScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      const Text(
+                      Text(
                         'CGPA Calculator',
                         style: TextStyle(
                           fontSize: 30,
-                          fontWeight: FontWeight.w600,
+                          fontWeight: FontWeight.w900,
+                          color: Theme.of(context).textTheme.bodyMedium!.color,
                         ),
                       ),
                       const SizedBox(height: 7),
                       userEmail != ''
                           ? Text(
                               userEmail,
-                              style: const TextStyle(
+                              style: TextStyle(
                                 fontSize: 13,
                                 fontWeight: FontWeight.w500,
+                                color: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium!
+                                    .color,
                               ),
                             )
                           : const SizedBox(),
@@ -53,8 +58,8 @@ class HomeScreen extends StatelessWidget {
                       RichText(
                         text: TextSpan(
                           style: TextStyle(
-                            fontSize: 25,
-                            fontWeight: FontWeight.w500,
+                            fontSize: 22,
+                            fontWeight: FontWeight.w600,
                             color:
                                 Theme.of(context).textTheme.bodyMedium!.color,
                           ),
@@ -65,8 +70,8 @@ class HomeScreen extends StatelessWidget {
                                   .currentCGPA
                                   .toStringAsFixed(2),
                               style: const TextStyle(
-                                fontSize: 28,
-                                fontWeight: FontWeight.w600,
+                                fontSize: 30,
+                                fontWeight: FontWeight.w800,
                                 color: Colors.green,
                               ),
                             ),
@@ -130,6 +135,7 @@ class HomeScreen extends StatelessWidget {
                   'Add New Year',
                   style: TextStyle(
                     fontSize: 24,
+                    fontWeight: FontWeight.w700,
                     color: Theme.of(context).textTheme.bodyMedium!.color,
                   ),
                 ),

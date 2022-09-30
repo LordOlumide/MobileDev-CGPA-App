@@ -43,9 +43,10 @@ class YearCardDisplay extends StatelessWidget {
                     // The year: 1st year
                     Text(
                       '${noToPosition(yearResult.year)} year',
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 20,
-                        fontWeight: FontWeight.bold,
+                        fontWeight: FontWeight.w800,
+                        color: Theme.of(context).textTheme.bodyMedium!.color,
                       ),
                     ),
                   ],
@@ -60,13 +61,17 @@ class YearCardDisplay extends StatelessWidget {
                         const TextSpan(text: 'GPA: '),
                         TextSpan(
                           text: yearResult.yearGPA.toStringAsFixed(2),
-                          style: const TextStyle(
-                            fontSize: 24,
+                          style: TextStyle(
+                            fontSize: 22,
+                            fontWeight: FontWeight.w700,
+                            color:
+                                Theme.of(context).textTheme.bodyMedium!.color,
                           ),
                         )
                       ],
                       style: TextStyle(
-                          fontSize: 18,
+                          fontSize: 17,
+                          fontWeight: FontWeight.w600,
                           color: Theme.of(context).textTheme.bodyMedium!.color),
                     ),
                   ),
@@ -82,22 +87,22 @@ class YearCardDisplay extends StatelessWidget {
                   children: [
                     const Text(
                       'First Semester:',
-                      style: TextStyle(),
+                      style: TextStyle(fontWeight: FontWeight.w600),
                     ),
                     Text(
-                      '\t\tCourses: ${yearResult.firstSem.totalNoOfCourses}'
+                      '\t\t\tCourses: ${yearResult.firstSem.totalNoOfCourses},'
                       '\t\tCourse Weight: ${yearResult.firstSem.totalNoOfUnits}',
-                      style: const TextStyle(),
+                      style: const TextStyle(fontSize: 13),
                     ),
                     const SizedBox(height: 3),
                     const Text(
                       'Second Semester:',
-                      style: TextStyle(),
+                      style: TextStyle(fontWeight: FontWeight.w600),
                     ),
                     Text(
-                      '\t\tCourses: ${yearResult.secondSem.totalNoOfCourses}'
+                      '\t\t\tCourses: ${yearResult.secondSem.totalNoOfCourses},'
                       '\t\tCourse Weight: ${yearResult.secondSem.totalNoOfUnits}',
-                      style: const TextStyle(),
+                      style: const TextStyle(fontSize: 13),
                     ),
                   ],
                 ),

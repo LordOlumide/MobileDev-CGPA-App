@@ -15,22 +15,30 @@ class WelcomeScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text(
+            Text(
               'Welcome to CGPA App',
-              style: TextStyle(fontSize: 30),
+              style: TextStyle(
+                fontSize: 35,
+                fontWeight: FontWeight.w800,
+                color: Theme.of(context).textTheme.bodyMedium!.color,
+              ),
+              textAlign: TextAlign.center,
             ),
             const SizedBox(height: 50),
 
             MaterialButton(
               padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
               onPressed: () {
-                Navigator.pushReplacementNamed(context, HomeScreen.screenId);
+                Navigator.pushNamed(context, HomeScreen.screenId);
               },
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10)),
               color: Theme.of(context).colorScheme.primary,
               child: const Text(
                 'Use Offline',
                 style: TextStyle(
-                  fontSize: 20,
+                  fontSize: 22,
+                  fontWeight: FontWeight.w800,
                 ),
               ),
             ),
@@ -42,11 +50,14 @@ class WelcomeScreen extends StatelessWidget {
               onPressed: () {
                 Navigator.pushNamed(context, RegistrationScreen.screenId);
               },
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(7)),
               color: Theme.of(context).colorScheme.primary,
               child: const Text(
                 'Register',
                 style: TextStyle(
                   fontSize: 20,
+                  fontWeight: FontWeight.w700,
                 ),
               ),
             ),
@@ -58,11 +69,14 @@ class WelcomeScreen extends StatelessWidget {
               onPressed: () {
                 Navigator.pushNamed(context, LoginScreen.screenId);
               },
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(7)),
               color: Theme.of(context).colorScheme.primary,
               child: const Text(
                 'Log in',
                 style: TextStyle(
                   fontSize: 20,
+                  fontWeight: FontWeight.w700,
                 ),
               ),
             ),
