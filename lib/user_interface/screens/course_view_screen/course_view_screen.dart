@@ -271,7 +271,8 @@ class _CourseScreenState extends State<CourseScreen> {
                             ),
                           ),
                           Text(
-                            '${semesterResult.courseResults.length} courses',
+                            '${semesterResult.courseResults.length} '
+                            '${semesterResult.courseResults.length == 1 ? 'course' : 'courses'}',
                             style: const TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.w600,

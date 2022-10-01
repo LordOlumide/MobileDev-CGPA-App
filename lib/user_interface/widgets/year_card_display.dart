@@ -107,8 +107,10 @@ class YearCardDisplay extends StatelessWidget {
                   ],
                 ),
 
-                // Delete button
-                yearResult.isEmpty()
+                // Delete button. Only visible on the last card if it is empty.
+                yearResult.isEmpty() &&
+                        (yearResult.year ==
+                            Provider.of<Database>(context).main.length)
                     ? IconButton(
                         padding: const EdgeInsets.symmetric(horizontal: 10),
                         onPressed: () {
