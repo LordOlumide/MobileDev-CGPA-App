@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../login_screen/login_screen.dart';
-import '../registration_screen/registration_screen.dart';
+import 'package:mobile_dev_cgpa_app/constants/enums.dart';
+import '../authenticate_screen/authenticate_screen.dart';
 import '../home_screen/home_screen.dart';
 
 class WelcomeScreen extends StatelessWidget {
@@ -48,7 +48,11 @@ class WelcomeScreen extends StatelessWidget {
             MaterialButton(
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
               onPressed: () {
-                Navigator.pushNamed(context, RegistrationScreen.screenId);
+                Navigator.pushNamed(
+                  context,
+                  AuthenticateScreen.screenId,
+                  arguments: AuthenticationActions.register,
+                );
               },
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(7)),
@@ -67,7 +71,11 @@ class WelcomeScreen extends StatelessWidget {
             MaterialButton(
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
               onPressed: () {
-                Navigator.pushNamed(context, LoginScreen.screenId);
+                Navigator.pushNamed(
+                  context,
+                  AuthenticateScreen.screenId,
+                  arguments: AuthenticationActions.login,
+                );
               },
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(7)),

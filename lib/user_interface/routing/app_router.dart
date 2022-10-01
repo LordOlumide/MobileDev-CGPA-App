@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import '../../constants/enums.dart';
 
 // screens
 import '../screens/home_screen/home_screen.dart';
-import '../screens/login_screen/login_screen.dart';
-import '../screens/registration_screen/registration_screen.dart';
+import '../screens/authenticate_screen/authenticate_screen.dart';
 import '../screens/semester_view_screen/semester_view_screen.dart';
 import '../screens/welcome_screen/welcome_screen.dart';
 import '../screens/course_view_screen/course_view_screen.dart';
@@ -15,11 +15,11 @@ class AppRouter {
     switch (settings.name) {
       case WelcomeScreen.screenId:
         return MaterialPageRoute(builder: (context) => const WelcomeScreen());
-      case RegistrationScreen.screenId:
+
+      case AuthenticateScreen.screenId:
         return MaterialPageRoute(
-            builder: (context) => const RegistrationScreen());
-      case LoginScreen.screenId:
-        return MaterialPageRoute(builder: (context) => const LoginScreen());
+            builder: (context) => AuthenticateScreen(
+                authAction: settings.arguments as AuthenticationActions));
 
       case HomeScreen.screenId:
         return MaterialPageRoute(

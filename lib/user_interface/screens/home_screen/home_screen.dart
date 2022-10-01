@@ -84,7 +84,6 @@ class HomeScreen extends StatelessWidget {
               ),
             ),
 
-            // The years ListView  TODO: Implement Multi course deleting
             Expanded(
               flex: 4,
               child: Container(
