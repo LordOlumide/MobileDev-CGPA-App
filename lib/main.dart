@@ -42,7 +42,8 @@ class _MyCGPAAppState extends State<MyCGPAApp> {
   @override
   void initState() {
     super.initState();
-    mainDatabase.initialize();
+    mainDatabase
+        .initialize(); // TODO: Implement Load with Dummy data and firestore
   }
 
   @override

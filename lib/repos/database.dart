@@ -34,7 +34,6 @@ class Database extends ChangeNotifier {
         highestYearIndex = yearIndex;
       }
     }
-    if (highestYearIndex == 0) return;
     // Creating the YearResult objects
     List<YearResult> yearResults = [];
     for (int yearIndex = 0; yearIndex <= highestYearIndex; yearIndex++) {
@@ -88,6 +87,7 @@ class Database extends ChangeNotifier {
         ? _main[yearResultIndex].addCourseToFirstSem(newCourse)
         : _main[yearResultIndex].addCourseToSecondSem(newCourse);
 
+    print(newCourse);
     await HiveOperations.addCourseToLocalDatabase(
       yearResultIndex: yearResultIndex,
       isFirstSemester: isFirstSemester,
