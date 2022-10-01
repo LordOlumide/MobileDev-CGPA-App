@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../../constants/enums.dart';
 
 // screens
+import '../../repos/database.dart';
 import '../screens/home_screen/home_screen.dart';
 import '../screens/authenticate_screen/authenticate_screen.dart';
 import '../screens/semester_view_screen/semester_view_screen.dart';
@@ -22,10 +24,23 @@ class AppRouter {
                 authAction: settings.arguments as AuthenticationActions));
 
       case HomeScreen.screenId:
-        return MaterialPageRoute(
-            builder: (context) => settings.arguments != null
-                ? HomeScreen(userEmail: settings.arguments as String)
-                : const HomeScreen());
+        Database getDatabase() {
+          Map args = settings.arguments != null
+              ? settings.arguments as Map<String, dynamic>
+              : {}; // args: ["withDummyData": bool]
+          bool withDummyData = args['withDummyData'] ?? false;
+          Database mainDatabase = Database();
+          mainDatabase.initialize(withDummyData);
+          return mainDatabase;
+        }
+
+        // TODO: Implement Load with Dummy data and firestore
+        return MaterialPageRoute(builder: (context) {
+          return ChangeNotifierProvider(
+            create: (context) => getDatabase(),
+            child: const HomeScreen(),
+          );
+        });
 
       case SemesterScreen.screenId:
         return MaterialPageRoute(

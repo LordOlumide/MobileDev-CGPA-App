@@ -31,7 +31,6 @@ class _AuthenticateScreenState extends State<AuthenticateScreen> {
               context,
               HomeScreen.screenId,
               ModalRoute.withName(WelcomeScreen.screenId),
-              arguments: email,
             ));
   }
 
@@ -42,12 +41,12 @@ class _AuthenticateScreenState extends State<AuthenticateScreen> {
               context,
               HomeScreen.screenId,
               ModalRoute.withName(WelcomeScreen.screenId),
-              arguments: email,
             ));
   }
 
   @override
   Widget build(BuildContext context) {
+    // TODO: implement local login
     return Scaffold(
       body: Center(
         child: Stack(
@@ -104,7 +103,8 @@ class _AuthenticateScreenState extends State<AuthenticateScreen> {
                           register();
                         }
                       } catch (e) {
-                        print('FirebaseAuth Error: $e');
+                        print(
+                            'FirebaseAuth Error: $e'); // TODO: Display information sheet on error
                       }
                       setState(() {
                         inAsyncCall = false;

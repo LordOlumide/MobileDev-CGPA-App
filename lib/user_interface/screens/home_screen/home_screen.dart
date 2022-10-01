@@ -40,7 +40,7 @@ class HomeScreen extends StatelessWidget {
                           color: Theme.of(context).textTheme.bodyMedium!.color,
                         ),
                       ),
-                      const SizedBox(height: 7),
+                      const SizedBox(height: 5),
                       userEmail != ''
                           ? Text(
                               userEmail,
@@ -54,7 +54,7 @@ class HomeScreen extends StatelessWidget {
                               ),
                             )
                           : const SizedBox(),
-                      const SizedBox(height: 7),
+                      const SizedBox(height: 5),
                       RichText(
                         text: TextSpan(
                           style: TextStyle(

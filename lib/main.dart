@@ -7,7 +7,6 @@ import 'package:firebase_core/firebase_core.dart';
 
 // helpers
 import 'repos/auth_repo.dart';
-import 'package:mobile_dev_cgpa_app/repos/database.dart';
 
 // services
 import 'user_interface/routing/app_router.dart';
@@ -37,22 +36,10 @@ class MyCGPAApp extends StatefulWidget {
 }
 
 class _MyCGPAAppState extends State<MyCGPAApp> {
-  Database mainDatabase = Database();
-
-  @override
-  void initState() {
-    super.initState();
-    mainDatabase
-        .initialize(); // TODO: Implement Load with Dummy data and firestore
-  }
-
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        Provider(create: (context) => Auth()),
-        ChangeNotifierProvider(create: (context) => mainDatabase),
-      ],
+    return Provider(
+      create: (context) => Auth(),
       child: MaterialApp(
         title: 'Flutter Demo',
         theme: AppTheme.lightTheme,

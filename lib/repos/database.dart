@@ -11,12 +11,14 @@ class Database extends ChangeNotifier {
 
   List<YearResult> get main => _main;
 
-  Future<void> initialize() async {
+  Future<void> initialize([bool withDummyData = false]) async {
     await HiveOperations.init();
 
-    // await addDummyData();
-
-    await loadDataFromLocalMemory();
+    if (withDummyData == true) {
+      await addDummyData();
+    } else {
+      await loadDataFromLocalMemory();
+    }
 
     HiveOperations.runTest();
   }
@@ -62,7 +64,7 @@ class Database extends ChangeNotifier {
     }
     // Adding the retrieved courses to _main
     _main.addAll([...yearResults]);
-    notifyListeners();
+    notifyListeners(); // TODO: Maybe add initial loading incrementing animation. NotifyListeners after adding each course
   }
 
   addNewYear() {
@@ -87,7 +89,6 @@ class Database extends ChangeNotifier {
         ? _main[yearResultIndex].addCourseToFirstSem(newCourse)
         : _main[yearResultIndex].addCourseToSecondSem(newCourse);
 
-    print(newCourse);
     await HiveOperations.addCourseToLocalDatabase(
       yearResultIndex: yearResultIndex,
       isFirstSemester: isFirstSemester,
