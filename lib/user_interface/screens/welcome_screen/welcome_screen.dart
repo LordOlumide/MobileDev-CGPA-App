@@ -73,7 +73,7 @@ class WelcomeScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 10),
 
-                  // Login button
+                  // Login butto
                   MaterialButton(
                     padding:
                         const EdgeInsets.symmetric(horizontal: 20, vertical: 5),

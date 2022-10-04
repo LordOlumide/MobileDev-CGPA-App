@@ -10,7 +10,8 @@ class AppTheme {
   static Color lightScaffoldBackgroundColor = const Color(0xfffefff2);
   static Color lightTextColor = Colors.black87;
 
-  static Color darkPrimaryColor = const Color(0xFF232323);
+  static Color darkPrimaryColor =
+      const Color(0xFF232323); // TODO: Enable dark theme
   static Color darkSecondaryColor = const Color(0xFF7700b2);
   static Color darkBackgroundColor = const Color(0xffbcbcbc);
   static Color darkFloatingActionButtonColor = const Color(0xFFb41eff);
