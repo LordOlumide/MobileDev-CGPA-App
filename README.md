@@ -12,3 +12,7 @@ The local storage is done with hive.
 
 - The data is not yet stored online.
 - The user data is not yet stored separately online and offline. It will be implemented soon.
+
+## Screenshots
+
+![App screenshots](assets\images\CGPA_DEMO.jpg?raw=true "App Screenshots")
