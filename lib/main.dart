@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_dev_cgpa_app/models/course_result.dart';
+import 'package:mobile_dev_cgpa_app/repos/database.dart';
 import 'package:provider/provider.dart';
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
@@ -39,10 +40,22 @@ class MyCGPAApp extends StatefulWidget {
 }
 
 class _MyCGPAAppState extends State<MyCGPAApp> {
+  late Database mainDatabase;
+
+  @override
+  void initState() {
+    super.initState();
+    Database mainDatabase = Database();
+    mainDatabase.initialize();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Provider(
-      create: (context) => Auth(),
+    return MultiProvider(
+      providers: [
+        Provider(create: (context) => Auth()),
+        ChangeNotifierProvider(create: (context) => mainDatabase),
+      ],
       child: MaterialApp(
         title: 'Flutter Demo',
         theme: AppTheme.lightTheme,

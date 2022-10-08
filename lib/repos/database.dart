@@ -12,6 +12,8 @@ class Database extends ChangeNotifier {
   List<YearResult> get main => _main;
 
   Future<void> initialize([bool withDummyData = false]) async {
+    // TODO: Implement Load with firestore
+
     await HiveOperations.init();
 
     if (withDummyData == true) {

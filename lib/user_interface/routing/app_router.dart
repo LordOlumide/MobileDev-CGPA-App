@@ -24,22 +24,8 @@ class AppRouter {
                 authAction: settings.arguments as AuthenticationActions));
 
       case HomeScreen.screenId:
-        Database getDatabase() {
-          Map args = settings.arguments != null
-              ? settings.arguments as Map<String, dynamic>
-              : {}; // args: ["withDummyData": bool]
-          bool withDummyData = args['withDummyData'] ?? false;
-          Database mainDatabase = Database();
-          mainDatabase.initialize(withDummyData);
-          return mainDatabase;
-        }
-
-        // TODO: Implement Load with Dummy data and firestore
         return MaterialPageRoute(builder: (context) {
-          return ChangeNotifierProvider(
-            create: (context) => getDatabase(),
-            child: const HomeScreen(),
-          );
+          return const HomeScreen();
         });
 
       case SemesterScreen.screenId:

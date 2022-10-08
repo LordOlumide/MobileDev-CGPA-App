@@ -1,16 +1,14 @@
 # mobile_dev_cgpa_app
 
-A new Flutter project.
+My entry for the Mobile Dev Community CGPA App challenge.
 
-## Getting Started
+## The App
 
-This project is a starting point for a Flutter application.
+The App's state is managed by Provider such that any changes are immediately reflected globally.
+If a course is added, edited, or removed, the GPA, CGPA, course number, and units are automatically recalculated.
+The local storage is done with hive.
 
-A few resources to get you started if this is your first Flutter project:
+## To Add:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- The data is not yet stored online.
+- The user data is not yet stored separately online and offline. It will be implemented soon.
