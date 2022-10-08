@@ -100,31 +100,31 @@ class WelcomeScreen extends StatelessWidget {
             ),
           ),
 
-          // Load with dummy data button
-          Align(
-            alignment: Alignment.bottomRight,
-            child: Padding(
-              padding: const EdgeInsets.only(right: 20, bottom: 20),
-              child: MaterialButton(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                onPressed: () {
-                  Navigator.pushNamed(context, HomeScreen.screenId,
-                      arguments: {'withDummyData': true});
-                },
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10)),
-                color: Theme.of(context).colorScheme.primary,
-                child: const Text(
-                  'Load with Dummy Data',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w800,
-                  ),
-                ),
-              ),
-            ),
-          ),
+          // // Load with dummy data button
+          // Align(
+          //   alignment: Alignment.bottomRight,
+          //   child: Padding(
+          //     padding: const EdgeInsets.only(right: 20, bottom: 20),
+          //     child: MaterialButton(
+          //       padding:
+          //           const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+          //       onPressed: () {
+          //         Navigator.pushNamed(context, HomeScreen.screenId,
+          //             arguments: {'withDummyData': true});
+          //       },
+          //       shape: RoundedRectangleBorder(
+          //           borderRadius: BorderRadius.circular(10)),
+          //       color: Theme.of(context).colorScheme.primary,
+          //       child: const Text(
+          //         'Load with Dummy Data',
+          //         style: TextStyle(
+          //           fontSize: 16,
+          //           fontWeight: FontWeight.w800,
+          //         ),
+          //       ),
+          //     ),
+          //   ),
+          // ),
         ],
       ),
     );

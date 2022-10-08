@@ -86,7 +86,6 @@ class _AuthenticateScreenState extends State<AuthenticateScreen> {
 
                   // Login button
                   MaterialButton(
-                    // TODO: Add loading animation for login and registration
                     padding:
                         const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
                     color: Theme.of(context).colorScheme.primary,
