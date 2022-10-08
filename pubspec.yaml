@@ -33,6 +33,7 @@ flutter:
 
   assets:
     - assets/images/
+    - app_screenshots/
   #   - images/a_dot_ham.jpeg
 
   fonts:

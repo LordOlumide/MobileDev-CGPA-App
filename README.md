@@ -15,4 +15,4 @@ The local storage is done with hive.
 
 ## Screenshots
 
-![App screenshots](assets\images\cgpa_demo.png?raw=true "App Screenshots")
+![App screenshots](app_screenshots\cgpa_demo.png?raw=true "App Screenshots")
