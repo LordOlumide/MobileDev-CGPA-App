@@ -40,12 +40,11 @@ class MyCGPAApp extends StatefulWidget {
 }
 
 class _MyCGPAAppState extends State<MyCGPAApp> {
-  late Database mainDatabase;
+  Database mainDatabase = Database();
 
   @override
   void initState() {
     super.initState();
-    Database mainDatabase = Database();
     mainDatabase.initialize();
   }
 

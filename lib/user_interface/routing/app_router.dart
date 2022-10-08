@@ -29,9 +29,10 @@ class AppRouter {
         });
 
       case SemesterScreen.screenId:
+        int argument = settings.arguments as int;
+
         return MaterialPageRoute(
-            builder: (context) =>
-                SemesterScreen(yearResultIndex: settings.arguments as int));
+            builder: (context) => SemesterScreen(yearResultIndex: argument));
 
       case CourseScreen.screenId:
         Map argumentsMap = settings.arguments as Map<String, dynamic>;
