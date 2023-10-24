@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_dev_cgpa_app/constants/decorations.dart';
 import 'package:mobile_dev_cgpa_app/constants/enums.dart';
-import 'package:mobile_dev_cgpa_app/repos/auth_repo.dart';
-import 'package:mobile_dev_cgpa_app/user_interface/screens/home_screen/home_screen.dart';
-import 'package:mobile_dev_cgpa_app/user_interface/screens/welcome_screen/welcome_screen.dart';
-import 'package:provider/provider.dart';
 
 class AuthenticateScreen extends StatefulWidget {
   static const screenId = 'Authentication screen';
@@ -24,25 +20,25 @@ class _AuthenticateScreenState extends State<AuthenticateScreen> {
 
   bool inAsyncCall = false;
 
-  login() async {
-    await Provider.of<Auth>(context, listen: false)
-        .logInWithEmailAndPassword(email: email, password: password)
-        .then((_) => Navigator.pushNamedAndRemoveUntil(
-              context,
-              HomeScreen.screenId,
-              ModalRoute.withName(WelcomeScreen.screenId),
-            ));
-  }
-
-  register() async {
-    await Provider.of<Auth>(context, listen: false)
-        .createUserWithEmailAndPassword(email: email, password: password)
-        .then((_) => Navigator.pushNamedAndRemoveUntil(
-              context,
-              HomeScreen.screenId,
-              ModalRoute.withName(WelcomeScreen.screenId),
-            ));
-  }
+  // login() async {
+  //   await Provider.of<Auth>(context, listen: false)
+  //       .logInWithEmailAndPassword(email: email, password: password)
+  //       .then((_) => Navigator.pushNamedAndRemoveUntil(
+  //             context,
+  //             HomeScreen.screenId,
+  //             ModalRoute.withName(WelcomeScreen.screenId),
+  //           ));
+  // }
+  //
+  // register() async {
+  //   await Provider.of<Auth>(context, listen: false)
+  //       .createUserWithEmailAndPassword(email: email, password: password)
+  //       .then((_) => Navigator.pushNamedAndRemoveUntil(
+  //             context,
+  //             HomeScreen.screenId,
+  //             ModalRoute.withName(WelcomeScreen.screenId),
+  //           ));
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -97,9 +93,9 @@ class _AuthenticateScreenState extends State<AuthenticateScreen> {
                       });
                       try {
                         if (widget.authAction == AuthenticationActions.login) {
-                          login();
+                          // login();
                         } else {
-                          register();
+                          // register();
                         }
                       } catch (e) {
                         print(

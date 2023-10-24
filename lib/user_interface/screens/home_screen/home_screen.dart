@@ -98,7 +98,7 @@ class HomeScreen extends StatelessWidget {
                         yearResultIndex: i,
                         deleteThisYear: () {
                           Provider.of<Database>(context, listen: false)
-                              .deleteYear(yearResultIndex: i);
+                              .deleteLastYear();
                         },
                       ),
                     const SizedBox(height: 30),
